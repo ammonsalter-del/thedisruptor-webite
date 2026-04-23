@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A short history of Vélox Dynamics — the fictional Belgian company at the heart of The Disruptor simulation. A taste of the firm; the full case study is inside the game.">
+  <title>The World of Vélox Dynamics — The Disruptor</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .fictional-banner {
+      background: linear-gradient(90deg, #fff8e1 0%, #fff3c4 100%);
+      border: 1px solid #f0c56b;
+      border-left: 4px solid #d97706;
+      border-radius: 10px;
+      padding: 12px 18px;
+      margin: 16px 0 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #78350f;
+      line-height: 1.5;
+    }
+    .fictional-banner .flag {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .fictional-banner strong { color: #78350f; }
+
+    .flavour-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 24px 0; }
+    @media (max-width: 768px) { .flavour-grid { grid-template-columns: 1fr; } }
+    .flavour-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; }
+    .flavour-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .flavour-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 22px 0 10px;
+    }
+    @media (max-width: 900px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .product-grid { grid-template-columns: 1fr; } }
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .product-art {
+      height: 170px;
+      background: var(--neutral-100);
+      display: block;
+      overflow: hidden;
+    }
+    .product-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .story-figure {
+      float: right;
+      width: 220px;
+      max-width: 40%;
+      margin: 0 0 14px 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--neutral-100);
+    }
+    .story-figure img { display: block; width: 100%; height: auto; }
+    .story-figure figcaption {
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 8px 10px;
+      font-style: italic;
+      text-align: center;
+    }
+    @media (max-width: 640px) {
+      .story-figure { float: none; width: 100%; max-width: 100%; margin: 0 0 16px; }
+    }
+
+    .product-body { padding: 14px 16px 16px; }
+    .product-body h4 { font-size: 14px; font-weight: 700; color: var(--neutral-900); margin: 0 0 4px; }
+    .product-body .product-line { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin-bottom: 6px; }
+    .product-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+
+    .quote-card {
+      background: linear-gradient(135deg, #fef2f2 0%, #fff 100%);
+      border-left: 4px solid var(--red-500);
+      border-radius: 0 14px 14px 0;
+      padding: 18px 22px;
+      margin: 22px 0;
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .quote-card cite {
+      display: block;
+      margin-top: 8px;
+      font-style: normal;
+      font-weight: 600;
+      color: var(--neutral-900);
+      font-size: 13px;
+      letter-spacing: 0.3px;
+    }
+
+    .fun-facts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 18px 0 4px;
+    }
+    @media (max-width: 800px) { .fun-facts { grid-template-columns: repeat(2, 1fr); } }
+    .fun-fact {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .fun-fact .ff-icon { font-size: 22px; margin-bottom: 6px; }
+    .fun-fact .ff-head { font-size: 12px; font-weight: 700; color: var(--neutral-900); margin-bottom: 3px; }
+    .fun-fact .ff-note { font-size: 11px; color: var(--text-muted); line-height: 1.45; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html" class="active">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <button class="nav-toggle" onclick="document.querySelector('.mobile-menu').classList.toggle('active')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="mobile-menu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html" class="active">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section>
+    <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 20px; flex-wrap: wrap;">
+      <img src="velox-logo.png" alt="Vélox Dynamics logo" style="height: 80px; width: auto;">
+      <div style="flex: 1; min-width: 280px;">
+        <h1 style="margin: 0 0 6px;">The World of Vélox Dynamics</h1>
+        <p class="page-intro" style="margin: 0;">A flavour of the Belgian firm at the heart of the simulation — its origin, its products, its people and the strange governance that makes it interesting to run.</p>
+      </div>
+    </div>
+
+    <div class="fictional-banner">
+      <span class="flag">🎭</span>
+      <div><strong>Vélox Dynamics is a fictional company.</strong> The firm, its founders, its products, the Foundation, the competitors and the Belgian setting were built for this simulation. Any resemblance to real companies is unintended. The fiction is the point — it lets students make decisions without real-world baggage or brand loyalty getting in the way.</div>
+    </div>
+
+    <div class="hero-box">
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+        <div>
+          <div class="stat" style="font-size: 20px;">€420M</div>
+          <div style="color: rgba(255,255,255,0.85); font-size: 13px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.3px;">Annual Revenue</div>
+        </div>
+        <div>
+          <div class="stat" style="font-size: 20px;">2,800</div>
+          <div style="color: rgba(255,255,255,0.85); font-size: 13px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.3px;">Employees</div>
+        </div>
+        <div>
+          <div class="stat" style="font-size: 20px;">Since 1987</div>
+          <div style="color: rgba(255,255,255,0.85); font-size: 13px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.3px;">Founded</div>
+        </div>
+      </div>
+      <p style="margin-top: 20px; font-size: 15px; color: rgba(255,255,255,0.9);"><em>"Precision in motion."</em></p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- A Short Story -->
+  <section>
+    <h2>A Short Story</h2>
+    <figure class="story-figure">
+      <img src="velox-founder.png" alt="Liesbeth Van Marcke, founder">
+      <figcaption>Liesbeth Van Marcke, founder of Vélox Dynamics</figcaption>
+    </figure>
+    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8;">Vélox Dynamics began in a Vilvoorde garage in the mid-1980s. Liesbeth Van Marcke, a Belgian materials scientist recovering from a serious cycling accident, had grown frustrated with the clumsy rehabilitation equipment she was prescribed. She teamed up with a doctoral student, built a precision-engineered instrumented bicycle — and, to her surprise, the Belgian Olympic cycling team wanted one. The company was incorporated in 1987.</p>
+
+    <figure class="story-figure" style="margin-top: 22px;">
+      <img src="prototype.png" alt="An early Vélox workshop prototype — gears, chain drive and a microcontroller on a workbench">
+      <figcaption>An early workshop prototype — the kind of precision-engineered rig that started it all</figcaption>
+    </figure>
+
+    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-top: 14px;">Forty years on, Vélox is a €420M business with 2,800 staff, a flagship campus at Cargovil in Vilvoorde, and a reputation for well-made equipment that respects the biomechanics of the human body. Heritage engineering is the emotional core of the brand. The challenge — and yours, as the new CIO — is to carry that heritage into a very different digital and platform-driven industry without losing the soul of the company on the way.</p>
+
+    <div class="quote-card">
+      "We make things that help people move better. Everything else is secondary — and everything else is also how we pay for it."
+      <cite>— Liesbeth Van Marcke, founder (retired, still on the Foundation board)</cite>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- Products -->
+  <section>
+    <h2>What Vélox Makes</h2>
+    <p class="section-intro" style="max-width: 780px;">A portfolio stretched across heritage hardware, home fitness, wearables, and the digital platform. The equipment still pays most of the bills; the platform is the bet on the future.</p>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-art"><img src="velox-bike.png" alt="CycleSense R1 performance bike"></div>
+        <div class="product-body">
+          <div class="product-line">Heritage · Performance</div>
+          <h4>CycleSense R1</h4>
+          <p>The 1987 founding product — an instrumented biomechanical-feedback bike using aluminium-magnesium alloys. Built for professional cycling teams and physiotherapy clinics. Still the company's origin story.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-art"><img src="velox-treadmill.png" alt="Vélox Essentials Treadmill"></div>
+        <div class="product-body">
+          <div class="product-line">Heritage · Commercial</div>
+          <h4>Vélox Essentials Treadmill</h4>
+          <p>Cardio equipment for clinics, studios and premium gyms — the slow-burn bestseller of the catalogue.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-art"><img src="velox-gym.png" alt="Vélox Home Gym"></div>
+        <div class="product-body">
+          <div class="product-line">Commercial · B2B</div>
+          <h4>Vélox Home Gym</h4>
+          <p>Home gym line built around resistance-rod technology and a connected platform — picked up from bankruptcy in 2024 and reshaped into a premium B2B offer.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-art"><img src="velox-home.png" alt="VéloxHome connected fitness"></div>
+        <div class="product-body">
+          <div class="product-line">Consumer · B2C</div>
+          <h4>VéloxHome</h4>
+          <p>Pandemic-era home fitness line — smart bikes, rowers and strength stations with live and on-demand classes. Revenue share grew from 8% to 28% in two years.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-art"><img src="velox-app.png" alt="Vélox+ platform app"></div>
+        <div class="product-body">
+          <div class="product-line">Digital · Platform</div>
+          <h4>Vélox+ &amp; Vélox Allez</h4>
+          <p>The subscription platform and its consumer-facing service: AI coaching, training plans, community challenges, and a growing roster of third-party complementors.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-art"><img src="velox-pulse.png" alt="Vélox Band Pro wearable"></div>
+        <div class="product-body">
+          <div class="product-line">Wearables · New</div>
+          <h4>Vélox Band &amp; Band Pro</h4>
+          <p>A newer line of wearables feeding biometric data into Vélox+ — the toe in the water of a very different business.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- Foundation & Listing -->
+  <section>
+    <h2>A Strange Kind of Owner</h2>
+    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8; max-width: 780px;">In 1991 Liesbeth transferred majority ownership to the <strong>Van Marcke Foundation for Health &amp; Movement</strong> — a self-governing enterprise foundation whose mission is to fund research and programmes in health, rehabilitation and sustainability. A decade later, in 2001, Vélox listed on Euronext Brussels through a dual-class share structure: the Foundation holds the voting A-shares, the public holds the B-shares. The Foundation therefore retains durable control, while the company has access to public capital markets.</p>
+    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8; max-width: 780px; margin-top: 14px;">That arrangement — mission-driven steward on one side, public shareholders on the other — is the strategic knife-edge of the simulation. Every major decision in the game sits in the tension between the two.</p>
+
+    <div class="quote-card">
+      "The Foundation will back a bold strategy. What it will not back is drift. Remember that when you are choosing what not to do."
+      <cite>— Chair's note to the incoming CIO</cite>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- Timeline -->
+  <section>
+    <h2>A Compact Timeline</h2>
+
+    <div class="timeline">
+      <div class="timeline-item milestone">
+        <div class="timeline-year">1987</div>
+        <div class="timeline-text"><strong>Founded.</strong> First product: an instrumented rehabilitation bicycle, adopted by the Belgian cycling team.</div>
+      </div>
+      <div class="timeline-item milestone">
+        <div class="timeline-year">1991</div>
+        <div class="timeline-text"><strong>Van Marcke Foundation established.</strong> Majority ownership transferred; profits begin to fund research and sport programmes.</div>
+      </div>
+      <div class="timeline-item milestone">
+        <div class="timeline-year">1997</div>
+        <div class="timeline-text"><strong>First export deal.</strong> Rehab equipment lands in German and Dutch hospitals — the start of the clinical business.</div>
+      </div>
+      <div class="timeline-item milestone">
+        <div class="timeline-year">2001</div>
+        <div class="timeline-text"><strong>Euronext Brussels listing.</strong> Dual-class share structure gives the Foundation permanent voting control.</div>
+      </div>
+      <div class="timeline-item milestone">
+        <div class="timeline-year">2010</div>
+        <div class="timeline-text"><strong>First digital platform.</strong> Connected equipment, cloud training — the early roots of today's subscription business.</div>
+      </div>
+      <div class="timeline-item milestone">
+        <div class="timeline-year">2020</div>
+        <div class="timeline-text"><strong>Pandemic pivot.</strong> Rapid launch of the connected home-fitness line; home revenue jumps from marginal to material overnight.</div>
+      </div>
+      <div class="timeline-item milestone">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-text"><strong>Founder steps back.</strong> Liesbeth Van Marcke retires from operational duties but keeps her Foundation seat — and her opinions.</div>
+      </div>
+      <div class="timeline-item milestone">
+        <div class="timeline-year">2025</div>
+        <div class="timeline-text"><strong>You arrive.</strong> The board appoints a new Chief Innovation Officer. The game begins.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- Fun Facts -->
+  <section>
+    <h2>Bits of Flavour</h2>
+    <p class="section-intro" style="max-width: 780px;">A few details that don't change the strategy — but do change the feel of the firm.</p>
+    <div class="fun-facts">
+      <div class="fun-fact">
+        <div class="ff-icon">🏭</div>
+        <div class="ff-head">Cargovil HQ</div>
+        <div class="ff-note">The flagship campus on the Vilvoorde canal — half factory, half research lab.</div>
+      </div>
+      <div class="fun-fact">
+        <div class="ff-icon">🗣️</div>
+        <div class="ff-head">Three languages</div>
+        <div class="ff-note">Flemish, French and English all echo around the canteen at lunchtime.</div>
+      </div>
+      <div class="fun-fact">
+        <div class="ff-icon">🥐</div>
+        <div class="ff-head">Friday speculoos</div>
+        <div class="ff-note">A standing Friday tradition in the R&amp;D wing that somehow survives every budget cut.</div>
+      </div>
+      <div class="fun-fact">
+        <div class="ff-icon">🚲</div>
+        <div class="ff-head">Staff cycling team</div>
+        <div class="ff-note">Genuinely quick. Uses prototype kit. Occasionally breaks prototype kit.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- The Setup -->
+  <section>
+    <h2>The Setup at Day One</h2>
+    <div class="flavour-grid">
+      <div class="flavour-card">
+        <h3>Heritage business, strong brand</h3>
+        <p>Vélox is profitable, well-regarded and holds a respected position in European fitness equipment. The core hardware franchise still pays the bills.</p>
+      </div>
+      <div class="flavour-card">
+        <h3>Platform pressure</h3>
+        <p>The industry is shifting toward connected, subscription-based, AI-coached experiences. Vélox has a platform — but faster, better-capitalised rivals are circling.</p>
+      </div>
+      <div class="flavour-card">
+        <h3>A patient owner</h3>
+        <p>The Foundation prizes long horizons and social impact. It will back a bold strategy — but will not tolerate drift.</p>
+      </div>
+      <div class="flavour-card">
+        <h3>An impatient market</h3>
+        <p>Public shareholders and an outspoken board want growth and margin. Your annual appraisal is not sentimental.</p>
+      </div>
+    </div>
+    <p style="font-size: 13px; color: var(--text-muted); margin-top: 18px; font-style: italic;">The rest of the story — the Foundation's governance, the executive team, the competitive landscape, the product portfolio in full, and the CIO's specific remit — is in the in-game case study that the player reads on day one.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h4>The Disruptor</h4>
+        <p>A corporate entrepreneurship and innovation management simulation for educational use.</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <a href="about.html">About the Game</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</div>
+  </footer>
+
+</body>
+</html>

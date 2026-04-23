@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to Play The Disruptor — Getting started, key systems, board reviews, and strategic tips.">
+  <meta name="keywords" content="The Disruptor, how to play, tutorial, gameplay, board review, strategy">
+  <meta property="og:title" content="How to Play The Disruptor">
+  <meta property="og:description" content="Master the managerial practices and systems. Navigate board reviews, manage your tenure, and achieve victory.">
+  <meta property="og:type" content="website">
+  <title>How to Play The Disruptor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-intro { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; max-width: 720px; line-height: 1.7; }
+    .btn-primary { display: inline-block; background: var(--red-500); color: white; border: none; padding: 14px 48px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(204,41,54,0.25); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(204,41,54,0.35); }
+    .btn-secondary { display: inline-block; background: white; color: var(--neutral-900); border: 1px solid var(--neutral-200); padding: 14px 36px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-right: 12px; }
+    .btn-secondary:hover { border-color: var(--neutral-400); }
+    .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    h1 { font-size: 36px; font-weight: 800; color: var(--neutral-900); margin-bottom: 8px; letter-spacing: -0.5px; }
+    .requirements-list { font-size: 14px; color: var(--text-secondary); margin-left: 0; }
+    .requirements-list li { margin-bottom: 8px; }
+    .victory-tier-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+    .victory-tier-card.tier-1 { border-left: 4px solid #16a34a; }
+    .victory-tier-card.tier-2 { border-left: 4px solid #2563eb; }
+    .victory-tier-card.tier-3 { border-left: 4px solid #f59e0b; }
+    .victory-tier-card.tier-4 { border-left: 4px solid #dc2626; }
+    .victory-tier-card.tier-5 { border-left: 4px solid #7c2d12; }
+    .tier-header { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .tier-score { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+    .tier-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="how-to-play.html" class="active">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <button class="nav-toggle" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-to-play.html" class="active">How to Play</a>
+      <a href="screenshots.html">Screenshots</a>
+      <a href="case-study.html">The Vélox World</a>
+      <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+    </div>
+  </nav>
+
+  <section>
+    <h1>How to Play The Disruptor</h1>
+    <p class="page-intro">The Disruptor puts you in the cockpit of Chief Innovation Officer at Vélox Dynamics — a €420M Belgian fitness-equipment manufacturer — and challenges you to navigate the tension between heritage engineering and digital disruption over 3 simulated years. The game flows continuously, events arrive dynamically, and a connected set of managerial practices and systems competes for your attention and resources.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>Quick Start</h2>
+
+    <div class="card-grid card-grid-3">
+      <div class="card">
+        <div class="card-icon-box blue">🌐</div>
+        <h3>Play Online</h3>
+        <p>Visit the repository's GitHub Pages site and play instantly in your browser. No installation required.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box cyan">💾</div>
+        <h3>Keep a Copy Offline</h3>
+        <p>The game is a single HTML file — grab it once and it plays without internet, on any modern browser. Handy for classrooms with patchy wifi.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box green">📖</div>
+        <h3>Read the Case Study</h3>
+        <p>The Vélox Dynamics case study (20–30 min read) prepares you for the simulation. Students who read the case treat it as a strategic simulation, not a resource puzzle.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 24px;">
+      <h3>Built-In Tutorials</h3>
+      <p>Two tutorial modes are built in. A <strong>Quick Guide</strong> covers five essential topics (your dashboard, the R&amp;D pipeline, strategy, and tips for success) and gets you playing within minutes. A <strong>Full Guide</strong> walks through every managerial practice and system in depth, with explanations of every panel, every decision type, and every metric. Experienced gamers skip straight to playing; cautious players read everything first. Both approaches work.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>System Requirements</h2>
+
+    <div class="highlight-box">
+      <h3>Browser & Device</h3>
+      <ul class="requirements-list">
+        <li><strong>Modern browser:</strong> Chrome, Firefox, Safari, or Edge (latest versions)</li>
+        <li><strong>Desktop or laptop recommended</strong> — mobile works but the experience is optimised for larger screens</li>
+        <li><strong>Landscape orientation on tablets</strong> for best results</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>How Time Works</h2>
+    <p class="section-intro">The game flows continuously — time advances week by week, with events arriving, projects progressing, and competitors moving in real time. You can pause, speed up, or slow down the simulation at any point.</p>
+
+    <div class="highlight-box" style="margin-top: 0;">
+      <h3>Continuous Flow, Not Turns</h3>
+      <p>Unlike turn-based games, The Disruptor runs as a continuous simulation. Weeks tick by, events fire, staff work on projects, and the market evolves while you make decisions across the firm's managerial systems. You can intervene at any time — hire staff, launch projects, form alliances, respond to events — without waiting for a "next turn" button. Quarterly milestones mark board check-ins and annual reviews, but the simulation never stops to wait for you.</p>
+    </div>
+
+    <div class="card-grid card-grid-3" style="margin-top: 24px;">
+      <div class="card">
+        <div class="card-icon-box blue">⏱️</div>
+        <h3>Speed Controls</h3>
+        <p>Pause the simulation to think, or accelerate through quiet periods. Three speed settings let you control the pace.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box orange">📰</div>
+        <h3>Events &amp; News</h3>
+        <p>Weekly events arrive dynamically — market shifts, competitor moves, staff issues, technology breakthroughs. You respond as they happen.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box red">📊</div>
+        <h3>Board Reviews</h3>
+        <p>Annual board reviews evaluate your cumulative performance. These are the key milestones — everything else flows continuously.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>The Managerial Practices &amp; Systems</h2>
+    <p class="section-intro">A set of interconnected managerial practices and systems competes for your budget and staff. See the <a href="about.html" style="color: var(--red-500);">About</a> page for the full list. The core tension: every euro and every person you commit to one system is unavailable for others.</p>
+
+    <div class="card-grid card-grid-2">
+      <div class="card">
+        <div class="card-icon-box blue">📊</div>
+        <h3>R&D Portfolio → Launchpad</h3>
+        <p>Fund and manage 25–30 projects across three horizons. When projects complete, prepare innovations through readiness activities, then launch to market. Timing and sequencing matter.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box green">👥</div>
+        <h3>People & Culture</h3>
+        <p>Hire across 13 disciplines, set salaries, shape culture through 10–15 organisational policies. Staff capacity is the hardest constraint — every system draws from the same pool.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box purple">🤝</div>
+        <h3>External Innovation</h3>
+        <p>Alliances (230+ partners), university partnerships, corporate venturing (69 startups), technology scouting, and crowdsourcing. Each extends your reach — but carries risk and cost.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box orange">🌐</div>
+        <h3>Platform, IP & Standards</h3>
+        <p>Grow Vélox+, manage patents and trade secrets, engage with 38 industry standards. Platform amplifies launches. IP protects revenue. Standards gate market access.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>Board Reviews & Performance Tiers</h2>
+    <p class="section-intro">Every year (at Q4), the board conducts a formal appraisal. You're evaluated on three dimensions: financial metrics, innovation metrics, and organisational metrics — simultaneously. Your annual appraisal tier determines budget adjustments and shapes your career trajectory.</p>
+
+    <div class="highlight-box">
+      <h3>The Five Appraisal Tiers</h3>
+      <p style="margin-bottom: 16px; font-size: 14px;">Each tier comes with budget changes, approval changes, and consequences for your tenure at Vélox Dynamics.</p>
+
+      <div class="victory-tier-card tier-1">
+        <div class="tier-header">Outstanding 🌟</div>
+        <div class="tier-score">Headline met + 3/3 strategic objectives achieved</div>
+        <div class="tier-desc">Exceptional performance. The board is genuinely impressed. Budget +15%, new approvals unlocked.</div>
+      </div>
+
+      <div class="victory-tier-card tier-2">
+        <div class="tier-header">Strong ✅</div>
+        <div class="tier-score">Headline met + 2/3 strategic objectives achieved</div>
+        <div class="tier-desc">Solid work. Board pleased, continued support. Budget +10%, some new approvals available.</div>
+      </div>
+
+      <div class="victory-tier-card tier-3">
+        <div class="tier-header">Adequate ⚠️</div>
+        <div class="tier-score">Headline missed + 2/3 strategic objectives achieved</div>
+        <div class="tier-desc">Mixed signals. The board is watching. Budget 0% (no change), limited new approvals.</div>
+      </div>
+
+      <div class="victory-tier-card tier-4">
+        <div class="tier-header">Concerning ⛔</div>
+        <div class="tier-score">Headline missed + 0–1 strategic objectives achieved</div>
+        <div class="tier-desc">Serious questions from the board. Budget -10%, some approvals withdrawn.</div>
+      </div>
+
+      <div class="victory-tier-card tier-5">
+        <div class="tier-header">Critical ❌</div>
+        <div class="tier-score">Headline missed + 0/3 strategic objectives achieved</div>
+        <div class="tier-desc">"This is not what we hired you for." Budget -15%, risk of dismissal.</div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h3>Headline Income Targets</h3>
+      <p style="margin-bottom: 16px;">Your annual targets escalate as Vélox grows. The board expects measurable innovation outcomes alongside commercial results.</p>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-number">€20M</div>
+          <div class="stat-label">Year 1</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">€50M</div>
+          <div class="stat-label">Year 2</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">€90M</div>
+          <div class="stat-label">Year 3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>Strategic Tips for New Players</h2>
+    <p class="section-intro">These insights will help you navigate your first playthrough more effectively.</p>
+
+    <div class="card-grid card-grid-2">
+      <div class="card">
+        <div class="card-icon-box blue">📖</div>
+        <h3>Read the Case Study First</h3>
+        <p>The Vélox Dynamics case study prepares you for the simulation. Without it, you'll treat the game as a resource puzzle rather than a strategic simulation. 20–30 minutes of reading makes a massive difference.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box green">⚖️</div>
+        <h3>Embrace the Tension</h3>
+        <p>The game's core dynamic is the tension between heritage engineering and digital disruption. Don't ignore the Foundation's mission — it's real, it's constraint, and it creates the challenge. How you navigate this tension defines your strategy.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box purple">🎯</div>
+        <h3>Understand Horizon Balance</h3>
+        <p>Invest across all three horizons. Horizon 1 (incremental) delivers near-term revenue. Horizon 2 (adjacent) builds capabilities. Horizon 3 (transformational) creates future opportunities. The board expects balance.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box orange">👥</div>
+        <h3>Manage Your People</h3>
+        <p>Your 67-person R&D organisation is your greatest asset and your greatest vulnerability. High morale enables ambitious projects. Low morale causes key staff to leave. Invest in culture, engagement, and career development.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box red">🎬</div>
+        <h3>Launch Carefully</h3>
+        <p>Too many launches in quick succession cause revenue collapse and brand damage. Plan launches across quarters. Quality over quantity. The Innovation Launchpad guides you through the 5-step process.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-box cyan">🔍</div>
+        <h3>Watch Your Competitors</h3>
+        <p>Ten AI-controlled competitors are pursuing their own strategies. Pay attention to what they're doing. Competitive intelligence is not optional — it's essential for strategic positioning.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>The End-of-Game PDF Scorecard</h2>
+    <p class="section-intro">When your three-year mandate ends, the game generates a comprehensive PDF report — not a simple score screen, but a structured evaluation of your entire CIO tenure.</p>
+
+    <div class="highlight-box">
+      <h3>What It Covers</h3>
+      <p>Performance metrics (board approval, revenue targets, innovation mix), project throughput, portfolio balance (H1/H2/H3), capability development, cultural investment, IP portfolio, external partnerships, commercial impact, and platform ecosystem health. Every dimension is mapped to the <strong>ISO 56001 Innovation Management Standard</strong> (Clauses 4–10). You receive an Innovation Maturity score (0–100), a Legacy Score (A–D), and a detailed narrative of your tenure — providing concrete evidence for reflective essays and class discussion.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>Ready to Play?</h2>
+    <p class="section-intro">You've learned the systems, understood the flow, and grasped the challenge. Now step into the cockpit of Chief Innovation Officer at Vélox Dynamics.</p>
+
+    <div class="cta-buttons">
+      <a href="https://github.com/ammonsalter/The-Disruptor/releases" class="btn-primary">Play The Disruptor →</a>
+      <a href="about.html" class="btn-secondary">Learn More About The Game</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h4>The Disruptor</h4>
+        <p>A corporate entrepreneurship and innovation management simulation for educational use.</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <a href="about.html">About the Game</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

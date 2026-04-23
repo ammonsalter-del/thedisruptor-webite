@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Disruptor — a free, open-source corporate entrepreneurship and innovation management simulation. Step into the CIO role at Vélox Dynamics.">
+  <title>The Disruptor — Corporate Innovation Simulation</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .hero { text-align: center; padding: 48px 24px 32px; max-width: 900px; margin: 0 auto; }
+    .hero img { width: 380px; max-width: 85%; height: auto; margin-bottom: 10px; }
+    .hero-tagline { font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--red-500); margin-bottom: 28px; }
+    .hero-video {
+      position: relative;
+      max-width: 820px;
+      margin: 0 auto 28px;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      background: #000;
+    }
+    .hero-video iframe {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+    }
+    .hero-lede {
+      font-size: 16px; line-height: 1.7; color: var(--text-secondary);
+      max-width: 680px; margin: 0 auto 24px;
+    }
+    .hero-meta { margin-top: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.5px; }
+    .explore-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    @media (max-width: 900px) { .explore-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .explore-grid { grid-template-columns: 1fr; } }
+    .explore-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px;
+      text-decoration: none; color: inherit; transition: all 0.2s;
+    }
+    .explore-card:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(204,41,54,0.15); transform: translateY(-1px); }
+    .explore-card h3 { font-size: 14px; font-weight: 700; margin: 10px 0 4px; color: var(--neutral-900); }
+    .explore-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <button class="nav-toggle" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-to-play.html">How to Play</a>
+      <a href="screenshots.html">Screenshots</a>
+      <a href="case-study.html">The Vélox World</a>
+      <a href="educators.html">For Educators</a>
+      <a href="licence.html">Licence</a>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO: LOGO + VIDEO CENTRAL ═══ -->
+  <div class="hero" style="padding-bottom: 0;">
+    <img src="Logocropped.png" alt="The Disruptor">
+    <div class="hero-tagline">A Corporate Entrepreneurship &amp; Innovation Simulation</div>
+
+    <div class="hero-video" style="margin-bottom: 0;">
+      <iframe src="https://drive.google.com/file/d/13lOUT_Bnb1gzScFCEd5xDB1Yv3f74kk2/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- ═══ INTRO ═══ -->
+  <section style="margin: 20px auto 24px;">
+    <div class="intro-box">
+      <p style="margin: 0 0 14px;">Schumpeter called it the <em>"perennial gale of creative destruction"</em>: the force that builds new industries on the ruins of old ones. Innovation drives that gale. But managing it means making difficult choices under uncertainty.</p>
+      <p style="margin: 0 0 14px;"><strong>What to fund and what to kill.</strong> When to explore and when to exploit. How to build a pipeline of new products, services, and AI-driven solutions while protecting your intellectual property. How to forge alliances, build platforms, tap into crowdsourced ideas, and meet industry standards, all while shaping the organisation and watching competitors who are doing the same.</p>
+      <p style="margin: 0 0 14px;"><strong>Knowing when to give people autonomy to imagine new futures, and when to rein them in.</strong> Nurturing concepts, validating them, and driving them through to commercial sales or operational change. Enlisting employees, exciting customers, building capabilities that competitors cannot easily imitate — under a board that sets ambitious goals.</p>
+      <p style="margin: 0 0 14px;"><strong>This simulation will challenge you.</strong> You will need to create and capture value using every tool you have, making trade-offs between competing goals where discipline matters just as much as creativity.</p>
+      <p style="margin: 0;">Get it right and you reshape an industry. Get it wrong and the gale sweeps you away. <em>Can you shape the future?</em></p>
+    </div>
+  </section>
+
+  <!-- ═══ CALL TO ACTION ═══ -->
+  <div class="hero" style="padding-top: 0;">
+    <p class="hero-lede">Step into the cockpit of Chief Innovation Officer at Vélox Dynamics. Make the trade-offs. Watch the consequences unfold.</p>
+    <a href="https://github.com/ammonsalter/The-Disruptor/releases" class="btn-primary">Take the Helm →</a>
+    <div class="hero-meta">Free · Open Source · No Installation · Works Offline</div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══ EXPLORE ═══ -->
+  <section>
+    <h2>Explore</h2>
+    <p class="section-intro">The rest of the site sits behind these four links.</p>
+    <div class="explore-grid">
+      <a href="about.html" class="explore-card">
+        <div class="card-icon-box blue">🏢</div>
+        <h3>About the Game</h3>
+        <p>The experience, managerial practices, game modes, and the end-of-game scorecard.</p>
+      </a>
+      <a href="how-to-play.html" class="explore-card">
+        <div class="card-icon-box green">🎮</div>
+        <h3>How to Play</h3>
+        <p>Quick start, tutorials, how time flows, and board reviews.</p>
+      </a>
+      <a href="educators.html" class="explore-card">
+        <div class="card-icon-box cyan">🎓</div>
+        <h3>For Educators</h3>
+        <p>Teaching pack, the Incubator, and ways to use the game in your course.</p>
+      </a>
+      <a href="licence.html" class="explore-card">
+        <div class="card-icon-box red">📜</div>
+        <h3>Licence</h3>
+        <p>CC BY-NC-SA 4.0. Educational use is free; commercial use needs a separate licence.</p>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h4>The Disruptor</h4>
+        <p>A corporate entrepreneurship and innovation management simulation for educational use.</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <a href="about.html">About the Game</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('active');
+    });
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => { menuBtn.setAttribute('aria-expanded', 'false'); mobileMenu.classList.remove('active'); });
+    });
+  </script>
+</body>
+</html>
