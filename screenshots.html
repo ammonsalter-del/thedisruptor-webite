@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Screenshots from The Disruptor — with short captions so you can tell at a glance what each screen does.">
+  <title>Screenshots — The Disruptor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .shot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 768px) {
+      .shot-grid { grid-template-columns: 1fr; }
+    }
+    .shot {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .shot img {
+      width: 100%;
+      display: block;
+      background: var(--neutral-100);
+      border-bottom: 1px solid var(--border);
+    }
+    .shot-caption {
+      padding: 12px 16px 14px;
+    }
+    .shot-caption h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin: 0 0 4px;
+    }
+    .shot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .wild-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
+      gap: 22px;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .wild-card { max-width: 360px; margin: 0 auto; }
+    .wild-question { font-size: 17px; line-height: 1.45; }
+    .wild-hint {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin: 0 auto;
+      max-width: 560px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html" class="active">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <button class="nav-toggle" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-to-play.html">How to Play</a>
+      <a href="screenshots.html" class="active">Screenshots</a>
+      <a href="case-study.html">The Vélox World</a>
+      <a href="educators.html">For Educators</a>
+      <a href="licence.html">Licence</a>
+    </div>
+  </nav>
+
+  <section>
+    <h1>Screenshots</h1>
+    <p class="page-intro" style="max-width: 780px;">A quick walk around the game — from the opening screens where the CIO arrives at Vélox, through the Message Cockpit where most decisions are made, out to the managerial practices and systems that fill the rest of the interface.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>Game Introduction</h2>
+    <p class="section-intro">The first few screens the player sees on day one.</p>
+    <div class="shot-grid">
+      <figure class="shot">
+        <img src="screenshot-version-choice.png" alt="Version and mode choice">
+        <figcaption class="shot-caption">
+          <h4>Pick your mode</h4>
+          <p>Forge, Pivot, Jugaad or Gauntlet — plus Incubator for teaching.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-welcome-pack.png" alt="Welcome pack">
+        <figcaption class="shot-caption">
+          <h4>Welcome pack</h4>
+          <p>The CIO's first briefing — tone, remit and what matters most.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-corporate-website.png" alt="Vélox corporate website">
+        <figcaption class="shot-caption">
+          <h4>Vélox corporate site</h4>
+          <p>A short tour of the fictional firm you've just joined.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-case-study.png" alt="In-game case study">
+        <figcaption class="shot-caption">
+          <h4>The case study</h4>
+          <p>Governance, the Foundation, products and the strategic context — as an in-game PDF.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-board-objectives.png" alt="Board objectives">
+        <figcaption class="shot-caption">
+          <h4>Board objectives</h4>
+          <p>The targets the board expects you to deliver this year.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>Message Cockpit</h2>
+    <p class="section-intro">The centre of the game — where the CIO reads, decides and acts.</p>
+    <div class="shot-grid">
+      <figure class="shot">
+        <img src="screenshot-message-cockpit.png" alt="Message cockpit">
+        <figcaption class="shot-caption">
+          <h4>Message Cockpit</h4>
+          <p>A live feed of proposals, events, warnings and decisions — the primary working surface.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-network-cockpit.png" alt="Capability and product network">
+        <figcaption class="shot-caption">
+          <h4>Capability &amp; product network</h4>
+          <p>A living map of what Vélox knows and what it sells, rebuilding as the firm evolves.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>Managerial Practices &amp; Systems</h2>
+    <p class="section-intro">Each screen below is a lever the CIO pulls — strategy, launch, people, IP, platform, investing, culture and competition.</p>
+    <div class="shot-grid">
+      <figure class="shot">
+        <img src="screenshot-innovation-strategy.png" alt="Innovation strategy">
+        <figcaption class="shot-caption">
+          <h4>Innovation strategy</h4>
+          <p>Set horizon ambition, risk appetite and the bets the board will hold you to.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-innovation-launchpad.png" alt="Innovation launchpad">
+        <figcaption class="shot-caption">
+          <h4>Innovation Launchpad</h4>
+          <p>Prepare products, processes, and services for launch, choose the timing of launch, and watch for overload.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-platform.png" alt="Platform">
+        <figcaption class="shot-caption">
+          <h4>Vélox+ platform</h4>
+          <p>Tune openness, payments and data sharing with complementors.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-ip-management.png" alt="IP management">
+        <figcaption class="shot-caption">
+          <h4>IP management</h4>
+          <p>Patent, keep as trade secret, or publish — and pick your enforcement and licensing stance.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-staffing.png" alt="Staffing">
+        <figcaption class="shot-caption">
+          <h4>Staffing</h4>
+          <p>Hire across disciplines and seniorities; decide who you cannot afford to lose.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-pulse-check.png" alt="Pulse check">
+        <figcaption class="shot-caption">
+          <h4>PulseCheck</h4>
+          <p>Team engagement, workload and morale — the early warning on people.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-corporate-venturing.png" alt="Corporate venturing">
+        <figcaption class="shot-caption">
+          <h4>Corporate venturing</h4>
+          <p>Scan start-ups, make minority investments, co-invest with Kinetics or go alone.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-competitors.png" alt="Competitors">
+        <figcaption class="shot-caption">
+          <h4>Competitors</h4>
+          <p>Track rival moves, see how you are doing in various markets, and decide when to match or leapfrog.</p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="screenshot-purpose.png" alt="Purpose">
+        <figcaption class="shot-caption">
+          <h4>Purpose</h4>
+          <p>Your progress towards achieving the Foundation's mission — the north star the board measures you against.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>The Disruptor Sightings</h2>
+    <p class="section-intro"><em class="wild-question">Where can you take The Disruptor?</em></p>
+
+    <div class="wild-grid">
+      <figure class="shot wild-card">
+        <img src="wild-01-genova-airport.jpg" alt="The Disruptor played on a laptop at Genova airport, with a Wizz Air aircraft and mountains visible through the window">
+        <figcaption class="shot-caption">
+          <p>Airport in Genova, Italy, Federico Bignone.</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="wild-hint">Please send your photos and I will add it here. Email me at <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a> or DM me on LinkedIn.</p>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h4>The Disruptor</h4>
+        <p>A corporate entrepreneurship and innovation management simulation for educational use.</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <a href="about.html">About the Game</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
