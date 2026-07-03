@@ -47,52 +47,8 @@
     .modal-sub { font-size: 13px; color: var(--text-secondary); }
     .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--neutral-400); padding: 0; line-height: 1; }
     .modal-body { font-size: 14px; line-height: 1.7; color: var(--text-secondary); }
-
-    /* ── Educator's Pack — AI Assistant featured cards ── */
-    .pack-section-h { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--neutral-700); margin-top: 32px; margin-bottom: 6px; }
-    .pack-section-h:first-of-type { margin-top: 8px; }
-    .pack-section-intro { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; max-width: 720px; line-height: 1.6; }
-
-    .ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 8px; }
-    @media (max-width: 720px) { .ai-grid { grid-template-columns: 1fr; } }
-
-    .ai-card {
-      background: var(--bg-card);
-      border: 1px solid var(--neutral-200);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex;
-      flex-direction: column;
-    }
-    .ai-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    }
-    .ai-hero {
-      width: 100%;
-      aspect-ratio: 600 / 220;
-      display: block;
-    }
-    .ai-hero svg { width: 100%; height: 100%; display: block; }
-    .ai-body { padding: 20px 22px 22px; }
-    .ai-tag {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 3px 10px;
-      border-radius: 6px;
-      margin-bottom: 10px;
-    }
-    .ai-tag.faculty { background: var(--red-50); color: var(--red-700); }
-    .ai-tag.public { background: #fef3f0; color: #b45309; }
-    .ai-card h3 { font-size: 18px; font-weight: 800; color: var(--neutral-900); margin-bottom: 6px; letter-spacing: -0.2px; }
-    .ai-card .ai-byline { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
-    .ai-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 0; }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -121,7 +77,7 @@
       <a href="screenshots.html">Screenshots</a>
       <a href="case-study.html">The Vélox World</a>
       <a href="educators.html" class="active">For Educators</a>
-      <a href="licence.html">Licence</a>
+        <a href="licence.html">Licence</a>
     </div>
   </nav>
 
@@ -296,7 +252,7 @@
 
   <section>
     <h2>The Pantheon of Innovation</h2>
-    <p class="section-intro">The Pantheon of Innovation is a feature of the game that surfaces the ideas underpinning each system. When a player faces a strategic dilemma, a relevant scholar appears with a short insight drawn from the research. The Pantheon is a library of key innovation thinkers, including their biographies and some of their contributions — giving a direct route from gameplay into the literature that has shaped the field, and a chance to learn about the people whose work built it. The Pantheon features 40 scholars — past and present — whose ideas underpin the game, including Joseph Schumpeter, Edith Penrose, Richard Nelson, Chris Freeman, Giovanni Dosi, Carlota Perez, Eric von Hippel, Keith Pavitt, Nathan Rosenberg, Sidney Winter, David Teece and many others.</p>
+    <p class="section-intro">The Pantheon of Innovation is a feature of the game that surfaces the ideas underpinning each system. When a player faces a strategic dilemma, a relevant scholar appears with a short insight drawn from the research. Players can also browse the full gallery at any time — a library of innovation thinkers, their biographies, and their contributions — giving a direct route from gameplay into the literature that has shaped the field, and a chance to learn about the people whose work built it.</p>
   </section>
 
   <hr class="section-divider">
@@ -373,7 +329,7 @@
 
     <div class="highlight-box" style="margin-top: 20px;">
       <h3>Onboarding students - some practical tips</h3>
-      <p>Students may find the simulation challenging at first - that is by design. No one just walks in off the street and starts to be an effective CIO. Like Football Manager, novice players may struggle. There are four ways to help: 1) try to encoruage them to see the simulation as a 'safe space' where failure is part of the process of learning, 2) reading the tutorials is very helpful to gain a sense of the game's featuers and operating logic, 3) require them study the case (or at least the key facts and website) before starting to gain a better understanding of the company and its industry context, 4) pair a gamer with a non-gamer, as experienced gamers (especially in simulations) will learn more quickly how to play and can share their experience. This can also encourage a more social learning experience. </p>
+      <p>Students may find the simulation challenging at first - that is by design. No one just walks in off the street and starts to be an effective CIO. Like Football Manager, novice players may struggle. There are three ways to help: 1) try to encoruage them to see the simulation as a 'safe space' where failure is part of the process of learning, 2) require them read the case (or at least the key facts and website) before starting to gain a better understanding of the company and its industry context, 3) pair a gamer with a non-gamer, as experienced gamers (especially in simulations) will learn more quickly how to play and can share their experience. This can also encourage a more social learning experience. </p>
     </div> 
     
   </section>
@@ -381,154 +337,31 @@
   <hr class="section-divider">
 
   <section>
-    <h2>The Educator's Pack</h2>
-    <p class="section-intro">A complete, open-source teaching package — twelve purpose-built resources covering preparation, assessment, student materials, and AI-powered support. Use one piece, several, or the whole set; the pack is built to flex around your course rather than the other way around. Free in non-commercial educational settings under CC BY-NC-SA 4.0.</p>
+    <h2>Teaching Pack</h2>
+    <p class="section-intro">A purpose-built teaching pack is available to lecturers and educators on request.</p>
 
-    <h3 class="pack-section-h">AI assistants</h3>
-    <p class="pack-section-intro">Two AI assistants, hosted on Google's NotebookLM, trained on the project's open-source teaching materials. Ask any question in plain English; every answer cites the source it came from.</p>
-
-    <div class="ai-grid">
-      <div class="ai-card">
-        <div class="ai-hero">
-          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <defs>
-              <linearGradient id="edu-grad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#cc2936"/>
-                <stop offset="100%" stop-color="#7f1d1d"/>
-              </linearGradient>
-              <radialGradient id="edu-glow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18"/>
-                <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <rect width="600" height="220" fill="url(#edu-grad)"/>
-            <circle cx="300" cy="110" r="200" fill="url(#edu-glow)"/>
-            <circle cx="80" cy="50" r="3" fill="white" opacity="0.55"/>
-            <circle cx="540" cy="170" r="4" fill="white" opacity="0.4"/>
-            <circle cx="540" cy="40" r="2" fill="white" opacity="0.6"/>
-            <circle cx="60" cy="180" r="3" fill="white" opacity="0.35"/>
-            <circle cx="490" cy="80" r="2" fill="white" opacity="0.5"/>
-            <g transform="translate(170 50)">
-              <path d="M 0 25 Q 0 0 25 0 H 235 Q 260 0 260 25 V 95 Q 260 120 235 120 H 90 L 60 145 V 120 H 25 Q 0 120 0 95 Z" fill="white"/>
-              <g transform="translate(130 60)">
-                <path d="M 0 -28 L 9 -9 L 28 0 L 9 9 L 0 28 L -9 9 L -28 0 L -9 -9 Z" fill="#cc2936"/>
-                <circle cx="24" cy="-24" r="4" fill="#cc2936"/>
-                <circle cx="-26" cy="22" r="3" fill="#cc2936" opacity="0.5"/>
-                <circle cx="28" cy="20" r="2.5" fill="#cc2936" opacity="0.7"/>
-              </g>
-            </g>
-          </svg>
-        </div>
-        <div class="ai-body">
-          <span class="ai-tag faculty">Faculty only</span>
-          <h3>The Educator's AI Assistant</h3>
-          <div class="ai-byline">Includes blog posts, slide decks, infographics, and a mindmap</div>
-          <p>An AI assistant trained on the project's teaching materials. Ask about class plans, system-by-system detail, deployment patterns, debrief questions, or game-mode guidance. Distributed via request to protect assessment integrity. <a href="mailto:ammon.salter@wbs.ac.uk?subject=Request%20access%20to%20Educator%27s%20AI%20Assistant" style="color: var(--red-500); font-weight: 600;">Email for access</a>.</p>
-        </div>
-      </div>
-
-      <div class="ai-card">
-        <div class="ai-hero">
-          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <defs>
-              <linearGradient id="play-grad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#e8626e"/>
-                <stop offset="100%" stop-color="#b91c1c"/>
-              </linearGradient>
-              <radialGradient id="play-glow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22"/>
-                <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <rect width="600" height="220" fill="url(#play-grad)"/>
-            <circle cx="300" cy="110" r="200" fill="url(#play-glow)"/>
-            <circle cx="60" cy="60" r="4" fill="white" opacity="0.45"/>
-            <circle cx="540" cy="160" r="3" fill="white" opacity="0.55"/>
-            <circle cx="80" cy="180" r="2" fill="white" opacity="0.6"/>
-            <circle cx="510" cy="50" r="3" fill="white" opacity="0.4"/>
-            <circle cx="500" cy="190" r="2" fill="white" opacity="0.45"/>
-            <g transform="translate(170 50)">
-              <path d="M 0 25 Q 0 0 25 0 H 235 Q 260 0 260 25 V 95 Q 260 120 235 120 H 90 L 60 145 V 120 H 25 Q 0 120 0 95 Z" fill="white"/>
-              <g transform="translate(130 60)">
-                <circle cx="-30" cy="0" r="7" fill="#cc2936"/>
-                <circle cx="0" cy="0" r="7" fill="#cc2936" opacity="0.7"/>
-                <circle cx="30" cy="0" r="7" fill="#cc2936" opacity="0.4"/>
-              </g>
-            </g>
-          </svg>
-        </div>
-        <div class="ai-body">
-          <span class="ai-tag public">Publicly shareable</span>
-          <h3>The Player's AI Assistant</h3>
-          <div class="ai-byline">A spoiler-free helper for students playing the game</div>
-          <p>An AI assistant for players that helps them understand the game while they play. Specific scoring, point thresholds, and end-of-tenure outcomes are deliberately stripped — players discover the rest through play. Free, no account required beyond Google sign-in. <a href="https://notebooklm.google.com/notebook/1576a3ca-932a-4b2e-a6b2-f4908680b1cd" target="_blank" style="color: var(--red-500); font-weight: 600;">Open the assistant</a>.</p>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="pack-section-h">Reference materials for educators</h3>
-    <div class="card-grid card-grid-2">
+    <div class="card-grid card-grid-2" style="margin-bottom: 24px;">
       <div class="card">
-        <h3>The Educator's Companion</h3>
-        <p>A 38-page system-by-system almanac of every modal, every strategy card, the five game modes, and the end-of-tenure final review. The single most comprehensive reference — built directly from the game's underlying code so the descriptions are accurate. Educators preparing classes around specific innovation systems start here.</p>
-      </div>
-      <div class="card">
-        <h3>Teaching with The Disruptor</h3>
-        <p>The pedagogical guide. Covers deployment formats from Quick Play to full semester integration, the Incubator's progressive unlock, suggested discussion threads, and ready-made debrief questions organised by topic. Written for educators who have not played the game themselves.</p>
-      </div>
-      <div class="card">
-        <h3>Lecturer Fact Sheet</h3>
-        <p>One-page brief for quick orientation. The simulation in 60 seconds, the three core deployment patterns, and the three things students get out of it. Useful when introducing the project to colleagues, programme directors, or external examiners.</p>
-      </div>
-      <div class="card">
-        <h3>Game Mechanics Reference</h3>
-        <p>Neutral, technical descriptions of how the simulation's systems work under the hood. Deeper than the Companion on mechanics, lighter on framing — useful when a specific behaviour puzzles you and you want to know why.</p>
-      </div>
-    </div>
-
-    <h3 class="pack-section-h">Assessment</h3>
-    <div class="card-grid card-grid-2">
-      <div class="card">
-        <h3>Assignment Bank with Rubrics</h3>
-        <p>Seven ready-to-use assignments with detailed marking criteria — open-innovation audits, reflective journals, strategic analyses, board-presentation decks, and more. Each rubric is mapped to QAA Master's Level 7 outcomes. Drop one into your module assessment with minimal adaptation.</p>
+        <h3>Teaching Note</h3>
+        <p>Educator guide covering deployment formats, the Incubator unlock system, debrief questions, and suggested discussion threads for each system of the game.</p>
       </div>
       <div class="card">
         <h3>Exam Question Bank</h3>
-        <p>Multiple choice, short answer, and essay questions pitched at Master's level. Each question is tied to a specific game modal and to the Vélox Dynamics case, so you can pick questions that match the systems you have emphasised in class.</p>
-      </div>
-    </div>
-
-    <h3 class="pack-section-h">Materials for students</h3>
-    <div class="card-grid card-grid-3">
-      <div class="card">
-        <h3>The Player's Companion</h3>
-        <p>A 30-page game guide written for students, with specific scoring and end-of-tenure mechanics deliberately stripped. The companion to the Player's AI Assistant.</p>
-      </div>
-      <div class="card">
-        <h3>Welcome Pack</h3>
-        <p>Vélox Dynamics case briefing — the firm, its world, and the role students step into. Designed to be read before play.</p>
+        <p>A set of exam questions pitched at Master's level, mapped to the game's systems and to the Vélox case study.</p>
       </div>
       <div class="card">
         <h3>Student Onboarding Sheet</h3>
-        <p>One-page handout covering the first hour of play, the dashboard, and what to expect. Gets students playing without a lengthy briefing.</p>
+        <p>One-page student handout covering the game's core concepts, the CIO role, and what to expect. Designed to get students playing without a lengthy briefing.</p>
       </div>
-    </div>
-
-    <h3 class="pack-section-h">Starter resources</h3>
-    <div class="card-grid card-grid-2">
       <div class="card">
         <h3>In-Class Introduction Presentation</h3>
-        <p>Slide deck for introducing the simulation in class — the setting, the CIO role, and how the session will run. Drop straight into your existing module deck.</p>
-      </div>
-      <div class="card">
-        <h3>Starter Pack</h3>
-        <p>Mini-files for educators new to The Disruptor, including a low-cost adoption guide, advice for non-gamers, and rapid onboarding approaches. The shortest path from "interested" to "running it next week".</p>
+        <p>Slide deck for introducing the simulation in class — the setting, the CIO role, and how the session will run.</p>
       </div>
     </div>
 
-    <div class="highlight-box" style="margin-top: 32px;">
-      <h3 style="font-size: 14px;">Request the Educator's Pack</h3>
-      <p>The full pack is free to use in non-commercial educational settings under CC BY-NC-SA 4.0. <a href="mailto:ammon.salter@wbs.ac.uk?subject=Request%20The%20Educator%27s%20Pack">Email a request here</a> — include your institution and the course you teach, and you will receive the full set of materials plus access to the Educator's AI Assistant.</p>
+    <div class="highlight-box">
+      <h3 style="font-size: 14px;">Request the Teaching Pack</h3>
+      <p>The teaching pack is free to use in non-commercial educational settings under CC BY-NC-SA 4.0. <a href="mailto:ammon.salter@wbs.ac.uk">Email a request here</a>.</p>
     </div>
 
     <div class="highlight-box" style="margin-top: 16px;">
@@ -605,13 +438,11 @@
       <p>Full terms and the commercial-licence request process: <a href="licence.html" style="color: var(--red-500); font-weight: 600;">see the Licence page</a>.</p>
     </div>
 
-    <hr class="section-divider">
-    ﻿<div class="highlight-box">
-  <p><strong>Suggested citation:</strong></p>
-  <p>Salter, A. (2026). <em>The Disruptor: An Innovation Management and Corporate Entrepreneurship Simulation</em> (Version 1.0.0) [Software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.20141142">https://doi.org/10.5281/zenodo.20141142</a>. Licensed under CC BY-NC-SA 4.0.</p>
-</div>
-</section>
-
+    <div class="highlight-box">
+      <p><strong>Suggested citation:</strong></p>
+      <p>Salter, A. (2026). <em>The Disruptor: A Corporate Entrepreneurship &amp; Innovation Simulation</em> (Version 1). Warwick Business School, University of Warwick. Licensed under CC BY-NC-SA 4.0.</p>
+    </div>
+  </section>
 
   <hr class="section-divider">
 
@@ -643,6 +474,12 @@
       <div>
         <h4>Contact</h4>
         <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
+      </div>
+      <div style="grid-column: 1 / -1; text-align: center;">
+        <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3em; font-weight: 500;">The Innovation and Entrepreneurship Playbook</h4>
+        <img src="playbook.jpg" alt="The Disruptor, The Slingshot and Build, Bin, Boost posters framed on a wall" style="max-width: 480px; width: 100%; border-radius: 8px; display: block; margin: 0 auto 12px;">
+        <p style="max-width: 560px; margin: 0 auto 10px;">The Disruptor is part of a family of free, open source educational simulations and tools in innovation and entrepreneurship. Subscribe for the latest developments, educator's packs, and stories from the educators using the games.</p>
+        <iframe src="https://ieplaybook.substack.com/embed" width="100%" height="150" style="max-width:480px; border:1px solid #eee; background:white; border-radius:6px;" frameborder="0" scrolling="no" title="Subscribe to the Innovation and Entrepreneurship Playbook"></iframe>
       </div>
     </div>
     <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</div>
