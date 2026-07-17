@@ -1,0 +1,26 @@
+# The Disruptor
+
+> The Disruptor is a free, open-source simulation of running the innovation portfolio of a company, built for teaching corporate entrepreneurship and innovation management. The player takes the role of Chief Innovation Officer (CIO) and makes consequential decisions under uncertainty across a three-year tenure. It runs in the browser with nothing to install, no account and no data collected; a full run takes about an hour once you know the rhythm, a little longer the first time. It was created by Ammon Salter (Warwick Business School, University of Warwick) and built through AI-assisted development.
+
+The player arrives as the new CIO of Vélox Dynamics, a fictional Belgian fitness-equipment company trying to reinvent itself. Each week, decisions arrive in a central cockpit — project proposals, events, warnings, staff requests, competitor moves, board nudges — and their consequences work back through the firm. The role spans a connected set of managerial practices rather than a string of isolated frameworks: setting innovation strategy, running an R&D portfolio across three horizons, launching innovations, building and leading teams, shaping organisation and culture, negotiating alliances and open innovation, running a platform, managing intellectual property, scouting the outside world, working with universities, investing in start-ups, crowdsourcing ideas, engaging with standards, chasing grants, and responding to competitors. The systems interact, so there is no single winning strategy; causal ambiguity is a deliberate design goal, and the same approach produces different outcomes on different playthroughs.
+
+The simulation is grounded in innovation and corporate entrepreneurship research. Around twenty-five concepts from the literature are embedded in its systems — including absorptive capacity, organisational ambidexterity, appropriability and value capture, creative destruction, diffusion of innovations, dominant design, dynamic capabilities, systems of innovation, open innovation, path dependence, platform strategy, structural holes and VRIN resources — and a Pantheon of real innovation scholars surfaces the relevant idea in context as players face each dilemma. Students experience these concepts through decisions rather than reading about them.
+
+Four play modes suit different teaching purposes: Forge (the standard, full experience), Pivot (move the company into a new sector), Jugaad (frugal innovation under a tight budget) and Gauntlet (a very hard challenge for experienced players). A teaching variant, the Incubator, lets an educator unlock the game's systems progressively at the pace of a syllabus, with gentler pressure for first-time players. Three short arcade mini-games sit inside the simulation. A run ends with a multi-page scorecard mapped to the ISO 56001 innovation management standard — an Innovation Maturity score, a Legacy grade, and a narrative of the tenure — plus a 3-Year CIO Performance Review PDF used for reflective essays and class discussion. The game is free under a Creative Commons BY-NC-SA 4.0 licence, with no accounts and no student data collected. A free educator pack (a teaching note with deployment formats and debrief prompts, an exam question bank, a student onboarding sheet, an introduction slide deck, and the Vélox Dynamics teaching case) is available on request from ammon.salter@wbs.ac.uk.
+
+## Play
+
+- [Play The Disruptor](https://ammonsalter-del.github.io/thedisruptor-sim/): the game itself, in the browser, free.
+
+## For educators
+
+- [For Educators](https://disruptorsim.org/educators.html): who the game is for, learning objectives, the concepts it teaches, the Incubator teaching mode, six ways to use it in class, and how to request the free educator pack.
+- [How to Play](https://disruptorsim.org/how-to-play.html): quick start, tutorials, how time flows, and board reviews.
+- [The Vélox World](https://disruptorsim.org/case-study.html): the teaching case study behind the game's fictional company and industry setting.
+
+## Background
+
+- [About](https://disruptorsim.org/about.html): what the game is, the experience, the managerial practices and systems, the game modes, and the end-of-game scorecard.
+- [Licence](https://disruptorsim.org/licence.html): CC BY-NC-SA 4.0 — educational use is free; commercial use needs a separate licence.
+- [Source code](https://github.com/ammonsalter-del/thedisruptor-sim): the open-source repository.
+- [Archived release](https://doi.org/10.5281/zenodo.20141142): Salter, A. (2026). The Disruptor: An Innovation Management and Corporate Entrepreneurship Simulation (Version 1.0.0) [Software]. Zenodo.
