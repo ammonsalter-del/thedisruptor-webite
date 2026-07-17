@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Security and privacy statement for The Disruptor — what data the game does and does not collect, GDPR position, and how to report a vulnerability.">
+  <title>Security &amp; Privacy — The Disruptor</title>
+
+  <!-- SEO: canonical + social preview -->
+  <link rel="canonical" href="https://disruptorsim.org/security.html">
+  <meta property="og:site_name" content="The Disruptor">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://disruptorsim.org/security.html">
+  <meta property="og:title" content="Security &amp; Privacy — The Disruptor">
+  <meta property="og:description" content="Security and privacy statement for The Disruptor — what data the game does and does not collect, GDPR position, and how to report a vulnerability.">
+  <meta property="og:image" content="https://disruptorsim.org/infographic.png">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Security &amp; Privacy — The Disruptor">
+  <meta name="twitter:description" content="Security and privacy statement for The Disruptor — what data the game does and does not collect, GDPR position, and how to report a vulnerability.">
+  <meta name="twitter:image" content="https://disruptorsim.org/infographic.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .sec-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 26px;
+      margin-bottom: 18px;
+    }
+    .sec-panel h3 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #0D7377;
+      margin-bottom: 12px;
+    }
+    .sec-panel p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 12px; }
+    .sec-panel p:last-child { margin-bottom: 0; }
+    .sec-panel ul { margin: 8px 0 12px 22px; font-size: 14px; line-height: 1.8; color: var(--text-secondary); }
+    .sec-hero {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .sec-hero strong { font-size: 16px; color: #166534; }
+    .sec-hero p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin: 8px 0 0; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <button class="nav-toggle" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-to-play.html">How to Play</a>
+      <a href="screenshots.html">Screenshots</a>
+      <a href="case-study.html">The Vélox World</a>
+      <a href="educators.html">For Educators</a>
+      <a href="licence.html">Licence</a>
+    </div>
+  </nav>
+
+  <section>
+    <h1>Security &amp; Privacy</h1>
+    <p class="page-intro">Written for the people who get asked "is this safe to use in class?" — educators, IT reviewers, and data protection teams. The short version: The Disruptor collects no personal data at all, and every claim on this page can be verified by reading the source code.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <div class="sec-hero">
+      <strong>No personal data is processed.</strong>
+      <p>The Disruptor is a single HTML file that runs entirely in the player's browser. No accounts, no logins, no cookies, no analytics, no tracking, and no data transmitted to game servers — there are none. Game state exists only in the player's browser and vanishes with the tab.</p>
+    </div>
+
+    <div class="sec-panel">
+      <h3>For university IT and data protection teams</h3>
+      <ul>
+        <li><b>No personal data collected.</b> No names, email addresses, student numbers, or accounts. Under GDPR there is nothing to assess: no consent banner, DPIA, or processor agreement is needed.</li>
+        <li><b>No cookies or tracking.</b> The game and this website set no cookies and run no analytics or advertising trackers.</li>
+        <li><b>No integration with university systems.</b> No LMS connection, no student authentication, no licences to procure. Students simply open a web page.</li>
+        <li><b>Fully auditable.</b> The complete source code is open source and public on GitHub, so every claim here can be checked by inspection.</li>
+        <li><b>Offline option.</b> Institutions preferring zero network activity can download the HTML file and run it locally or from their own servers.</li>
+      </ul>
+    </div>
+
+    <div class="sec-panel">
+      <h3>The CEO reflection tool (Katrien)</h3>
+      <p>The game links to an optional reflection tool built on Claude artefacts, in which players can discuss their end-of-game report with the fictional CEO. Using it requires a free Claude account, and the player chooses to upload their own report PDF to Claude (Anthropic) — in the same way they might paste text into any AI assistant. The game itself transmits nothing, and the tool is entirely skippable.</p>
+    </div>
+
+    <div class="sec-panel">
+      <h3>Security practices</h3>
+      <p>The project repository has GitHub's security features enabled, including private vulnerability reporting, secret scanning, and code scanning. The account is protected with two-factor authentication and the site is served over enforced HTTPS.</p>
+    </div>
+
+    <div class="sec-panel">
+      <h3>Reporting a vulnerability</h3>
+      <p>If you find a security issue, please report it responsibly to <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a> rather than opening a public issue. We will acknowledge receipt within 7 days and aim to address confirmed vulnerabilities promptly. The full security policy is published in the project repository.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h4>The Disruptor</h4>
+        <p>A corporate entrepreneurship and innovation management simulation for educational use.</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <a href="about.html">About the Game</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="licence.html">Licence</a>
+        <a href="security.html">Security &amp; Privacy</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
