@@ -135,6 +135,16 @@
     }
     .callout h3 { font-size: 14px; font-weight: 700; color: var(--neutral-900); margin-bottom: 6px; }
     .callout p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+    .creator-header { display: flex; gap: 24px; align-items: center; margin-bottom: 20px; }
+    .creator-header figure { flex-shrink: 0; margin: 0; }
+    .creator-header img { width: 300px; border-radius: 10px; border: 1px solid var(--border); display: block; }
+    .creator-header figcaption { font-size: 11px; color: var(--text-muted); margin-top: 6px; font-style: italic; text-align: center; max-width: 300px; }
+    @media (max-width: 640px) {
+      .creator-header { flex-direction: column; align-items: center; text-align: center; }
+      .creator-header img { width: 100%; max-width: 360px; }
+      .creator-header figcaption { max-width: 360px; }
+    }
   </style>
 </head>
 <body>
@@ -363,9 +373,17 @@
     <!-- ═══ CREATOR & DEVELOPER ═══ -->
     <section style="margin: 32px auto;">
       <div style="background: linear-gradient(135deg, #ffffff 0%, #fef7f7 100%); border: 1px solid var(--border); border-left: 4px solid var(--red-500); border-radius: 14px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(204,41,54,0.06);">
-        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--red-500); letter-spacing: 1.5px; margin-bottom: 10px;">Creator &amp; Lead Designer</div>
-        <h2 style="font-size: 30px; font-weight: 800; color: var(--neutral-900); margin: 0 0 4px; letter-spacing: -0.5px;">Ammon Salter</h2>
-        <p style="font-size: 15px; color: var(--text-secondary); margin: 0 0 20px;">Warwick Business School, University of Warwick</p>
+        <div class="creator-header">
+          <figure>
+            <img src="SalterFounder.jpg" alt="Ammon Salter with Liesbeth Van Marcke, founder of Vélox Dynamics">
+            <figcaption>Ammon Salter with Liesbeth Van Marcke, founder of Vélox Dynamics</figcaption>
+          </figure>
+          <div>
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--red-500); letter-spacing: 1.5px; margin-bottom: 10px;">Creator &amp; Lead Designer</div>
+            <h2 style="font-size: 30px; font-weight: 800; color: var(--neutral-900); margin: 0 0 4px; letter-spacing: -0.5px;">Ammon Salter</h2>
+            <p style="font-size: 15px; color: var(--text-secondary); margin: 0;">Warwick Business School, University of Warwick</p>
+          </div>
+        </div>
 
         <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 20px;">
           <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1.2px; margin-right: 4px;">built with</span>
@@ -375,7 +393,7 @@
           <span style="display: inline-flex; align-items: baseline; gap: 6px; background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 14px;"><strong>Gemini</strong><span style="color: var(--text-secondary);">— Google</span><span style="color: var(--text-muted); font-size: 12px;">· images &amp; content</span></span>
         </div>
 
-        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin: 0;">The Disruptor was built through sustained iteration. Most of the work was done in conversation with Claude — drafting, testing and reshaping the design, writing and rewriting the code, and working through bugs loop by loop. Codex helped build the mini-games. GPT-5 and Gemini contributed on content and images. The game reflects my attempt to build a living textbook, drawn from years of playing simulations myself.</p>
+        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin: 0;">The Disruptor was built through sustained iteration with generative AI. Most of the work was done in conversation with different Claude models — drafting, testing and reshaping the design, writing and rewriting the content and code, and working through design issues and bugs loop by loop, adding features slowly and carefully, and ensuring the flow of the game worked for human players. Codex helped build the mini-games. GPT-5 and Gemini contributed on content and images. It takes a village of LLMs to build an educational simulation, but human attention is still required to design the systems, to ensure the quality of content, to judge the playing experience, and to inject some humour, joy and personality. The game reflects my attempt to translate years of research and teaching into play, drawn from a lifetime of playing games myself.</p>
       </div>
     </section>
 
