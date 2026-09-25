@@ -1,67 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Sitemap for disruptorsim.org.
-  Upload to the site root so it resolves at https://disruptorsim.org/sitemap.xml,
-  keep the Sitemap: line in robots.txt, then submit it in Google Search Console
-  and Bing Webmaster Tools.
-  Update <lastmod> when a page changes. Add the /play entry once the game is
-  hosted on this domain (see SEO-deployment-checklist.md).
--->
 <urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">
   <url>
     <loc>https://disruptorsim.org/</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://disruptorsim.org/about.html</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://disruptorsim.org/educators.html</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://disruptorsim.org/how-to-play.html</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://disruptorsim.org/case-study.html</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://disruptorsim.org/screenshots.html</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://disruptorsim.org/faq.html</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://disruptorsim.org/licence.html</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://disruptorsim.org/security.html</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
-  <!-- Add once the game is served on this domain:
-  <url>
-    <loc>https://disruptorsim.org/play/</loc>
-    <lastmod>2026-07-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  -->
 </urlset>
