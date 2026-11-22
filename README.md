@@ -135,6 +135,8 @@ The PDF library `jspdf.umd.min.js` is a separate work under its own MIT licence,
 
 **Beta testers:** Students of the Corporate Entrepreneurship course, Masters in Management programme, Warwick Business School 2025–26.
 
+**Film credits:** The narration in the Version 2 films was recorded with a synthetic voice from ElevenLabs.
+
 **Audio credits:** Sound samples from Freesound.org: "Atmos" by fluxdelux (CC BY 4.0), "Ambient, Pad Piano – Event Horizon" by Andrewkn (CC BY 4.0), "Clank Car Crash Collision" by qubodup (CC0), "crash.wav" by moxobna (CC0), "Rocket 02.wav" by LilMati (CC0).
 
 ## Disclaimer
