@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How to play The Disruptor, a free innovation management simulation. Getting started, key systems, game modes, board reviews and strategic tips.">
+  <!-- CHANGED 20 Nov: page descriptions follow the page (the board's year, the end of the tenure) -->
+  <meta name="description" content="How to play The Disruptor, a free innovation management simulation. Getting started, key systems, the board's year, the end of your tenure and strategic tips.">
   <meta name="author" content="Ammon Salter">
   <meta name="keywords" content="The Disruptor, how to play, tutorial, gameplay, board review, strategy">
   <title>How to Play The Disruptor</title>
@@ -14,12 +15,12 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://disruptorsim.org/how-to-play.html">
   <meta property="og:title" content="How to Play The Disruptor">
-  <meta property="og:description" content="Getting started, key systems, board reviews, and strategic tips.">
+  <meta property="og:description" content="Getting started, key systems, the board's year, and strategic tips.">
   <meta property="og:image" content="https://disruptorsim.org/infographic.png">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="How to Play The Disruptor">
-  <meta name="twitter:description" content="Getting started, key systems, board reviews, and strategic tips.">
+  <meta name="twitter:description" content="Getting started, key systems, the board's year, and strategic tips.">
   <meta name="twitter:image" content="https://disruptorsim.org/infographic.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
@@ -35,16 +36,109 @@
     h1 { font-size: 36px; font-weight: 800; color: var(--neutral-900); margin-bottom: 8px; letter-spacing: -0.5px; }
     .requirements-list { font-size: 14px; color: var(--text-secondary); margin-left: 0; }
     .requirements-list li { margin-bottom: 8px; }
-    .victory-tier-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
-    .victory-tier-card.tier-1 { border-left: 4px solid #16a34a; }
-    .victory-tier-card.tier-2 { border-left: 4px solid #2563eb; }
-    .victory-tier-card.tier-3 { border-left: 4px solid #f59e0b; }
-    .victory-tier-card.tier-4 { border-left: 4px solid #dc2626; }
-    .victory-tier-card.tier-5 { border-left: 4px solid #7c2d12; }
-    .tier-header { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-    .tier-score { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
-    .tier-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
-  </style>
+  /* ==== 22 Nov CARDS FROM THE GAME: each look below is copied from the game (github-working/index.html), lines named in each comment ==== */
+
+/* LOOK mc: the Message Centre card (game index.html lines 658 to 677: white, radius 12, a 5px bar in the
+   severity colour red #dc2626, amber #f59e0b, blue #3b82f6, grey #cbd5e1, green #059669), with depth. */
+html body .lk-mc > *, html body .lk-mc1 { background: linear-gradient(180deg, #fff 55%, color-mix(in srgb, var(--stripe, #cbd5e1) 7%, #fff) 100%); border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 16px 14px 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 24px -16px rgba(15,23,42,0.35); }
+html body .lk-mc > *::before, html body .lk-mc1::before { content: ''; position: absolute; left: 12px; top: 14px; bottom: 14px; width: 5px; border-radius: 3px; background: var(--stripe, #cbd5e1); }
+html body .lk-mc > *:hover, html body .lk-mc1:hover { border-color: #cbd5e1; box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 14px 26px -16px rgba(15,23,42,0.4); }
+.lk-mc .card-icon-box { margin-bottom: 4px; }
+
+/* LOOK cock: each system as ITS OWN cockpit card (game index.html lines 486 to 545; each card's own colours, lines 3521 to 3708).
+   Exact values, system by system (background / border; title #1a1a1a on every card):
+   R&D Portfolio #fef5f5/#f0d4d4 · IP Management #fdf1f1/#eecece · Crowdsourcing #fceded/#ecc8c8 · Staff & Hiring #fbeaea/#eac2c2 ·
+   Organisation #fae6e6/#e8bcbc · Grant Funding #f9e2e2/#e6b6b6 · Innovation Strategy #f8dede/#e4b0b0 · Tech Scouting #f6f8fe/#d8e0ee ·
+   Universities & Research #f3f6fd/#d3ddec · Alliances #eff4fc/#cdd9ea · Standards #ecf2fb/#c8d6e8 · Platform #e9f0fa/#c3d3e6 ·
+   Corp. Venturing #e5eef9/#bdcfe4 · Competitors & Markets #e2ecf8/#b8cce2. The icon is the card's own drawing, at the left, as in the cockpit.
+   Each card ONE flat tint edge to edge, as in the cockpit; depth only from a soft shadow outside the card. */
+html body .lk-cock > * { --ct: #f7f7f7; --cb: #e0e0e0; --cs: rgba(127,29,29,0.22); background: var(--ct); border: 1px solid var(--cb); border-radius: 14px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 12px 24px -16px var(--cs); }
+html body .lk-cock > *::before { display: none; }
+html body .lk-cock > *:hover { border-color: #cc2936; box-shadow: 0 4px 12px rgba(204,41,54,0.15); }
+.lk-cock > * h3, .lk-cock > * h4 { color: #1a1a1a !important; }
+html body .lk-cock > .card:has(.card-icon-box) { display: grid; grid-template-columns: 58px 1fr; column-gap: 14px; align-content: start; }
+.lk-cock > .card .card-icon-box { grid-row: 1 / span 4; width: 58px !important; height: 58px !important; }
+.lk-cock > .card .card-icon-box img { width: 56px; height: 56px; }
+.lk-cock > .card > h3 { margin-top: 4px; }
+.lk-cock .sys-icon .h-ico { width: 54px; height: 54px; }
+.lk-cock > *:has(img[src*="sys-rd-portfolio"]) { --ct: #fef5f5; --cb: #f0d4d4; }
+.lk-cock > *:has(img[src*="sys-ip"]) { --ct: #fdf1f1; --cb: #eecece; }
+.lk-cock > *:has(img[src*="sys-crowdsourcing"]) { --ct: #fceded; --cb: #ecc8c8; }
+.lk-cock > *:has(img[src*="sys-staff"]) { --ct: #fbeaea; --cb: #eac2c2; }
+.lk-cock > *:has(img[src*="sys-organisation"]) { --ct: #fae6e6; --cb: #e8bcbc; }
+.lk-cock > *:has(img[src*="sys-grants"]) { --ct: #f9e2e2; --cb: #e6b6b6; }
+.lk-cock > *:has(img[src*="sys-strategy"]) { --ct: #f8dede; --cb: #e4b0b0; }
+.lk-cock > *:has(img[src*="sys-scouting"]) { --ct: #f6f8fe; --cb: #d8e0ee; --cs: rgba(30,58,138,0.22); }
+.lk-cock > *:has(img[src*="sys-universities"]) { --ct: #f3f6fd; --cb: #d3ddec; --cs: rgba(30,58,138,0.22); }
+.lk-cock > *:has(img[src*="sys-alliances"]) { --ct: #eff4fc; --cb: #cdd9ea; --cs: rgba(30,58,138,0.22); }
+.lk-cock > *:has(img[src*="sys-standards"]) { --ct: #ecf2fb; --cb: #c8d6e8; --cs: rgba(30,58,138,0.22); }
+.lk-cock > *:has(img[src*="sys-platform"]) { --ct: #e9f0fa; --cb: #c3d3e6; --cs: rgba(30,58,138,0.22); }
+.lk-cock > *:has(img[src*="sys-venturing"]) { --ct: #e5eef9; --cb: #bdcfe4; --cs: rgba(30,58,138,0.22); }
+.lk-cock > *:has(img[src*="sys-competitors"]) { --ct: #e2ecf8; --cb: #b8cce2; --cs: rgba(30,58,138,0.22); }
+/* "Read the Numbers" has no cockpit card: it opens from the top bar's Revenue and Profit tiles (lines 3421 to 3432), whose face is
+   --bg #f7f7f7 (line 221) with --border #e0e0e0 (line 215), CSS lines 287 to 297. */
+.lk-cock > *:has(img[src*="h-chart-up"]) { --ct: #f7f7f7; --cb: #e0e0e0; --cs: rgba(15,23,42,0.18); }
+
+/* LOOK uni: the University & Research engagement card (game lines 1328 to 1345: a thick 11px bar down both sides
+   in the card's colour darkened with #1e293b, radius 14, the heading in the same colour). */
+html body .lk-uni > * { --k: #0d9488; background: linear-gradient(180deg, #ffffff 0%, color-mix(in srgb, var(--k) 7%, #fff) 100%); border: 0 solid color-mix(in srgb, var(--k) 62%, #1e293b); border-left-width: 11px; border-right-width: 11px; border-radius: 14px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(15,23,42,0.1), 0 12px 24px -16px rgba(15,23,42,0.35); }
+html body .lk-uni > *::before { display: none; }
+html body .lk-uni > *:hover { border-color: color-mix(in srgb, var(--k) 62%, #1e293b); box-shadow: 0 6px 16px rgba(15,23,42,0.16); }
+.lk-uni > * h3 { color: color-mix(in srgb, var(--k) 62%, #1e293b) !important; }
+.lk-uni > .s-red { --k: #dc2626; } .lk-uni > .s-amber { --k: #d97706; } .lk-uni > .s-blue { --k: #2563eb; }
+.lk-uni > .s-green { --k: #059669; } .lk-uni > .s-grey { --k: #64748b; } .lk-uni > .s-indigo { --k: #4338ca; }
+
+/* LOOK year: the end screen's year card (game lines 112055 to 112075: stone face #fafaf9, border #e7e5e4, radius 12,
+   "Year 1" in #57534e, the figure large and heavy, a bar with a #a8a29e edge). */
+html body .lk-year, html body .lk-year-all > * { background: linear-gradient(180deg, #ffffff 0%, #fafaf9 60%, #f5f5f4 100%); border: 1px solid #e7e5e4; border-radius: 12px; padding-left: 26px; box-shadow: 0 1px 3px rgba(28,25,23,0.05), 0 12px 24px -16px rgba(28,25,23,0.40); }
+html body .lk-year::before, html body .lk-year-all > *::before { display: none; }
+.lk-year h3, .lk-year-all h3 { color: #1c1917 !important; }
+.lk-year p, .lk-year-all p { color: #44403c !important; }
+
+/* LOOK ent: the entity card of the Alliances and Universities windows (game lines 1253 to 1257: centred, white,
+   radius 12, hover in indigo #6366f1; the engaged card on a green wash #f0fdf4 with border #86efac,
+   the allied one on #faf5ff with #a78bfa). */
+html body .lk-ent > * { display: flex; flex-direction: column; align-items: center; text-align: center; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 16px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 24px -16px rgba(99,102,241,0.45); }
+html body .lk-ent > *::before { display: none; }
+html body .lk-ent > *:hover { border-color: #6366f1; box-shadow: 0 4px 12px rgba(99,102,241,0.15); transform: translateY(-2px); }
+.lk-ent h3 { justify-content: center; flex-direction: column; gap: 8px !important; }
+.lk-ent .h-ico-inline { width: 44px; height: 44px; margin: 0; }
+.lk-ent .card-icon-box { justify-content: center !important; margin-left: auto; margin-right: auto; }
+.lk-ent > * p { text-align: center; }
+html body .lk-ent.engaged > * { background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%); border-color: #86efac; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 24px -16px rgba(5,150,105,0.45); }
+html body .lk-ent.allied > * { background: linear-gradient(180deg, #ffffff 0%, #faf5ff 100%); border-color: #a78bfa; }
+
+/* LOOK lp: the Innovation Launchpad bar under the cockpit (game lines 350 to 364: #1a1a1a to #2d2d2d to #7f1d1d,
+   white heading, a shadow). */
+html body .lk-lp { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #7f1d1d 100%) !important; border: 1px solid #1a1a1a !important; box-shadow: 0 -3px 14px rgba(0,0,0,0.10), 0 16px 30px -16px rgba(127,29,29,0.6) !important; }
+html body .lk-lp::before { display: none; }
+.lk-lp h3 { color: #fff !important; } .lk-lp p, .lk-lp li { color: #e7e5e4 !important; } .lk-lp strong, .lk-lp em { color: #fff !important; }
+.lk-lp .h-ico-head { background: #fff; border-radius: 10px; padding: 3px; }
+.lk-lp a { color: #fca5a5 !important; }
+
+/* LOOK post: the postcard of the tenure (game lines 112822 to 112850: the end picture under a dark fall
+   rgba(28,25,23,0.20) to 0.88 at 62% to 0.92, white type, a frosted round rgba(255,255,255,0.22)). */
+html body .lk-post { background: linear-gradient(180deg, rgba(28,25,23,0.20) 0px, rgba(28,25,23,0.88) 190px, rgba(28,25,23,0.92) 100%), url("img/end-boardroom.webp") center 30% / cover no-repeat, #292524 !important; padding-top: 150px !important; border: 1px solid #292524 !important; box-shadow: 0 6px 20px rgba(28,25,23,0.3) !important; }
+html body .lk-post::before { display: none; }
+.lk-post h3 { color: #fff !important; } .lk-post p { color: #f5f5f4 !important; } .lk-post strong, .lk-post em { color: #fff !important; }
+.lk-post .h-ico-head { background: rgba(255,255,255,0.85); border-radius: 50%; padding: 4px; }
+
+/* LOOK scene: Katrien's scene card in the Message Centre (game line 110217: a Message Centre card in amber,
+   source "Katrien De Wolf"; the appraisal's colours, line 85750: 3 #10b981, 2 #f59e0b, 1 #dc2626). */
+html body .lk-scene { background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%) !important; border: 1px solid #fde68a !important; padding-left: 34px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 24px -16px rgba(180,83,9,0.45) !important; }
+html body .lk-scene::before { background: #f59e0b !important; }
+
+/* the four grouped system boxes as the cockpit places them: warm on the left (R&D Portfolio, then Staff & Hiring), cool on the right
+   (Alliances, then Platform), game lines 3519 to 3708; on a phone, warm then cool. CSS order only. */
+.lk-cock > :has(img[src*="sys-rd-portfolio"]) { order: 1; } .lk-cock > :has(img[src*="sys-alliances"]) { order: 2; }
+.lk-cock > :has(img[src*="sys-staff"]) { order: 3; } .lk-cock > :has(img[src*="sys-platform"]) { order: 4; }
+@media (max-width: 768px) { .lk-cock > :has(img[src*="sys-staff"]) { order: 2; } .lk-cock > :has(img[src*="sys-alliances"]) { order: 3; } }
+.lk-scene h3 { color: #92400e !important; }
+.lk-ent .card-icon-box { width: 56px !important; height: 56px !important; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #ffffff 0%, #eef2ff 100%) !important; display: flex; align-items: center; box-shadow: inset 0 0 0 1px #e0e7ff; }
+.lk-ent .card-icon-box img { width: 36px; height: 36px; margin: 0 auto; }
+
+/* ==== end of 22 Nov CARDS ==== */
+</style>
 </head>
 <body>
 
@@ -58,6 +152,7 @@
         <a href="screenshots.html">Screenshots</a>
         <a href="case-study.html">The Vélox World</a>
         <a href="educators.html">For Educators</a>
+        <a href="classroom.html">Competitive Play</a>
         <a href="faq.html">FAQ</a>
         <a href="licence.html">Licence</a>
       </div>
@@ -74,14 +169,15 @@
       <a href="screenshots.html">Screenshots</a>
       <a href="case-study.html">The Vélox World</a>
       <a href="educators.html">For Educators</a>
+      <a href="classroom.html">Competitive Play</a>
       <a href="faq.html">FAQ</a>
-        <a href="licence.html">Licence</a>
+      <a href="licence.html">Licence</a>
     </div>
   </nav>
 
   <section>
     <h1>How to Play The Disruptor</h1>
-    <p class="page-intro">The Disruptor puts you in the cockpit of Chief Innovation Officer at Vélox Dynamics — a €420M Belgian fitness-equipment manufacturer — and challenges you to navigate the tension between heritage engineering and digital disruption over 3 simulated years. The game flows continuously, events arrive dynamically, and a connected set of managerial practices and systems competes for your attention and resources.</p>
+    <p class="page-intro">The Disruptor puts you in the cockpit of Chief Innovation Officer at Vélox Dynamics, a €420M Belgian fitness-equipment manufacturer, and challenges you to navigate the tension between heritage engineering and digital disruption over 3 simulated years. The game flows continuously, events arrive dynamically, and a connected set of managerial practices and systems competes for your attention and resources.</p>
   </section>
 
   <hr class="section-divider">
@@ -89,27 +185,27 @@
   <section>
     <h2>Quick Start</h2>
 
-    <div class="card-grid card-grid-3">
-      <div class="card">
-        <div class="card-icon-box blue">🌐</div>
+    <div class="card-grid card-grid-3 lk-ent">
+      <div class="card s-blue">
+        <div class="card-icon-box"><img src="icons/h-globe.png" alt="" width="40" height="40"></div>
         <h3>Play Online</h3>
-        <p>Visit the repository's GitHub Pages site and play instantly in your browser. No installation required.</p>
+        <p class="is-short">Visit the repository's GitHub Pages site and play instantly in your browser. No installation required.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box cyan">💾</div>
+      <div class="card s-grey">
+        <div class="card-icon-box"><img src="icons/h-save.svg" alt="" width="40" height="40"></div>
         <h3>Keep a Copy Offline</h3>
-        <p>The game is a single HTML file — grab it once and it plays without internet, on any modern browser. Handy for classrooms with patchy wifi.</p>
+        <p><!-- CHANGED 20 Nov: Version 2's board meetings are pages of their own beside the game file (game line 117962) -->The game is an HTML file with its pictures and a few companion pages, among them the board’s meetings and the mini-games. Keep a copy of the whole folder and the simulation plays without a connection, on any modern browser. Handy for classrooms with patchy wifi. <!-- CHANGED 22 Nov: "and the end-of-game PDF" dropped; the report is now made without a connection (item 311; loadJsPDF uses the copy of the PDF library beside the game first, github-working/index.html line 112853 to 112865) -->Offline, the opening video and the case study do not load.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box green">📖</div>
+      <div class="card s-green">
+        <div class="card-icon-box"><img src="icons/h-book.png" alt="" width="40" height="40"></div>
         <h3>Read the Case Study</h3>
-        <p>The Vélox Dynamics case study (20–30 min read) prepares you for the simulation. Students who read the case treat it as a strategic simulation, not a resource puzzle.</p>
+        <p>The Vélox Dynamics case study (20 to 30 min read) prepares you for the simulation. Students who read the case treat it as a strategic simulation, not a resource puzzle.</p>
       </div>
     </div>
 
-    <div class="highlight-box" style="margin-top: 24px;">
-      <h3>Built-In Tutorials</h3>
-      <p>Two tutorial modes are built in. A <strong>Quick Guide</strong> covers five essential topics (your dashboard, the R&amp;D pipeline, strategy, and tips for success) and gets you playing within minutes. A <strong>Full Guide</strong> walks through every managerial practice and system in depth, with explanations of every panel, every decision type, and every metric. Experienced gamers skip straight to playing; cautious players read everything first. Both approaches work.</p>
+    <div class="highlight-box lk-mc1 s-blue" style="margin-top: 24px;">
+      <h3><img class="h-ico-head" src="icons/h-book.png" alt="">Built-In Tutorials</h3>
+      <p>Two tutorial modes are built in. A <strong>Quick Guide</strong> covers eight short topics (among them your dashboard, the R&amp;D pipeline, strategy, and tips for success) and gets you playing within minutes. A <strong>Full Guide</strong> walks through every managerial practice and system in depth, with explanations of every panel, every decision type, and every metric. Experienced gamers skip straight to playing; cautious players read everything first. Both approaches work.</p>
     </div>
   </section>
 
@@ -118,11 +214,11 @@
   <section>
     <h2>System Requirements</h2>
 
-    <div class="highlight-box">
-      <h3>Browser & Device</h3>
+    <div class="highlight-box lk-mc1 s-grey">
+      <h3><img class="h-ico-head" src="icons/h-laptop.png" alt="">Browser &amp; Device</h3>
       <ul class="requirements-list">
         <li><strong>Modern browser:</strong> Chrome, Firefox, Safari, or Edge (latest versions)</li>
-        <li><strong>Desktop or laptop recommended</strong> — mobile works but the experience is optimised for larger screens</li>
+        <li><strong>Desktop or laptop recommended:</strong> mobile works but the experience is optimised for larger screens</li>
         <li><strong>Landscape orientation on tablets</strong> for best results</li>
       </ul>
     </div>
@@ -133,28 +229,29 @@
 
   <section>
     <h2>How Time Works</h2>
-    <p class="section-intro">The game flows continuously — time advances week by week, with events arriving, projects progressing, and competitors moving in real time. You can pause, speed up, or slow down the simulation at any point.</p>
+    <p class="section-intro">The game flows continuously: time advances week by week, with events arriving, projects progressing, and competitors moving in real time. You can pause, speed up, or slow down the simulation at any point.</p>
 
-    <div class="highlight-box" style="margin-top: 0;">
-      <h3>Continuous Flow, Not Turns</h3>
-      <p>Unlike turn-based games, The Disruptor runs as a continuous simulation. Weeks tick by, events fire, staff work on projects, and the market evolves while you make decisions across the firm's managerial systems. You can intervene at any time — hire staff, launch projects, form alliances, respond to events — without waiting for a "next turn" button. Quarterly milestones mark board check-ins and annual reviews, but the simulation never stops to wait for you.</p>
+    <div class="highlight-box lk-lp" style="margin-top: 0;">
+      <h3><img class="h-ico-head" src="icons/h-clock.png" alt="">Continuous Flow, Not Turns</h3>
+      <p>Unlike turn-based games, The Disruptor runs as a continuous simulation. Weeks tick by, events fire, staff work on projects, and the market evolves while you make decisions across the firm's managerial systems. You can intervene at any time (hire staff, launch projects, form alliances, respond to events) without waiting for a "next turn" button. <!-- CHANGED 20 Nov: the quarterly board check-in is gone (the R&D Director reports each quarter), and the clock now stops while a decision is open or when decisions pile up (game lines 40452, 40796, 113727) -->Each quarter the R&amp;D Director sends you a brief, and each year turns on the board’s meetings. The clock stops by itself while a decision window is open, or when unanswered decisions pile up; otherwise it keeps running.</p>
     </div>
 
-    <div class="card-grid card-grid-3" style="margin-top: 24px;">
-      <div class="card">
-        <div class="card-icon-box blue">⏱️</div>
+    <div class="card-grid card-grid-3 lk-mc" style="margin-top: 24px;">
+      <div class="card s-grey">
+        <div class="card-icon-box"><img src="icons/h-stopwatch.png" alt="" width="40" height="40"></div>
         <h3>Speed Controls</h3>
-        <p>Pause the simulation to think, or accelerate through quiet periods. Three speed settings let you control the pace.</p>
+        <p class="is-short">Pause the simulation to think, or accelerate through quiet periods. Three speed settings let you control the pace.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box orange">📰</div>
+      <div class="card s-amber">
+        <div class="card-icon-box"><img src="icons/h-newspaper.png" alt="" width="40" height="40"></div>
         <h3>Events &amp; News</h3>
-        <p>Weekly events arrive dynamically — market shifts, competitor moves, staff issues, technology breakthroughs. You respond as they happen.</p>
+        <p>Weekly events arrive dynamically: market shifts, competitor moves, staff issues, technology breakthroughs. You respond as they happen.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box red">📊</div>
-        <h3>Board Reviews</h3>
-        <p>Annual board reviews evaluate your cumulative performance. These are the key milestones — everything else flows continuously.</p>
+      <div class="card s-red">
+        <div class="card-icon-box"><img src="icons/h-bars.png" alt="" width="40" height="40"></div>
+        <!-- CHANGED 20 Nov: the Annual Board Review was replaced by the board's meeting and the end-of-year appraisal (game line 109151) -->
+        <h3>The Board’s Year</h3>
+        <p>The management board meets at the start of each year to settle the firm’s direction, and questions you at the end of the first and second years. These are the key milestones. Everything else flows continuously.</p>
       </div>
     </div>
   </section>
@@ -165,25 +262,25 @@
     <h2>The Managerial Practices &amp; Systems</h2>
     <p class="section-intro">A set of interconnected managerial practices and systems competes for your budget and staff. See the <a href="about.html" style="color: var(--red-500);">About</a> page for the full list. The core tension: every euro and every person you commit to one system is unavailable for others.</p>
 
-    <div class="card-grid card-grid-2">
-      <div class="card">
-        <div class="card-icon-box blue">📊</div>
-        <h3>R&D Portfolio → Launchpad</h3>
-        <p>Fund and manage 25–30 projects across three horizons. When projects complete, prepare innovations through readiness activities, then launch to market. Timing and sequencing matter.</p>
+    <div class="card-grid card-grid-2 lk-cock">
+      <div class="card s-red">
+        <div class="card-icon-box"><img src="icons/sys-rd-portfolio.png" alt="" width="40" height="40"></div>
+        <h3>R&amp;D Portfolio → Launchpad</h3>
+        <p>Build a portfolio of projects across three horizons, starting from the handful you inherit. When projects complete, prepare innovations through readiness activities, then launch to market. Timing and sequencing matter.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box green">👥</div>
-        <h3>People & Culture</h3>
-        <p>Hire across 13 disciplines, set salaries, shape culture through 10–15 organisational policies. Staff capacity is the hardest constraint — every system draws from the same pool.</p>
+      <div class="card s-amber">
+        <div class="card-icon-box"><img src="icons/sys-staff.png" alt="" width="40" height="40"></div>
+        <h3>People &amp; Culture</h3>
+        <p><!-- CHANGED 20 Nov: ten disciplines (game line 17364) -->Hire across ten disciplines, set salaries, shape culture through more than twenty organisational policies, <!-- CHANGED 20 Nov: added, Version 2's AI & Innovation tab of the Organisation window (game lines 88661 to 88690, 88895) -->and decide on the AI &amp; Innovation tab how far AI goes in R&amp;D. Staff capacity is the hardest constraint: every system draws from the same pool.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box purple">🤝</div>
+      <div class="card s-indigo">
+        <div class="card-icon-box"><img src="icons/sys-alliances.png" alt="" width="40" height="40"></div>
         <h3>External Innovation</h3>
-        <p>Alliances (230+ partners), university partnerships, corporate venturing (69 startups), technology scouting, and crowdsourcing. Each extends your reach — but carries risk and cost.</p>
+        <p>Alliances (230+ partners), university partnerships, corporate venturing (more than forty start-ups), technology scouting, and crowdsourcing. Each extends your reach, but carries risk and cost.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box orange">🌐</div>
-        <h3>Platform, IP & Standards</h3>
+      <div class="card s-blue">
+        <div class="card-icon-box"><img src="icons/sys-platform.png" alt="" width="40" height="40"></div>
+        <h3>Platform, IP &amp; Standards</h3>
         <p>Grow Vélox+, manage patents and trade secrets, engage with 38 industry standards. Platform amplifies launches. IP protects revenue. Standards gate market access.</p>
       </div>
     </div>
@@ -192,60 +289,25 @@
   <hr class="section-divider">
 
   <section>
-    <h2>Board Reviews & Performance Tiers</h2>
-    <p class="section-intro">Every year (at Q4), the board conducts a formal appraisal. You're evaluated on three dimensions: financial metrics, innovation metrics, and organisational metrics — simultaneously. Your annual appraisal tier determines budget adjustments and shapes your career trajectory.</p>
+    <!-- CHANGED 20 Nov: the Annual Board Review and its tier table (with conditions and budget percentages that are no longer the game's: the game moves the budget far less, set per version, game lines 6601 to 6672) replaced by the Version 2 year, in concepts, without thresholds (game lines 109151 to 109160, 110220 to 110226, 117939) -->
+    <h2>The Board’s Year</h2>
+    <p class="section-intro">Each year has the same shape. It opens with the management board meeting on the firm’s direction: members argue for where Vélox should go, and the CEO, Katrien De Wolf, decides whether to stay the course, shift the emphasis or change strategy. A pack on your desk then sets out the year’s goal for innovation income and the objectives that go with it.</p>
 
-    <div class="highlight-box">
-      <h3>The Five Appraisal Tiers</h3>
-      <p style="margin-bottom: 16px; font-size: 14px;">Each tier comes with budget changes, approval changes, and consequences for your tenure at Vélox Dynamics.</p>
-
-      <div class="victory-tier-card tier-1">
-        <div class="tier-header">Outstanding 🌟</div>
-        <div class="tier-score">Headline met + 3/3 strategic objectives achieved</div>
-        <div class="tier-desc">Exceptional performance. The board is genuinely impressed. Budget +15%, new approvals unlocked.</div>
-      </div>
-
-      <div class="victory-tier-card tier-2">
-        <div class="tier-header">Strong ✅</div>
-        <div class="tier-score">Headline met + 2/3 strategic objectives achieved</div>
-        <div class="tier-desc">Solid work. Board pleased, continued support. Budget +10%, some new approvals available.</div>
-      </div>
-
-      <div class="victory-tier-card tier-3">
-        <div class="tier-header">Adequate ⚠️</div>
-        <div class="tier-score">Headline missed + 2/3 strategic objectives achieved</div>
-        <div class="tier-desc">Mixed signals. The board is watching. Budget 0% (no change), limited new approvals.</div>
-      </div>
-
-      <div class="victory-tier-card tier-4">
-        <div class="tier-header">Concerning ⛔</div>
-        <div class="tier-score">Headline missed + 0–1 strategic objectives achieved</div>
-        <div class="tier-desc">Serious questions from the board. Budget -10%, some approvals withdrawn.</div>
-      </div>
-
-      <div class="victory-tier-card tier-5">
-        <div class="tier-header">Critical ❌</div>
-        <div class="tier-score">Headline missed + 0/3 strategic objectives achieved</div>
-        <div class="tier-desc">"This is not what we hired you for." Budget -15%, risk of dismissal.</div>
-      </div>
+    <div class="highlight-box lk-scene">
+      <h3><img class="h-ico-head" src="icons/h-speech.png" alt="">The End-of-Year Appraisal</h3>
+      <p style="margin-bottom: 12px; font-size: 14px;">At the end of the first and second years you go before the board. Its members question you about the year (what you funded, what you launched, what you left undone) and you answer. Katrien closes the meeting with a score: exceeds expectations, meets expectations, or needs development.</p>
+      <p style="margin-bottom: 12px; font-size: 14px;">Behind the meeting the board weighs your innovation income against the year’s goal and the objectives you met. The outcome moves the next year’s budget up or down, and a poor enough record can end your appointment early. There is no appraisal after the third year: the tenure ends instead, and you are judged on the whole of it.</p>
+      <p style="margin-bottom: 0; font-size: 14px;">On Probation, the first year’s appraisal leads to a Probation Review: the board gives its view of your year, and you choose whether to carry on into the full term or end there.</p>
     </div>
 
-    <div class="highlight-box">
-      <h3>Headline Income Targets</h3>
-      <p style="margin-bottom: 16px;">Your annual targets escalate as Vélox grows. The board expects measurable innovation outcomes alongside commercial results.</p>
-      <div class="stat-grid">
-        <div class="stat-box">
-          <div class="stat-number">€20M</div>
-          <div class="stat-label">Year 1</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number">€50M</div>
-          <div class="stat-label">Year 2</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number">€90M</div>
-          <div class="stat-label">Year 3</div>
-        </div>
+    <div class="highlight-box lk-year">
+      <h3><img class="h-ico-head" src="icons/h-chart-up.png" alt="">Headline Income Targets</h3>
+      <p style="margin-bottom: 16px;">Your targets for innovation income are cumulative and rise each year. These are the Forge's; the other modes and the Incubator set their own. The board expects measurable innovation outcomes alongside commercial results.</p>
+      <!-- NEW 22 Nov, not his words: his three figures drawn as rising bars (bar heights in proportion, 22, 45, 90), in place of the three number boxes; figures confirmed in the game, HEADLINE_TARGETS, github-working/index.html lines 6720 to 6727, the Forge's default in getHeadlineTargets, line 6897 -->
+      <div class="rise">
+        <div class="rise-col"><div class="rise-num">€22M</div><div class="rise-bar"></div><div class="rise-label">Year 1</div></div>
+        <div class="rise-col"><div class="rise-num">€45M</div><div class="rise-bar"></div><div class="rise-label">Year 2</div></div>
+        <div class="rise-col"><div class="rise-num">€90M</div><div class="rise-bar"></div><div class="rise-label">Year 3</div></div>
       </div>
     </div>
   </section>
@@ -254,38 +316,38 @@
 
   <section>
     <h2>Strategic Tips for New Players</h2>
-    <p class="section-intro">These insights will help you navigate your first playthrough more effectively.</p>
+    <p class="is-short section-intro">These insights will help you navigate your first playthrough more effectively.</p>
 
-    <div class="card-grid card-grid-2">
-      <div class="card">
-        <div class="card-icon-box blue">📖</div>
+    <div class="card-grid card-grid-2 lk-uni">
+      <div class="card s-green">
+        <div class="card-icon-box"><img src="icons/h-book.png" alt="" width="40" height="40"></div>
         <h3>Read the Case Study First</h3>
-        <p>The Vélox Dynamics case study prepares you for the simulation. Without it, you'll treat the game as a resource puzzle rather than a strategic simulation. 20–30 minutes of reading makes a massive difference.</p>
+        <p>The Vélox Dynamics case study prepares you for the simulation. Without it, you'll treat the game as a resource puzzle rather than a strategic simulation. 20 to 30 minutes of reading makes a massive difference.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box green">⚖️</div>
+      <div class="card s-grey">
+        <div class="card-icon-box"><img src="icons/h-scales.png" alt="" width="40" height="40"></div>
         <h3>Embrace the Tension</h3>
-        <p>The game's core dynamic is the tension between heritage engineering and digital disruption. Don't ignore the Foundation's mission — it's real, it's constraint, and it creates the challenge. How you navigate this tension defines your strategy.</p>
+        <p>The game's core dynamic is the tension between heritage engineering and digital disruption. Don't ignore the Foundation's mission: it's real, it's constraint, and it creates the challenge. How you navigate this tension defines your strategy.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box purple">🎯</div>
+      <div class="card s-blue">
+        <div class="card-icon-box"><img src="icons/h-target.png" alt="" width="40" height="40"></div>
         <h3>Understand Horizon Balance</h3>
         <p>Invest across all three horizons. Horizon 1 (incremental) delivers near-term revenue. Horizon 2 (adjacent) builds capabilities. Horizon 3 (transformational) creates future opportunities. The board expects balance.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box orange">👥</div>
+      <div class="card s-amber">
+        <div class="card-icon-box"><img src="icons/sys-staff.png" alt="" width="40" height="40"></div>
         <h3>Manage Your People</h3>
-        <p>Your 67-person R&D organisation is your greatest asset and your greatest vulnerability. High morale enables ambitious projects. Low morale causes key staff to leave. Invest in culture, engagement, and career development.</p>
+        <p><!-- CHANGED 20 Nov: the game starts with 67 R&D staff (EMPLOYEE_POOL, game line 61044; HR's opening message, 41290), as in his video script -->Your 67-person R&amp;D organisation is your greatest asset and your greatest vulnerability. High morale enables ambitious projects. Low morale causes key staff to leave. Invest in culture, engagement, and career development.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box red">🎬</div>
+      <div class="card s-red">
+        <div class="card-icon-box"><img src="icons/sys-launchpad.png" alt="" width="40" height="40"></div>
         <h3>Launch Carefully</h3>
-        <p>Too many launches in quick succession cause revenue collapse and brand damage. Plan launches across quarters. Quality over quantity. The Innovation Launchpad guides you through the 5-step process.</p>
+        <p>Too many launches in quick succession cause revenue collapse and brand damage. Plan launches across quarters. Quality over quantity. The Innovation Launchpad takes each idea through incubation to launch.</p>
       </div>
-      <div class="card">
-        <div class="card-icon-box cyan">🔍</div>
+      <div class="card s-indigo">
+        <div class="card-icon-box"><img src="icons/sys-competitors.png" alt="" width="40" height="40"></div>
         <h3>Watch Your Competitors</h3>
-        <p>Ten AI-controlled competitors are pursuing their own strategies. Pay attention to what they're doing. Competitive intelligence is not optional — it's essential for strategic positioning.</p>
+        <p>Ten competitors make moves as the game runs, and the ones that threaten Vélox most move most often. Pay attention to what they're doing. Competitive intelligence is not optional: it's essential for strategic positioning.</p>
       </div>
     </div>
   </section>
@@ -293,13 +355,16 @@
   <hr class="section-divider">
 
   <section>
-    <h2>The End-of-Game PDF Scorecard</h2>
-    <p class="section-intro">When your three-year mandate ends, the game generates a comprehensive PDF report — not a simple score screen, but a structured evaluation of your entire CIO tenure.</p>
+    <!-- CHANGED 20 Nov: the ISO 56001 mapping, the Innovation Maturity score and the Legacy Score are no longer in the game (game line 111040: "The ISO maturity and legacy blocks ... are no longer shown"); the end as it is now (111037 to 111200; the report's title, 112110) -->
+    <h2>The End of Your Tenure</h2>
+    <p class="is-short section-intro">When your mandate ends, or if the board ends it early, you are judged twice: by Vélox, and by the game.</p>
 
-    <div class="highlight-box">
-      <h3>What It Covers</h3>
-      <p>Performance metrics (board approval, revenue targets, innovation mix), project throughput, portfolio balance (H1/H2/H3), capability development, cultural investment, IP portfolio, external partnerships, commercial impact, and platform ecosystem health. Every dimension is mapped to the <strong>ISO 56001 Innovation Management Standard</strong> (Clauses 4–10). You receive an Innovation Maturity score (0–100), a Legacy Score (A–D), and a detailed narrative of your tenure — providing concrete evidence for reflective essays and class discussion.</p>
+    <div class="highlight-box lk-post">
+      <h3><img class="h-ico-head" src="icons/h-scroll.png" alt="">What You Receive</h3>
+      <p>The end screen sets out each year with the board: your innovation income against the goal, and the objectives you met. Then comes the board’s view of your tenure, and beside it <strong>The Disruptor’s score</strong>, the game’s own view, with a short word on what you did well and what to try next time. You can download your report, <em>Your tenure at Vélox</em>: what you chose each year, what the board said, and the game’s assessment, area by area and in words, of how you used the tools of corporate entrepreneurship and innovation management. It gives concrete evidence for reflective essays and class discussion. A postcard of your tenure comes with it.</p>
     </div>
+
+    <!-- 22 Nov: the drawn end screen with made-up figures removed on his word "avoid AI text" -->
   </section>
 
   <hr class="section-divider">
@@ -309,7 +374,7 @@
     <p class="section-intro">You've learned the systems, understood the flow, and grasped the challenge. Now step into the cockpit of Chief Innovation Officer at Vélox Dynamics.</p>
 
     <div class="cta-buttons">
-      <a href="https://ammonsalter-del.github.io/thedisruptor-sim/" class="btn-primary">Play The Disruptor →</a>
+      <a href="play/" class="btn-primary">Play The Disruptor →</a>
       <a href="about.html" class="btn-secondary">Learn More About The Game</a>
     </div>
   </section>
@@ -318,7 +383,7 @@
     <div class="footer-inner">
       <div>
         <h4>The Disruptor</h4>
-        <p>A corporate entrepreneurship and innovation management simulation for educational use.</p>
+        <p class="is-short">A corporate entrepreneurship and innovation management simulation for educational use.</p>
       </div>
       <div>
         <h4>Pages</h4>
@@ -327,6 +392,7 @@
         <a href="screenshots.html">Screenshots</a>
         <a href="case-study.html">The Vélox World</a>
         <a href="educators.html">For Educators</a>
+        <a href="classroom.html">Competitive Play</a>
         <a href="faq.html">FAQ</a>
         <a href="licence.html">Licence</a>
       </div>
@@ -335,7 +401,7 @@
         <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. <!-- CHANGED 20 Nov: both licences, as the game states them -->Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
   </footer>
 
   <script>

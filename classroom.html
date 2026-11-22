@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<!--
+    The Disruptor - Vélox Dynamics: Class results (published on the website as classroom.html)
+    Created by Ammon Salter, Warwick Business School, University of Warwick
+    Educational content (text): licensed under
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+    https://creativecommons.org/licenses/by-nc-sa/4.0/
+    Software (source code): licensed under the PolyForm Noncommercial License 1.0.0
+    https://polyformproject.org/licenses/noncommercial/1.0.0
+    Required Notice: Copyright 2026 Ammon Salter (https://disruptorsim.org)
+-->
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- PROJECTREF: the Disruptor's own Supabase project (BIG CHOICE 1 = A), filled in at STEPS step 7, here and in CONFIG below -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src https://wwihfojqrrizmwelamvf.supabase.co; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Competitive Play for The Disruptor: make a class code, and see how your class's Forge games compare.">
+  <title>Competitive Play | The Disruptor</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* The page's own parts, in the site's look (styles.css gives the navigation, footer and colours). */
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #f7f7f7; color: #1a1a1a; line-height: 1.6; margin: 0; }
+    .cr-wrap { max-width: 960px; margin: 0 auto; padding: 32px 16px 48px; }
+    .cr-wrap h1 { font-size: 30px; font-weight: 800; margin: 0 0 4px; }
+    .cr-sub { color: #555; margin: 0 0 24px; }
+    .cr-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .cr-card h2 { font-size: 18px; margin: 0 0 10px; }
+    .cr-card h3 { font-size: 15px; margin: 18px 0 6px; }
+    .cr-steps { margin: 0; padding-left: 20px; }
+    .cr-steps li { margin-bottom: 4px; }
+    .cr-tabs { display: flex; gap: 6px; border-bottom: 2px solid #e0e0e0; margin-bottom: 0; flex-wrap: wrap; }
+    .cr-tabs button { font: inherit; font-weight: 600; padding: 10px 16px; border: 1px solid #e0e0e0; border-bottom: none; border-radius: 10px 10px 0 0; background: #f5f5f5; color: #555; cursor: pointer; }
+    .cr-tabs button[aria-selected="true"] { background: #fff; color: #b91c1c; border-color: #cc2936; }
+    .cr-panel { border-top-left-radius: 0; }
+    label.cr-l, .cr-l { display: block; font-weight: 600; font-size: 14px; margin: 12px 0 4px; }
+    .cr-in { width: 100%; max-width: 420px; box-sizing: border-box; padding: 10px 12px; font: inherit; font-size: 15px; border: 1px solid #999; border-radius: 8px; background: #fff; color: #1a1a1a; }
+    .cr-help { font-size: 13px; color: #555; margin: 4px 0 0; }
+    .cr-btn { font: inherit; font-weight: 700; font-size: 15px; padding: 10px 18px; border-radius: 8px; border: none; background: #b91c1c; color: #fff; cursor: pointer; margin-top: 14px; }
+    .cr-btn.alt { background: #fff; color: #1a1a1a; border: 1px solid #999; font-weight: 600; }
+    .cr-btn.small { font-size: 13px; padding: 5px 10px; margin: 2px 4px 2px 0; }
+    .cr-btn:disabled { opacity: 0.6; cursor: default; }
+    :focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
+    [tabindex="-1"]:focus { outline: none; }   /* a heading or the code given focus for screen readers: no box */
+    .cr-code { font-size: 40px; font-weight: 800; letter-spacing: 0.18em; margin: 6px 0; }
+    .cr-link { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .cr-link input { flex: 1; min-width: 0; }
+    .cr-msg { min-height: 1.2em; margin-top: 10px; font-size: 14px; }
+    .cr-msg.bad { color: #b91c1c; }
+    .cr-figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 12px 0; }
+    .cr-fig { background: #f5f5f5; border-radius: 10px; padding: 10px 12px; }
+    .cr-fig b { display: block; font-size: 22px; }
+    .cr-fig span { font-size: 12px; color: #555; }
+    .cr-table-box { overflow-x: auto; border: 1px solid #e0e0e0; border-radius: 10px; position: relative; }
+    .cr-table-box:focus-visible { outline: 3px solid #2563eb; }
+    table.cr-t { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+    .cr-t th, .cr-t td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #ececec; vertical-align: top; white-space: nowrap; }
+    .cr-t th { background: #f5f5f5; font-weight: 700; }
+    .cr-t tr.out td { color: #888; }
+    .cr-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: #eee; max-width: 420px; }
+    .cr-bar i { display: block; height: 100%; }
+    .cr-note { font-size: 13px; color: #555; }
+    .cr-kept p { margin: 0 0 6px; font-size: 14px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    @media (max-width: 640px) { .cr-wrap h1 { font-size: 24px; } .cr-code { font-size: 32px; } .cr-card { padding: 16px; } }
+  /* ==== 22 Nov CARDS FROM THE GAME: each look below is copied from the game (github-working/index.html), lines named in each comment ==== */
+
+/* classroom: CSS only; no element a script reads or writes is changed, only styled */
+/* "How it works": a Message Centre card with a blue bar (game lines 658 to 677) */
+html body .cr-wrap > div.cr-card { position: relative; padding-left: 34px; background: linear-gradient(180deg, #ffffff 55%, #f3f7ff 100%); border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 24px -16px rgba(15,23,42,0.35); }
+html body .cr-wrap > div.cr-card::before { content: ''; position: absolute; left: 14px; top: 16px; bottom: 16px; width: 5px; border-radius: 3px; background: #3b82f6; }
+/* the two tabs as the game's window tabs (game lines 1898 to 1900: pale pill, border #d5dde8, the chosen one #a15c07 with white type) */
+.cr-tabs { border-bottom: none; gap: 8px; margin-bottom: 12px; }
+.cr-tabs button { border: 1px solid #d5dde8; border-radius: 8px; background: #fff; color: #475569; font-size: 14px; padding: 8px 16px; box-shadow: 0 1px 2px rgba(15,23,42,0.06); transition: all 0.15s; }
+.cr-tabs button:hover { background: #f1f5f9; }
+.cr-tabs button[aria-selected="true"], .cr-tabs button[aria-selected="true"]:hover { background: #a15c07; border-color: #a15c07; color: #fff; box-shadow: 0 4px 10px -4px rgba(161,92,7,0.55); }
+/* the two panels as a game window body: white falling to #f8fafc, border #e2e8f0, radius 12 (the window cards, lines 658 to 668) */
+html body .cr-panel { border-radius: 12px; border: 1px solid #e2e8f0; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 14px 28px -18px rgba(15,23,42,0.35); }
+.cr-in { border: 1px solid #cbd5e1; box-shadow: inset 0 1px 2px rgba(15,23,42,0.06); }
+.cr-in:focus { border-color: #a15c07; }
+/* buttons as the Message Centre's buttons (lines 707 to 721): the secondary one #f1f5f9 with border #e2e8f0 */
+.cr-btn { box-shadow: 0 2px 6px rgba(185,28,28,0.25); }
+.cr-btn.alt { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; box-shadow: none; }
+.cr-btn.alt:hover { background: #e2e8f0; }
+/* the new class code: Katrien's amber scene card (line 110217), the thing a lecturer takes away */
+#mk-result { position: relative; margin-top: 16px; padding: 4px 20px 16px 36px; border: 1px solid #fde68a; border-radius: 12px; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 24px -16px rgba(180,83,9,0.45); }
+#mk-result::before { content: ''; position: absolute; left: 14px; top: 16px; bottom: 16px; width: 5px; border-radius: 3px; background: #f59e0b; }
+#mk-result .cr-code { color: #92400e; }
+
+/* ===== The class results, in the manner of the game's END SCREEN (showEndOfGameScorecard, game lines 112020 to 112140):
+   a banner of the boardroom picture darkened, the logo in white over it and the title (112038 to 112046); section labels in small
+   spaced capitals #78716c (112030); year cards on a stone face #fafaf9, border #e7e5e4, radius 12, "Year 1" in #57534e, the figure
+   large and heavy, a 14px bar, white with a #a8a29e edge for the part not reached, green #059669 once the goal is reached (112055 to 112066);
+   white sections with thin rules between them. ===== */
+#panel-view { background: #fff; }
+#vw-msg:empty, #vw-action-msg:empty { min-height: 0; margin: 0; }
+/* the results need the end screen's width: the page widens while the results are shown */
+.cr-wrap:has(#panel-view:not([hidden])) { max-width: 1200px; }
+.cr-wrap:has(#panel-view:not([hidden])) > section { max-width: none; }
+#vw-body .cr-banner { position: relative; margin: -20px -20px 6px; min-height: 210px; border-radius: 12px 12px 0 0; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; padding: 0 28px 24px; box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(28,25,23,0.10) 0%, rgba(28,25,23,0.66) 45%, rgba(28,25,23,0.93) 100%), url("img/end-boardroom.webp") center 35% / cover no-repeat, #292524; }
+#vw-body .cr-banner-logo { height: 42px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 10px; }
+#vw-body .cr-banner h2 { color: #fff; font-size: 30px; font-weight: 900; line-height: 1.15; margin: 0 0 6px; text-shadow: 0 2px 12px rgba(0,0,0,0.3); overflow-wrap: anywhere; }
+#vw-body .cr-banner .cr-note { color: rgba(255,255,255,0.92); font-size: 14px; margin: 0; }
+#vw-body > h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; color: #78716c; margin: 26px 0 12px; padding-top: 18px; border-top: 1px solid #e7e5e4; }
+/* the class figures: a row of year cards */
+#vw-body .cr-figs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) minmax(0, 1.35fr); gap: 12px; margin: 18px 0 4px; }
+#vw-body .cr-fig { display: flex; flex-direction: column; justify-content: flex-start; background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 12px; padding: 14px 14px 12px; box-shadow: 0 1px 3px rgba(28,25,23,0.05), 0 10px 20px -14px rgba(28,25,23,0.40); min-width: 0; }
+#vw-body .cr-fig span { order: -1; font-size: 13px; font-weight: 700; color: #57534e; line-height: 1.25; min-height: 2.5em; }
+#vw-body .cr-fig b { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: #1c1917; white-space: nowrap; line-height: 1.15; margin-top: 4px; }
+#vw-body .cr-fbar { height: 14px; background: #fff; border: 1px solid #a8a29e; box-sizing: border-box; border-radius: 7px; overflow: hidden; margin-top: 10px; }
+#vw-body .cr-fbar i { display: block; height: 100%; background: #78716c; }
+/* the students: each year as a small year card in its cell */
+#vw-body .cr-table-box { border: 1px solid #e7e5e4; border-radius: 12px; background: #fff; box-shadow: 0 1px 3px rgba(28,25,23,0.05), 0 12px 24px -16px rgba(28,25,23,0.35); }
+#vw-body table.cr-t { border-collapse: separate; border-spacing: 0; }
+#vw-body .cr-t thead th { background: #fafaf9; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #78716c; font-weight: 700; padding: 10px 10px; border-bottom: 1px solid #e7e5e4; white-space: nowrap; }
+#vw-body .cr-t tbody th, #vw-body .cr-t tbody td { padding: 12px 10px; white-space: normal; border-bottom: 1px solid #f5f5f4; vertical-align: middle; background: transparent; }
+#vw-body .cr-t tbody tr:last-child th, #vw-body .cr-t tbody tr:last-child td { border-bottom: none; }
+#vw-body .cr-t tbody tr:hover { background: #fafaf9; box-shadow: none; }
+#vw-body .cr-t tbody th { font-size: 14px; font-weight: 700 !important; color: #1c1917; overflow-wrap: anywhere; white-space: normal; min-width: 96px; }
+#vw-body .cr-t .cr-lv { font-size: 12.5px; color: #57534e; }
+#vw-body .cr-yc { min-width: 150px; }
+#vw-body .cr-t tbody th:first-child { padding-left: 16px; }
+#vw-body .cr-yc-top b { font-size: 16px; font-weight: 800; color: #1c1917; letter-spacing: -0.2px; }
+#vw-body .cr-yc-top span { font-size: 12px; color: #78716c; }
+#vw-body .cr-ybar { height: 8px; background: #fff; border: 1px solid #a8a29e; box-sizing: border-box; border-radius: 4px; overflow: hidden; margin: 5px 0 4px; max-width: 170px; }
+#vw-body .cr-ybar i { display: block; height: 100%; background: #a8a29e; }
+#vw-body .cr-ybar i.met { background: #059669; }
+#vw-body .cr-yc-low { font-size: 12px; color: #57534e; white-space: nowrap; }
+#vw-body .cr-yc-none { font-size: 12.5px; color: #78716c; }
+#vw-body .cr-v { font-weight: 700; }
+#vw-body .v-outstanding { color: #047857; } #vw-body .v-strong { color: #0369a1; } #vw-body .v-adequate { color: #b45309; }
+#vw-body .v-concerning { color: #c2410c; } #vw-body .v-critical { color: #b91c1c; }
+#vw-body .cr-end { font-size: 13px; font-weight: 600; color: #44403c; white-space: normal; min-width: 90px; }
+#vw-body .cr-end.on { color: #78716c; font-weight: 500; }
+#vw-body .cr-act { text-align: right; }
+#vw-body .cr-lnk { display: block; margin: 0 0 2px auto; background: none; border: none; padding: 2px 0; font: inherit; font-size: 12px; font-weight: 600; color: #57534e; cursor: pointer; white-space: normal; text-align: right; min-width: 118px; text-decoration: underline; text-decoration-color: #d6d3d1; text-underline-offset: 3px; }
+#vw-body .cr-lnk:hover { color: #1c1917; text-decoration-color: #57534e; }
+#vw-body .cr-t tr.out th, #vw-body .cr-t tr.out td, #vw-body .cr-t tr.out .cr-yc-top b, #vw-body .cr-t tr.out .cr-v { color: #78716c; }
+#vw-body .cr-t tr.out .cr-ybar i { background: #d6d3d1; }
+/* the class against all Forge players: a year card for each year */
+#vw-cmp { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+#vw-body .cr-ycard { background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 12px; padding: 14px 16px 10px; box-shadow: 0 1px 3px rgba(28,25,23,0.05), 0 10px 20px -14px rgba(28,25,23,0.40); }
+#vw-body .cr-ycard p { margin: 0 0 6px; }
+#vw-body .cr-ycard-h { font-size: 13px; font-weight: 700; color: #57534e; }
+#vw-body .cr-ycard .cr-note { color: #44403c; font-size: 12.5px; line-height: 1.5; }
+#vw-body .cr-bars { margin: 10px 0 4px; }
+#vw-body .cr-bars .cr-note { font-size: 12px; color: #57534e; margin-bottom: 4px; }
+#vw-body .cr-bar { height: 14px; background: #fff; border: 1px solid #a8a29e; box-sizing: border-box; border-radius: 7px; max-width: none; }
+#vw-rank p { margin: 10px 0 0; font-size: 13px; font-weight: 600; color: #44403c; }
+#vw-game p { margin: 0 0 6px; font-size: 14px; color: #1c1917; }
+#vw-game .cr-note { font-size: 13px; color: #57534e; }
+/* the buttons at the foot; Delete set apart and quieter */
+#vw-body .cr-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 26px; padding-top: 18px; border-top: 1px solid #e7e5e4; }
+#vw-body .cr-foot .cr-btn { margin: 0; font-size: 14px; padding: 9px 16px; }
+#vw-body #vw-delete { margin-left: auto; background: #fff; border: 1px solid #fecaca; color: #b91c1c; font-weight: 600; }
+#vw-body #vw-delete:hover { background: #fef2f2; border-color: #fca5a5; }
+#vw-body #vw-del-sure { margin-top: 12px; padding: 12px 14px; border: 1px solid #fecaca; border-radius: 10px; background: #fef2f2; }
+#vw-body > ul.cr-note { font-size: 12.5px; color: #57534e; padding-left: 18px; margin: 0; }
+@media (max-width: 900px) { #vw-body .cr-figs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  #vw-body .cr-banner { margin: -16px -16px 6px; min-height: 180px; padding: 0 16px 18px; }
+  #vw-body .cr-banner h2 { font-size: 24px; }
+  #vw-body .cr-figs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  #vw-body .cr-fig b { font-size: 24px; }
+  #vw-body .cr-foot #vw-delete { margin-left: 0; }
+  /* each student as a card: the name and level, then the three years side by side, then how it ended */
+  #vw-body .cr-table-box { overflow: visible; border: none; background: transparent; box-shadow: none; }
+  #vw-body .cr-t, #vw-body .cr-t tbody { display: block; }
+  #vw-body .cr-t thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  #vw-body .cr-t tbody tr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 10px; row-gap: 6px; background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 12px 12px 10px; margin-bottom: 10px; box-shadow: 0 8px 18px -14px rgba(28,25,23,0.4); }
+  #vw-body .cr-t tbody th, #vw-body .cr-t tbody td { display: block; padding: 0; border: none; min-width: 0; }
+  #vw-body .cr-t tbody th { grid-column: 1 / 3; }
+  #vw-body .cr-t .cr-lv { grid-column: 3; text-align: right; }
+  #vw-body .cr-yc { min-width: 0; padding-top: 6px !important; border-top: 1px solid #f5f5f4 !important; }
+  #vw-body .cr-yc::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 700; color: #57534e; margin-bottom: 2px; }
+  #vw-body .cr-yc-top b { font-size: 14px; }
+  #vw-body .cr-yc-top span { display: block; font-size: 11px; }
+  #vw-body .cr-yc-low { font-size: 11px; }
+  #vw-body .cr-end { grid-column: 1 / 3; font-size: 12.5px; padding-top: 4px !important; min-width: 0; }
+  #vw-body .cr-act { grid-column: 1 / -1; display: flex !important; justify-content: flex-end; flex-wrap: wrap; gap: 4px 16px; padding-top: 6px !important; border-top: 1px solid #f5f5f4 !important; }
+  #vw-body .cr-act .cr-lnk { margin: 0; min-width: 0; }
+  #vw-body .cr-t tbody th:first-child { padding-left: 0; }
+  #vw-body .cr-yc-low { white-space: normal; }
+  #vw-body .cr-t tbody td:not(.cr-lv):not(.cr-yc):not(.cr-end):not(.cr-act) { grid-column: 1 / -1; font-size: 12.5px; color: #57534e; }
+  #vw-body .cr-lnk { white-space: normal; text-align: right; }
+}
+
+/* ===== 22 Nov, declutter: fewer things at once, more air (same end-screen look) ===== */
+#vw-body > h3 { margin: 40px 0 18px; padding-top: 28px; }
+#vw-body .cr-figs { gap: 14px; margin: 26px 0 6px; }
+#vw-body .cr-fig { box-shadow: 0 1px 2px rgba(28,25,23,0.05); padding: 16px 16px 14px; }
+#vw-body .cr-fig span { min-height: 0; font-size: 12.5px; font-weight: 600; color: #78716c; }
+#vw-body .cr-fig b { margin-top: 6px; }
+#vw-body .cr-fbar { height: 6px; border-radius: 3px; margin-top: 12px; border-color: #d6d3d1; }
+#vw-body .cr-fbar i { background: #a8a29e; }
+#vw-body .cr-t tbody th, #vw-body .cr-t tbody td { padding: 18px 16px; }
+#vw-body .cr-t thead th { padding: 12px 16px; }
+#vw-body .cr-t tbody th:first-child, #vw-body .cr-t thead th:first-child { padding-left: 20px; }
+#vw-body .cr-yc { min-width: 150px; }
+#vw-body .cr-yc-low { margin-top: 2px; }
+#vw-body .cr-ga { font-size: 12px; font-weight: 500; color: #78716c; margin-top: 3px; }
+#vw-body .cr-act { width: 1%; white-space: nowrap; }
+#vw-body .cr-menu { position: relative; display: inline-block; }
+#vw-body .cr-opt { font: inherit; font-size: 12px; font-weight: 600; color: #57534e; background: #fff; border: 1px solid #e7e5e4; border-radius: 8px; padding: 4px 10px; cursor: pointer; }
+#vw-body .cr-opt:hover, #vw-body .cr-opt[aria-expanded="true"] { border-color: #a8a29e; color: #1c1917; }
+#vw-body .cr-pop { position: absolute; right: calc(100% + 6px); top: -6px; z-index: 5; min-width: 200px; background: #fff; border: 1px solid #e7e5e4; border-radius: 10px; padding: 6px; box-shadow: 0 12px 28px -12px rgba(28,25,23,0.45); text-align: left; }
+#vw-body .cr-pop .cr-lnk { display: block; width: 100%; min-width: 0; margin: 0; padding: 7px 10px; border-radius: 6px; text-align: left; text-decoration: none; white-space: nowrap; color: #44403c; }
+#vw-body .cr-pop .cr-lnk:hover, #vw-body .cr-pop .cr-lnk:focus-visible { background: #fafaf9; color: #1c1917; }
+#vw-body .cr-more { margin: 16px 0 0; font-size: 14px; padding: 9px 18px; }
+/* the comparison: one key, then cards that are mostly bars */
+#vw-cmp { gap: 16px; }
+#vw-body .cr-key { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: #57534e; margin: 0 0 4px; }
+#vw-cmp > .cr-key { grid-column: 1 / -1; }
+#vw-body .cr-key span { display: inline-flex; align-items: center; gap: 6px; }
+#vw-body .cr-key i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+#vw-body .cr-ycard { padding: 18px 18px 14px; box-shadow: 0 1px 2px rgba(28,25,23,0.05); }
+#vw-body .cr-ycard .cr-note { margin-bottom: 4px; }
+#vw-body .cr-bars { margin: 14px 0 0; }
+#vw-body .cr-bar-l { font-size: 12px; font-weight: 700; color: #57534e; margin-bottom: 5px; }
+#vw-body .cr-bar { height: 12px; border-radius: 6px; }
+#vw-rank { margin-top: 8px; }
+/* 22 Nov, the comparison redrawn: year cards in the end screen's manner (stone face, soft depth, the year large), income first */
+#vw-cmp { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+#vw-cmp > .cr-note { grid-column: 1 / -1; }
+#vw-body .cr-ycard { position: relative; padding: 20px 20px 18px; background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%); border: 1px solid #e7e5e4; border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(28,25,23,0.05), 0 18px 32px -22px rgba(28,25,23,0.45); }
+#vw-body .cr-ycard-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 0 14px; padding-bottom: 12px; border-bottom: 1px solid #f0efed; }
+#vw-body .cr-ycard-h b { font-size: 26px; font-weight: 900; letter-spacing: -0.5px; color: #1c1917; line-height: 1; }
+#vw-body .cr-ycard-h span { font-size: 12px; font-weight: 600; color: #78716c; }
+/* income: two bars on one scale, each ending in its figure; the goal a thin line across both, labelled once above */
+#vw-body .cr-inc { position: relative; padding-top: 20px; }
+#vw-body .cr-inc-goal-l { position: absolute; top: 0; transform: translateX(-50%); font-size: 11px; font-weight: 700; color: #57534e; white-space: nowrap; }
+#vw-body .cr-inc-plot { position: relative; }
+#vw-body .cr-inc-goal { position: absolute; top: -3px; bottom: 6px; width: 0; border-left: 2px dashed #57534e; margin-left: -1px; z-index: 1; }
+#vw-body .cr-inc-l { font-size: 11.5px; font-weight: 600; color: #78716c; margin: 0 0 3px; }
+#vw-body .cr-inc-row { display: grid; grid-template-columns: minmax(0, 1fr) 92px; column-gap: 12px; align-items: center; margin-bottom: 10px; }
+#vw-body .cr-inc-track { height: 14px; background: #f5f5f4; border-radius: 7px; overflow: hidden; }
+#vw-body .cr-inc-track i { display: block; height: 100%; border-radius: 7px; }
+#vw-body .cr-inc-track i.cls { background: linear-gradient(90deg, #dc2626, #b91c1c); }
+#vw-body .cr-inc-track i.all { background: linear-gradient(90deg, #a8a29e, #78716c); }
+#vw-body .cr-inc-row b { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; color: #1c1917; white-space: nowrap; line-height: 1; }
+/* Adequate or better: a ring and a figure for each group, the board score as a chip */
+#vw-body .cr-sec-l { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: #78716c; margin: 8px 0 8px; padding-top: 12px; border-top: 1px solid #f0efed; }
+#vw-body .cr-good-g { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+#vw-body .cr-good-c { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; min-width: 0; align-content: flex-start; }
+#vw-body .cr-chip-w { flex: 0 0 100%; }
+#vw-body .cr-good-c > div:not(.cr-chip-w):not(.cr-ring) { flex: 1 1 0; min-width: 0; }
+#vw-body .cr-ring { --c: #b91c1c; flex: 0 0 auto; width: 42px; height: 42px; border-radius: 50%; background: conic-gradient(var(--c) var(--p), #e7e5e4 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent 64%, #000 66%); mask: radial-gradient(farthest-side, transparent 64%, #000 66%); }
+#vw-body .cr-good-c.all .cr-ring { --c: #78716c; }
+#vw-body .cr-good-c b { display: block; font-size: 24px; font-weight: 800; letter-spacing: -0.4px; color: #1c1917; line-height: 1.1; }
+#vw-body .cr-good-l { display: block; font-size: 11.5px; font-weight: 600; color: #78716c; }
+#vw-body .cr-chip { display: inline-block; font-size: 11px; font-weight: 600; color: #44403c; background: #f5f5f4; border: 1px solid #e7e5e4; border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+/* the board's five appraisals, secondary: the key, then two slim stacked bars with their labels at the left */
+#vw-body .cr-apr { margin-top: 16px; padding-top: 12px; border-top: 1px solid #f0efed; }
+#vw-body .cr-apr .cr-key { font-size: 10.5px; gap: 3px 9px; margin: 0 0 8px; }
+#vw-body .cr-apr .cr-key span { gap: 4px; } #vw-body .cr-apr .cr-key i { width: 7px; height: 7px; border-radius: 2px; }
+#vw-body .cr-apr-row { display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: 8px; align-items: center; margin-bottom: 6px; }
+#vw-body .cr-apr-l { font-size: 11.5px; font-weight: 600; color: #57534e; }
+#vw-body .cr-apr-bar { display: flex; height: 18px; border-radius: 5px; overflow: hidden; background: #f5f5f4; }
+#vw-body .cr-apr-bar i { display: flex; align-items: center; justify-content: center; height: 100%; font-style: normal; font-size: 10.5px; font-weight: 700; color: #1c1917; overflow: hidden; white-space: nowrap; }
+#vw-body .cr-apr-bar i + i { box-shadow: inset 1px 0 0 rgba(255,255,255,0.7); }
+#vw-body .a-outstanding { background: #059669; } #vw-body .a-strong { background: #0ea5e9; } #vw-body .a-adequate { background: #d97706; }
+#vw-body .a-concerning { background: #f97316; } #vw-body .a-critical { background: #dc2626; color: #fff !important; }
+@media (max-width: 960px) { #vw-cmp { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { #vw-body .cr-apr { display: none; } #vw-body .cr-ycard { padding: 16px 16px 14px; } #vw-body .cr-ring { width: 34px; height: 34px; } #vw-body .cr-good-c { gap: 6px 8px; } #vw-body .cr-good-l { font-size: 11px; line-height: 1.25; } }
+/* the game's assessment: a key and two bars */
+#vw-game .cr-key { margin-bottom: 6px; }
+#vw-body .cr-gabars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; max-width: 760px; }
+/* 22 Nov, scores, redrawn as the year cards: two cards across the full width, each a ring gauge with the median in its centre,
+   then a 0 to 100 bar, the middle half in the group's colour (red for the class, stone for all Forge), the median a dark marker */
+#vw-body .cr-scores { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+#vw-body .cr-scard { display: flex; flex-direction: column; align-items: center; }
+#vw-body .cr-scard .cr-ycard-h { align-self: stretch; }
+#vw-body .cr-sl { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: #78716c; margin: 2px 0 10px; }
+#vw-body .cr-sring { --c: #b91c1c; position: relative; width: 112px; height: 112px; margin-bottom: 18px; }
+#vw-body .cr-scard.all .cr-sring { --c: #78716c; }
+#vw-body .cr-sring > i { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(var(--c) var(--p), #e7e5e4 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent 80%, #000 81%); mask: radial-gradient(farthest-side, transparent 80%, #000 81%); }
+#vw-body .cr-sring-in { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+#vw-body .cr-sring-in b { font-size: 38px; font-weight: 900; letter-spacing: -1px; line-height: 1; color: #1c1917; }
+#vw-body .cr-so { font-size: 11px; font-weight: 600; color: #78716c; margin-top: 3px; }
+#vw-body .cr-sbar { position: relative; align-self: stretch; height: 12px; background: #f5f5f4; border-radius: 6px; }
+#vw-body .cr-sbar .cr-sq { position: absolute; top: 0; bottom: 0; border-radius: 6px; background: linear-gradient(90deg, #dc2626, #b91c1c); }
+#vw-body .cr-scard.all .cr-sbar .cr-sq { background: linear-gradient(90deg, #a8a29e, #78716c); }
+#vw-body .cr-sbar .cr-sm { position: absolute; top: -5px; bottom: -5px; width: 5px; margin-left: -2.5px; border-radius: 3px; background: #1c1917; box-shadow: 0 0 0 2px #fff; }
+#vw-body .cr-sends { align-self: stretch; display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; color: #a8a29e; margin-top: 6px; }
+#vw-body .cr-foot { margin-top: 40px; padding-top: 24px; }
+@media (max-width: 640px) {
+  #vw-body .cr-gabars { grid-template-columns: 1fr; }
+  #vw-body .cr-scores { grid-template-columns: 1fr; }
+  #vw-body .cr-t tbody th:first-child { padding-left: 0; }
+  #vw-body .cr-act { width: auto; }
+  #vw-body .cr-t tbody tr { padding: 14px 14px 12px; row-gap: 8px; margin-bottom: 12px; }
+  #vw-body .cr-t tbody th, #vw-body .cr-t tbody td { padding: 0; }
+}
+/* "What is kept": the University & Research card with thick bars down both sides (lines 1328 to 1345), in teal #0d9488 */
+html body .cr-kept { border: 0 solid #0f5f5a; border-left-width: 11px; border-right-width: 11px; border-radius: 14px; background: linear-gradient(180deg, #ffffff 0%, #f0fdfa 100%); box-shadow: 0 1px 3px rgba(15,23,42,0.1), 0 12px 24px -16px rgba(15,23,42,0.35); }
+.cr-kept h2 { color: #0f5f5a; text-align: left !important; }
+html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+
+/* ==== end of 22 Nov CARDS ==== */
+</style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="how-to-play.html">How to Play</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="case-study.html">The Vélox World</a>
+        <a href="educators.html">For Educators</a>
+        <a href="classroom.html" class="active" aria-current="page">Competitive Play</a>
+        <a href="faq.html">FAQ</a>
+        <a href="licence.html">Licence</a>
+      </div>
+      <button class="nav-toggle" id="menuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-to-play.html">How to Play</a>
+      <a href="screenshots.html">Screenshots</a>
+      <a href="case-study.html">The Vélox World</a>
+      <a href="educators.html">For Educators</a>
+      <a href="classroom.html" class="active" aria-current="page">Competitive Play</a>
+      <a href="faq.html">FAQ</a>
+      <a href="licence.html">Licence</a>
+    </div>
+  </nav>
+
+  <main class="cr-wrap" id="main">
+    <h1>Competitive Play</h1>
+    <p class="cr-sub">How Forge players compare, and your class’s results.</p>
+
+    <div class="cr-card">
+      <h2>How it works</h2>
+      <ol class="cr-steps">
+        <li>A student starts a Forge game and chooses Compare, with your class code, or Skip.</li>
+        <li>The game plays the same either way. Results are sent at the end of each year.</li>
+        <li>At the end, the student sees where each year stands. You see the class here.</li>
+      </ol>
+      <h3>For lecturers</h3>
+      <p class="cr-note" style="margin:0">Make a class below and give your students the code. No account, name, e-mail or password. Forge only.</p>
+    </div>
+
+    <div class="cr-tabs" role="tablist" aria-label="Class results">
+      <button type="button" role="tab" id="tab-make" aria-controls="panel-make" aria-selected="true">Make a class</button>
+      <button type="button" role="tab" id="tab-view" aria-controls="panel-view" aria-selected="false" tabindex="-1">Class results</button>
+    </div>
+
+    <section class="cr-card cr-panel" role="tabpanel" id="panel-make" aria-labelledby="tab-make">
+      <form id="make-form" novalidate>
+        <label class="cr-l" for="mk-label">Class label</label>
+        <input class="cr-in" id="mk-label" maxlength="60" autocomplete="off" placeholder="e.g. Innovation module, spring 2027" aria-describedby="mk-label-help">
+        <p class="cr-help" id="mk-label-help">Something you will recognise. Not a person’s name.</p>
+        <label class="cr-l" for="mk-level">Student level</label>
+        <select class="cr-in" id="mk-level">
+          <option value="ug">Undergraduate</option><option value="masters">Masters</option><option value="mba">MBA</option><option value="other">Other</option>
+        </select>
+        <div><button class="cr-btn" type="submit" id="mk-go">Make the class</button></div>
+      </form>
+      <div class="cr-msg" id="mk-msg" role="status" aria-live="polite"></div>
+      <div id="mk-result" hidden>
+        <p class="cr-l" style="margin-top:16px">Your class code</p>
+        <div class="cr-code" id="mk-code"></div>
+        <p class="cr-help" style="margin-top:0">Students enter it when they start a Forge game.</p>
+        <label class="cr-l" for="mk-link">Your class link</label>
+        <div class="cr-link"><input class="cr-in" id="mk-link" readonly><button class="cr-btn alt small" type="button" id="mk-copy">Copy</button></div>
+        <p class="cr-help"><strong>Keep this link: it is shown only once</strong> and is the only way in. Anyone with it can see the class’s results.</p>
+        <p class="cr-help" id="mk-closes"></p>
+        <p><a href="#" id="mk-open">Open the class results</a></p>
+      </div>
+    </section>
+
+    <section class="cr-card cr-panel" role="tabpanel" id="panel-view" aria-labelledby="tab-view" hidden>
+      <div id="vw-ask">
+        <p>Open your class link to see its results, or paste it here.</p>
+        <label class="cr-l" for="vw-paste">Class link</label>
+        <div class="cr-link"><input class="cr-in" id="vw-paste" autocomplete="off" placeholder="https://disruptorsim.org/classroom.html#k=..."><button class="cr-btn alt small" type="button" id="vw-paste-go">Open</button></div>
+      </div>
+      <div class="cr-msg" id="vw-msg" role="status" aria-live="polite"></div>
+      <div id="vw-body" hidden>
+        <div class="cr-banner"><img class="cr-banner-logo" src="Logocropped.png" alt="" width="200" height="60"><h2 id="vw-title" tabindex="-1"></h2><p class="cr-note" id="vw-head"></p></div>
+        <div class="cr-figs" id="vw-figs"></div>
+        <h3>Students</h3>
+        <div class="cr-table-box" tabindex="0" role="region" aria-label="Students, scrolls sideways"><table class="cr-t" id="vw-table"></table></div>
+        <p class="cr-note" id="vw-empty" hidden>No games yet. Results appear here at the end of each student’s Year 1.</p>
+        <h3>Your class against all Forge players</h3>
+        <div id="vw-cmp"></div>
+        <div id="vw-rank"></div>
+        <h3>The game’s assessment</h3>
+        <div id="vw-game"></div>
+        <div class="cr-foot">
+          <button class="cr-btn alt" type="button" id="vw-csv">Download as CSV</button>
+          <button class="cr-btn alt" type="button" id="vw-check">Check the connection</button>
+          <button class="cr-btn alt" type="button" id="vw-delete">Delete this class</button>
+        </div>
+        <div id="vw-del-sure" hidden>
+          <p class="cr-msg">Delete this class now? The class and its code go at once. Results stay in the comparison, without nicknames or class.</p>
+          <button class="cr-btn small" type="button" id="vw-del-yes">Delete</button><button class="cr-btn alt small" type="button" id="vw-del-no">Keep</button>
+        </div>
+        <div class="cr-msg" id="vw-action-msg" role="status" aria-live="polite"></div>
+        <h3>Notes</h3>
+        <ul class="cr-note">
+          <li>Time played is shown for the class as a whole, never for one student.</li>
+          <li>If you ask students which nickname is theirs, you link results to people. What you download is yours to look after.</li>
+          <li>Students under 18: follow your school’s rules on online tools.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="cr-card cr-kept" id="what-is-kept">
+      <h2>What is kept</h2>
+      <p>The game records the results of each Forge year and the time played. No personal data is collected. It does not track you. All play is anonymous. The data is used to improve the game and monitor use.</p>
+      <p><strong>Recorded:</strong> each year’s income against its goal, objectives met, the board’s appraisal and score, what was used (launches, projects, partners, grants, programmes, missions, hires), time played, how the tenure ended, and the game’s own assessment.</p>
+      <p><strong>Compare adds</strong> a nickname made up by the game, a level and a class code. <strong>Skip adds</strong> nothing. Other versions send nothing.</p>
+      <p><strong>Never recorded:</strong> a name, anything typed, times of day. The database keeps no IP address. Nothing is kept on the device.</p>
+      <p><strong>For a class:</strong> its label, level and code. No name, e-mail or password.</p>
+      <p><strong>Where and how long:</strong> a database in the EU (Supabase, under its data processing agreement). Nicknames and class codes are removed after 12 months; results are kept.</p>
+      <p><strong>Responsible:</strong> <span id="who">Ammon Salter</span>. Contact: <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><h4>The Disruptor</h4><p>A corporate entrepreneurship and innovation management simulation for educational use.</p></div>
+      <div><h4>Contact</h4><a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Content: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>. Software: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener">PolyForm Noncommercial 1.0.0</a>.</div>
+  </footer>
+
+<script>
+(function () {
+  'use strict';
+  // ================================================================ BIG CHOICE 1 = A: the Disruptor's own Supabase project
+  var CONFIG = { url: 'https://wwihfojqrrizmwelamvf.supabase.co', key: 'sb_publishable_8doMY-Me4JZ5OcBrjEgMgA_kHWEjXiu', page: location.origin + location.pathname, wait: 8000,
+    // rebase 17 Nov. HIS CHOICE, the same as the shim's CONFIG.compareScore: show The Disruptor's score (a column, and the class median
+    // against all Forge players). The score is stored either way.
+    showScore: false };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var LEVELS = { ug: 'Undergraduate', masters: 'Masters', mba: 'MBA', other: 'Other' };
+  var APPR = { outstanding: ['Outstanding', '#059669'], strong: ['Strong', '#0ea5e9'], adequate: ['Adequate', '#d97706'], concerning: ['Concerning', '#f97316'], critical: ['Critical', '#dc2626'] };
+  var ENDS = { pinnacle: 'The Pinnacle', outstanding: 'Outstanding Tenure', mixed: 'Mixed Record', underperformance: 'Underperformance', critical: 'A Difficult Tenure', ended_early: 'Ended early by the board' };
+  var GA = ['Innovation Jedi Master', 'Innovation Jedi', 'Innovation Padawan', 'Innovation Youngling'];
+  var FAIL = 'The class results could not be fetched just now. Please try again in a minute.';
+  // 22 Nov, declutter: the first ten students, then "Show all N"; one click anywhere else closes an open "Options" menu
+  var FIRST = 10, SHOW_ALL = false, MORE = null;
+  document.addEventListener('click', function (e) {
+    Array.prototype.forEach.call(document.querySelectorAll('#vw-table .cr-menu'), function (m) {
+      if (m.contains(e.target)) return; var p = m.querySelector('.cr-pop'), o = m.querySelector('.cr-opt'); if (p && !p.hidden) { p.hidden = true; o.setAttribute('aria-expanded', 'false'); } });
+  });
+  function eur(x) { return '€' + (Math.round((Number(x) || 0) * 10) / 10) + 'M'; }
+  function day(s) { try { return new Date(s + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); } catch (e) { return String(s || ''); } }
+  function el(tag, text, attrs) { var e = document.createElement(tag); if (text != null) e.textContent = String(text); if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }   // text only: nothing from the database reaches innerHTML
+  function say(id, text, bad) { var m = $(id); m.textContent = text || ''; m.classList.toggle('bad', !!bad); }
+
+  function rpc(name, body) {
+    if (/PROJECTREF/.test(CONFIG.url) || /^sb_secret_/.test(CONFIG.key) || /service_role/.test((function () { try { return atob(String(CONFIG.key).split('.')[1].replace(/-/g, '+').replace(/_/g, '/')); } catch (e) { return ''; } })())) return Promise.resolve({ ok: false });   // rebase 17 Nov: never with a secret key
+    var ctl = new AbortController(), t = setTimeout(function () { ctl.abort(); }, CONFIG.wait);
+    return fetch(CONFIG.url + '/rest/v1/rpc/' + name, { method: 'POST', signal: ctl.signal, credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer',
+      headers: { 'apikey': CONFIG.key, 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) })
+      .then(function (r) { clearTimeout(t); if (!r.ok) return { ok: false }; return r.json().then(function (v) { return { ok: true, v: v }; }, function () { return { ok: false }; }); })
+      .catch(function () { clearTimeout(t); return { ok: false }; });
+  }
+
+  // ---------------------------------------------------------------- tabs (arrow keys move between them)
+  var tabs = [$('tab-make'), $('tab-view')];
+  function show(which) {
+    tabs.forEach(function (t) { var on = t.id === 'tab-' + which; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; $(t.getAttribute('aria-controls')).hidden = !on; });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { show(t.id.slice(4)); });
+    t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + 1) % 2]; show(n.id.slice(4)); n.focus(); e.preventDefault(); } });
+  });
+
+  // ---------------------------------------------------------------- make a class
+  $('make-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var label = $('mk-label').value.trim(), level = $('mk-level').value, go = $('mk-go');
+    if (!label) { say('mk-msg', 'Please give the class a label.', true); $('mk-label').focus(); return; }
+    go.disabled = true; say('mk-msg', 'Making the class…');
+    rpc('dz_class_create', { p_label: label, p_level: level }).then(function (r) {
+      go.disabled = false;
+      if (!r.ok || !r.v) return say('mk-msg', 'The class could not be made just now. Please try again in a minute.', true);
+      if (r.v.error === 'busy') return say('mk-msg', 'Too many classes are being made just now. Please try again in a minute.', true);
+      if (r.v.error === 'label') return say('mk-msg', 'Please give a label of 1 to 60 characters.', true);
+      if (r.v.error || !r.v.join_code) return say('mk-msg', 'The class could not be made just now. Please try again in a minute.', true);
+      var link = CONFIG.page + '#k=' + r.v.view_key;
+      $('mk-code').textContent = r.v.join_code;
+      $('mk-link').value = link;
+      var closes = new Date(); closes.setFullYear(closes.getFullYear() + 1);
+      $('mk-closes').textContent = 'The code stops taking games, and the class is removed, on ' + closes.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + '.';
+      $('mk-open').href = link;
+      $('mk-result').hidden = false; $('make-form').hidden = true;
+      say('mk-msg', 'Your class is made. Its code is ' + r.v.join_code.split('').join(' ') + '.');
+      $('mk-code').tabIndex = -1; $('mk-code').focus();
+    });
+  });
+  $('mk-copy').addEventListener('click', function () {
+    var v = $('mk-link').value;
+    var done = function () { say('mk-msg', 'The link is copied.'); };
+    try { navigator.clipboard.writeText(v).then(done, function () { $('mk-link').select(); document.execCommand('copy'); done(); }); }
+    catch (e) { $('mk-link').select(); try { document.execCommand('copy'); done(); } catch (e2) {} }
+  });
+  $('mk-open').addEventListener('click', function (e) { e.preventDefault(); location.hash = 'k=' + $('mk-link').value.split('#k=')[1]; });
+
+  // ---------------------------------------------------------------- class results
+  var KEY = null, VIEW = null;
+  function keyFrom(s) { var m = /(?:^|#|&)k=([0-9a-f]{48})(?:$|&)/.exec(String(s || '').trim()); return m ? m[1] : null; }
+  function fromHash() {
+    var k = keyFrom(location.hash);
+    if (!location.hash || location.hash === '#what-is-kept') return;
+    show('view');
+    if (!k) { $('vw-body').hidden = true; say('vw-msg', 'This class link was not recognised. It may have been mistyped, or the class deleted or past its 12 months.', true); return; }
+    KEY = k; load();
+  }
+  $('vw-paste-go').addEventListener('click', function () {
+    var k = keyFrom($('vw-paste').value);
+    if (!k) { say('vw-msg', 'This class link was not recognised. It may have been mistyped, or the class deleted or past its 12 months.', true); return; }
+    location.hash = 'k=' + k;
+  });
+  $('vw-paste').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('vw-paste-go').click(); });
+  window.addEventListener('hashchange', fromHash);
+
+  function load(focusTitle) {
+    say('vw-msg', 'Fetching the class results…');
+    return rpc('dz_class_view', { p_view_key: KEY }).then(function (r) {
+      if (!r.ok) { say('vw-msg', FAIL, true); return; }
+      if (!r.v) { $('vw-body').hidden = true; say('vw-msg', 'This class link was not recognised. It may have been mistyped, or the class deleted or past its 12 months.', true); return; }
+      VIEW = r.v; say('vw-msg', ''); draw(r.v);
+      $('vw-ask').hidden = true; $('vw-body').hidden = false;
+      if (focusTitle !== false) $('vw-title').focus();
+    });
+  }
+
+  function yearCell(y) {
+    if (!y) return '–';
+    if (y.ended_early) return 'Not completed';
+    var s = eur(y.income) + ' of ' + eur(y.goal) + ' · ' + (APPR[y.appraisal] ? APPR[y.appraisal][0] : '–');
+    if (y.board_score) s += ' · score ' + y.board_score + ' of 3';
+    return s;
+  }
+
+  // 22 Nov: one year in a student's row, drawn as the end screen draws a year (game, showEndOfGameScorecard): the income "of" the goal,
+  // a bar for the share of the goal reached (green once reached), the board's word in its colour. The same words as yearCell; text only.
+  function yearTd(y, label) {
+    var td = el('td', null, { 'class': 'cr-yc', 'data-label': label, 'title': yearCell(y) });   // 22 Nov, declutter: the board's score only in the tooltip (and the CSV)
+    if (!y || y.ended_early) { td.appendChild(el('span', yearCell(y), { 'class': 'cr-yc-none' })); return td; }
+    var top = el('div', null, { 'class': 'cr-yc-top' }); top.appendChild(el('b', eur(y.income))); top.appendChild(el('span', ' of ' + eur(y.goal))); td.appendChild(top);
+    var share = Number(y.goal) > 0 ? Math.max(0, Math.min(1, Number(y.income) / Number(y.goal))) : 0;
+    var bar = el('div', null, { 'class': 'cr-ybar', 'aria-hidden': 'true' }), fill = el('i', null, { 'class': share >= 1 ? 'met' : '' }); fill.style.width = Math.round(share * 100) + '%'; bar.appendChild(fill); td.appendChild(bar);
+    var low = el('div', null, { 'class': 'cr-yc-low' }), a = APPR.hasOwnProperty(y.appraisal) ? y.appraisal : null;
+    low.appendChild(el('span', a ? APPR[a][0] : '–', { 'class': a ? 'cr-v v-' + a : '' }));
+    td.appendChild(low);
+    return td;
+  }
+
+  function draw(v) {
+    $('vw-title').textContent = v.label;
+    $('vw-head').textContent = LEVELS[v.level] + ' · Code ' + v.join_code + ' · Made ' + day(v.created_on) + ' · Open until ' + day(v.closes_on);
+    var runs = v.runs || [], fin = function (yr) { return runs.filter(function (r) { return (r.years || []).some(function (y) { return y.year === yr && !y.ended_early; }); }).length; };
+    var figs = [['Joined', runs.length], ['Finished Year 1', fin(1)], ['Finished Year 2', fin(2)], ['Finished Year 3', fin(3)],
+                ['Ended early', runs.filter(function (r) { return r.ended_how === 'early'; }).length],
+                ['Median time played', v.median_minutes == null ? '–' : (v.median_minutes >= 60 ? Math.floor(v.median_minutes / 60) + ' h ' + (v.median_minutes % 60) + ' min' : v.median_minutes + ' min')]];
+    var fb = $('vw-figs'); fb.textContent = '';
+    // 22 Nov, the end screen's year cards: a year's figure also as a bar, its share of those who joined (the figure is in the text already)
+    figs.forEach(function (f, i) {
+      var d = el('div', null, { 'class': 'cr-fig' + (i >= 1 && i <= 3 ? ' yr' : '') }); d.appendChild(el('b', f[1])); d.appendChild(el('span', f[0]));
+      if (i >= 1 && i <= 3) { var fbar = el('div', null, { 'class': 'cr-fbar', 'aria-hidden': 'true' }), fi = el('i'); fi.style.width = (runs.length ? Math.round(100 * f[1] / runs.length) : 0) + '%'; fbar.appendChild(fi); d.appendChild(fbar); }
+      fb.appendChild(d);
+    });
+
+    // students
+    var t = $('vw-table'); t.textContent = '';
+    var cap = el('caption', 'One row per student’s game, in the order they started', { 'class': 'sr-only' }); t.appendChild(cap);
+    // 22 Nov, scores: The Disruptor's score sits under "How it ended", in the same cell, in place of the level name
+    var head = ['Nickname', 'Level', 'Year 1', 'Year 2', 'Year 3', 'How it ended', ''];
+    var tr = el('tr'); head.forEach(function (h, i) { var th = el('th', h, { scope: 'col' }); if (!h) th.appendChild(el('span', 'Actions', { 'class': 'sr-only' })); tr.appendChild(th); });
+    var thead = el('thead'); thead.appendChild(tr); t.appendChild(thead);
+    var tb = el('tbody');
+    runs.forEach(function (r, n) {
+      var row = el('tr'); if (r.hidden) row.className = 'out';
+      if (n >= FIRST && !SHOW_ALL) row.hidden = true;   // 22 Nov, declutter: the first ten, then "Show all N"
+      var nick = r.nickname || (r.nickname_hidden ? 'hidden' : '–');
+      var byYear = {}; (r.years || []).forEach(function (y) { byYear[y.year] = y; });
+      var th = el('th', nick + (r.hidden ? ' (left out)' : ''), { scope: 'row' }); th.style.fontWeight = '600'; row.appendChild(th);
+      row.appendChild(el('td', LEVELS[r.level] || '–', { 'data-label': 'Level', 'class': 'cr-lv' }));
+      [1, 2, 3].forEach(function (yr) { row.appendChild(yearTd(byYear[yr], 'Year ' + yr)); });   // 22 Nov: the end screen's year card in small
+      var endTd = el('td', null, { 'data-label': 'How it ended', 'class': 'cr-end' + (r.outcome || r.ended_how ? '' : ' on') });
+      endTd.appendChild(el('div', r.outcome ? ENDS[r.outcome] : (r.ended_how ? '–' : 'Still playing')));
+      var sc = scoreOf(r); if (sc !== null) endTd.appendChild(el('div', 'Score ' + sc, { 'class': 'cr-ga' }));   // 22 Nov, scores: none, nothing shown
+      row.appendChild(endTd);
+      var act = el('td', null, { 'class': 'cr-act' }), items = [];
+      if (!r.nickname_hidden && r.nickname) items.push(btn('Hide nickname', 'Hide the nickname ' + nick, function () { hide(r.id, 'nickname'); }));
+      if (!r.hidden) items.push(btn('Leave out of comparisons', 'Leave ' + nick + ' out of comparisons', function () { hide(r.id, 'run'); }));
+      if (items.length) act.appendChild(menu(nick, items));   // 22 Nov, declutter: one quiet "Options" control holding the row's actions
+      row.appendChild(act);
+      tb.appendChild(row);
+    });
+    t.appendChild(tb);
+    $('vw-empty').hidden = runs.length > 0;
+    if (MORE) { MORE.remove(); MORE = null; }
+    if (runs.length > FIRST && !SHOW_ALL) {
+      MORE = el('button', 'Show all ' + runs.length, { type: 'button', 'class': 'cr-btn alt cr-more' });
+      MORE.addEventListener('click', function () { SHOW_ALL = true; Array.prototype.forEach.call(tb.rows, function (x) { x.hidden = false; }); MORE.remove(); MORE = null; });
+      t.parentNode.parentNode.insertBefore(MORE, t.parentNode.nextSibling);
+    }
+
+    // the class against all Forge players: the board's view
+    var cb = $('vw-cmp'); cb.textContent = '';
+    var cmp = v.compare || [];
+    if (!cmp.length) cb.appendChild(el('p', 'Shown once a student has finished Year 1.', { 'class': 'cr-note' }));
+    // 22 Nov, comparison redrawn: each year card leads with income (the end screen's year card: two bars on one scale, the goal a line
+    // across both), then the share rated Adequate or better as a ring, then the board's five appraisals as two slim stacked bars with their key.
+    // The sentence of medians stays for screen readers only.
+    cmp.forEach(function (c) {
+      var box = el('div', null, { 'class': 'cr-ycard' });
+      var hd = el('div', null, { 'class': 'cr-ycard-h' }); hd.appendChild(el('b', 'Year ' + c.year)); hd.appendChild(el('span', c.class_n + ' in the class')); box.appendChild(hd);
+      box.appendChild(el('p', 'Median income: class ' + eur(c.class_median_income) + ', all Forge ' + eur(c.all_median_income) + '.' +
+        (c.class_median_score != null ? ' Median board score: class ' + c.class_median_score + ', all Forge ' + (c.all_median_score == null ? '–' : c.all_median_score) + ' (of 3).' : ''), { 'class': 'sr-only' }));
+      box.appendChild(incomeBars(c, goalOf(runs, c.year)));
+      box.appendChild(goodShare(c));
+      box.appendChild(apprRows(c));
+      cb.appendChild(box);
+    });
+    var rk = $('vw-rank'); rk.textContent = '';
+    cmp.filter(function (c) { return c.rank; }).forEach(function (c) {
+      rk.appendChild(el('p', 'By median income in Year ' + c.year + ', your class is ' + ordinal(c.rank) + ' of ' + c.rank_of + ' Forge classes.'));
+    });
+
+    // the game's view. 22 Nov, scores (his words: "class scores would be better than the terms of mastery"): The Disruptor's score for the
+    // class and for all Forge players, each as its median out of 100 over a bar from 0 to 100, the middle half shaded, the median marked,
+    // and the number of games under it. Fewer than 3 games: the figures without a bar. No level names.
+    var gb = $('vw-game'); gb.textContent = '';
+    var scs = v.scores || {}, scC = scs['class'] || {}, scA = scs.all || {};
+    if (!(Number(scC.n) > 0) || scC.median == null) gb.appendChild(el('p', 'Shown once games in your class carry the game’s own assessment.', { 'class': 'cr-note' }));
+    else {
+      var gw = el('div', null, { 'class': 'cr-scores' });
+      gw.appendChild(scoreRow('Your class', scC));
+      if (Number(scA.n) > 0 && scA.median != null) gw.appendChild(scoreRow('All Forge players', scA));
+      gb.appendChild(gw);
+    }
+  }
+  // 22 Nov, scores: a game's score as the database gives it (after PATCH 3 "score", before it "ds_score"); null when there is none
+  function scoreOf(r) { var s = typeof r.score === 'number' ? r.score : r.ds_score; return (typeof s === 'number' && isFinite(s)) ? Math.round(s) : null; }
+  // 22 Nov, scores, redrawn as the year cards: one card per group (header: who, and the number of games), the median as a ring gauge
+  // with its figure in the centre, then a 0 to 100 bar (3 games or more): the middle half in the group's colour, the median marked.
+  function scoreRow(who, s) {
+    var n = Number(s.n) || 0, med = Number(s.median), q1 = Number(s.q1), q3 = Number(s.q3), pc = function (x) { return Math.max(0, Math.min(100, x)) + '%'; };
+    var card = el('div', null, { 'class': 'cr-ycard cr-scard ' + (who === 'Your class' ? 'cls' : 'all') });
+    var hd = el('div', null, { 'class': 'cr-ycard-h' }); hd.appendChild(el('b', who)); hd.appendChild(el('span', n + (n === 1 ? ' game' : ' games'))); card.appendChild(hd);
+    card.appendChild(el('div', 'Median score', { 'class': 'cr-sl' }));
+    var ring = el('div', null, { 'class': 'cr-sring' }), arc = el('i', null, { 'aria-hidden': 'true' }); arc.style.setProperty('--p', pc(med)); ring.appendChild(arc);
+    var mid0 = el('div', null, { 'class': 'cr-sring-in' }); mid0.appendChild(el('b', Math.round(med))); mid0.appendChild(el('span', 'out of 100', { 'class': 'cr-so' })); ring.appendChild(mid0);
+    card.appendChild(ring);
+    if (n >= 3 && isFinite(q1) && isFinite(q3)) {
+      card.appendChild(el('span', who + ': ' + Math.round(q1) + ' to ' + Math.round(q3) + ' for the middle half of the games.', { 'class': 'sr-only' }));
+      var bar = el('div', null, { 'class': 'cr-sbar', 'aria-hidden': 'true' }), mid = el('i', null, { 'class': 'cr-sq' }), mk = el('i', null, { 'class': 'cr-sm' });
+      mid.style.left = pc(q1); mid.style.width = pc(q3 - q1); mk.style.left = pc(med);
+      bar.appendChild(mid); bar.appendChild(mk); card.appendChild(bar);
+      var ends = el('div', null, { 'class': 'cr-sends', 'aria-hidden': 'true' }); ends.appendChild(el('span', '0')); ends.appendChild(el('span', '100')); card.appendChild(ends);
+    }
+    return card;
+  }
+  function ordinal(n) { var s = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+  function btn(text, label, fn) { var b = el('button', text, { type: 'button', 'class': 'cr-lnk', 'aria-label': label }); b.addEventListener('click', fn); return b; }   // 22 Nov: a quiet text button (class cr-lnk)
+  // 22 Nov, comparison redrawn. The year's goal as the class's own games carry it (the same for every Forge game); null if none.
+  function goalOf(runs, yr) { for (var i = 0; i < runs.length; i++) { var ys = runs[i].years || []; for (var j = 0; j < ys.length; j++) if (ys[j].year === yr && Number(ys[j].goal) > 0) return Number(ys[j].goal); } return null; }
+  // Income: "Your class" in red and "All Forge players" in stone, on one scale, each ending in its median; the goal a thin line across both.
+  function incomeBars(c, goal) {
+    var a = Number(c.class_median_income) || 0, b = Number(c.all_median_income) || 0, top = Math.max(a, b, goal || 0) * 1.08 || 1;
+    var wrap = el('div', null, { 'class': 'cr-inc', 'aria-hidden': 'true' });
+    var plot = el('div', null, { 'class': 'cr-inc-plot' });
+    if (goal) {
+      var at = 'calc((100% - 104px) * ' + (goal / top) + ')';
+      var gl = el('div', 'Goal ' + eur(goal), { 'class': 'cr-inc-goal-l' }); gl.style.left = at; wrap.appendChild(gl);
+      var line = el('i', null, { 'class': 'cr-inc-goal' }); line.style.left = at; plot.appendChild(line);
+    }
+    [['Your class', a, 'cls'], ['All Forge players', b, 'all']].forEach(function (r) {
+      plot.appendChild(el('div', r[0], { 'class': 'cr-inc-l' }));
+      var row = el('div', null, { 'class': 'cr-inc-row' }), track = el('div', null, { 'class': 'cr-inc-track' }), fill = el('i', null, { 'class': r[2] });
+      fill.style.width = (100 * r[1] / top) + '%'; track.appendChild(fill); row.appendChild(track); row.appendChild(el('b', eur(r[1]))); plot.appendChild(row);
+    });
+    wrap.appendChild(plot);
+    return wrap;
+  }
+  // The share of games whose year the board rated Adequate or better, for each group: a figure and a ring; the median board score as a chip.
+  function goodShare(c) {
+    var wrap = el('div', null, { 'class': 'cr-good' });
+    var share = function (o) { var t = 0, g = 0; Object.keys(o || {}).forEach(function (k) { t += o[k]; if (k === 'outstanding' || k === 'strong' || k === 'adequate') g += o[k]; }); return t ? Math.round(100 * g / t) : null; };
+    var pc = share(c.class_appraisals), pa = share(c.all_appraisals);
+    if (pc === null && pa === null) return wrap;
+    wrap.appendChild(el('div', 'Adequate or better', { 'class': 'cr-sec-l' }));
+    var grid = el('div', null, { 'class': 'cr-good-g' });
+    [['Your class', pc, c.class_median_score, 'cls'], ['All Forge players', pa, c.all_median_score, 'all']].forEach(function (g) {
+      var cell = el('div', null, { 'class': 'cr-good-c ' + g[3] });
+      var ring = el('div', null, { 'class': 'cr-ring', 'aria-hidden': 'true' }); ring.style.setProperty('--p', (g[1] || 0) + '%'); cell.appendChild(ring);
+      var txt = el('div'); txt.appendChild(el('span', g[0], { 'class': 'cr-good-l' })); txt.appendChild(el('b', g[1] === null ? '–' : g[1] + '%'));
+      cell.appendChild(txt); if (g[2] != null) { var chip = el('div', null, { 'class': 'cr-chip-w' }); chip.appendChild(el('span', 'Board score ' + g[2] + ' of 3', { 'class': 'cr-chip' })); cell.appendChild(chip); }
+      grid.appendChild(cell);
+    });
+    wrap.appendChild(grid);
+    return wrap;
+  }
+  // The board's five appraisals: the key directly above, then one slim stacked bar per group, the share printed in each part of 8% or more.
+  function apprRows(c) {
+    var wrap = el('div', null, { 'class': 'cr-apr' }), K = ['outstanding', 'strong', 'adequate', 'concerning', 'critical'];
+    if (!c.class_appraisals && !c.all_appraisals) return wrap;
+    wrap.appendChild(keyOf(K.map(function (k) { return APPR[k]; })));
+    [['Your class', c.class_appraisals], ['All Forge players', c.all_appraisals]].forEach(function (g) {
+      var counts = g[1] || {}, total = 0; K.forEach(function (k) { total += Number(counts[k]) || 0; });
+      var keys = K.filter(function (k) { return counts[k]; });
+      var sentence = g[0] + ', the board’s appraisals: ' + (keys.map(function (k) { return APPR[k][0] + ' ' + Math.round(100 * counts[k] / total) + '%'; }).join(', ') || '–');
+      var row = el('div', null, { 'class': 'cr-apr-row', title: sentence });
+      row.appendChild(el('span', sentence, { 'class': 'sr-only' }));
+      row.appendChild(el('span', g[0], { 'class': 'cr-apr-l', 'aria-hidden': 'true' }));
+      var bar = el('div', null, { 'class': 'cr-apr-bar', 'aria-hidden': 'true' });
+      keys.forEach(function (k) { var p = 100 * counts[k] / total, i = el('i', p >= 8 ? Math.round(p) + '%' : null, { 'class': 'a-' + k }); i.style.width = p + '%'; bar.appendChild(i); });
+      row.appendChild(bar); wrap.appendChild(row);
+    });
+    return wrap;
+  }
+  // 22 Nov, declutter: a colour key; entries are [name, colour], names are the game's own (appraisals, levels)
+  function keyOf(list) {
+    var k = el('div', null, { 'class': 'cr-key', 'aria-hidden': 'true' });
+    list.forEach(function (e) { var s = el('span'), sw = el('i'); sw.style.background = e[1]; s.appendChild(sw); s.appendChild(document.createTextNode(e[0])); k.appendChild(s); });
+    return k;
+  }
+  // 22 Nov, declutter: one small "Options" control per row; it opens a little menu with the row's actions (Escape or a click elsewhere closes it)
+  function menu(nick, items) {
+    var wrap = el('div', null, { 'class': 'cr-menu' });
+    var b = el('button', 'Options', { type: 'button', 'class': 'cr-opt', 'aria-expanded': 'false', 'aria-label': 'Options for ' + nick });
+    var pop = el('div', null, { 'class': 'cr-pop' }); pop.hidden = true;
+    items.forEach(function (i) { pop.appendChild(i); });
+    var close = function (focus) { pop.hidden = true; b.setAttribute('aria-expanded', 'false'); if (focus) b.focus(); };
+    b.addEventListener('click', function (e) {
+      e.stopPropagation(); var open = pop.hidden;
+      Array.prototype.forEach.call(document.querySelectorAll('#vw-table .cr-pop'), function (p) { p.hidden = true; });
+      Array.prototype.forEach.call(document.querySelectorAll('#vw-table .cr-opt'), function (o) { o.setAttribute('aria-expanded', 'false'); });
+      if (open) { pop.hidden = false; b.setAttribute('aria-expanded', 'true'); items[0].focus(); }
+    });
+    wrap.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pop.hidden) { close(true); e.stopPropagation(); } });
+    wrap.appendChild(b); wrap.appendChild(pop);
+    return wrap;
+  }
+  function hide(id, what) {
+    rpc('dz_class_hide', { p_view_key: KEY, p_run_id: id, p_what: what }).then(function (r) {
+      if (!r.ok || r.v !== 'ok') return say('vw-action-msg', 'That could not be done just now. Please try again in a minute.', true);
+      load(false).then(function () { say('vw-action-msg', what === 'nickname' ? 'The nickname is hidden.' : 'The game is left out of comparisons.'); });
+    });
+  }
+
+  // CSV, built in the browser from what the page already has. No minutes per student.
+  $('vw-csv').addEventListener('click', function () {
+    if (!VIEW) return;
+    var cols = ['nickname', 'level', 'started', 'how it ended', 'game assessment', 'score'];   // 22 Nov: The Disruptor's score, 0 to 100
+    [1, 2, 3].forEach(function (y) { ['goal', 'income', 'objectives met', 'objectives set', 'appraisal', 'board score', 'launches', 'launches disappointed'].forEach(function (c) { cols.push('Y' + y + ' ' + c); }); });
+    var q = function (s) { s = s == null ? '' : String(s); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    var rows = [cols.map(q).join(',')];
+    (VIEW.runs || []).forEach(function (r) {
+      var byYear = {}; (r.years || []).forEach(function (y) { byYear[y.year] = y; });
+      var line = [r.nickname || (r.nickname_hidden ? 'hidden' : ''), LEVELS[r.level] || '', r.started_on, r.outcome ? ENDS[r.outcome] : '', r.assessment_level || '', scoreOf(r) === null ? '' : scoreOf(r)];
+      [1, 2, 3].forEach(function (yr) { var y = byYear[yr]; line = line.concat(y ? [y.goal, y.income, y.objectives_met, y.objectives_total, y.ended_early ? 'not completed' : (APPR[y.appraisal] ? APPR[y.appraisal][0] : ''), y.board_score == null ? '' : y.board_score, y.launches, y.launches_failed] : ['', '', '', '', '', '', '', '']); });
+      rows.push(line.map(q).join(','));
+    });
+    var blob = new Blob(['﻿' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    var a = el('a'); a.href = URL.createObjectURL(blob); a.download = 'class-results-' + VIEW.join_code + '.csv'; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    say('vw-action-msg', 'The CSV is downloaded.');
+  });
+
+  $('vw-check').addEventListener('click', function () {
+    say('vw-action-msg', 'Checking…');
+    rpc('dz_ping', {}).then(function (r) {
+      if (r.ok && r.v === 'ok') say('vw-action-msg', 'The comparison is answering.');
+      else say('vw-action-msg', 'The comparison is not answering just now. If a class is coming, try again in a minute: the database wakes after a quiet spell.', true);
+    });
+  });
+  $('vw-delete').addEventListener('click', function () { $('vw-del-sure').hidden = false; $('vw-del-no').focus(); });
+  $('vw-del-no').addEventListener('click', function () { $('vw-del-sure').hidden = true; $('vw-delete').focus(); });
+  $('vw-del-yes').addEventListener('click', function () {
+    rpc('dz_class_delete', { p_view_key: KEY }).then(function (r) {
+      if (!r.ok || r.v !== 'ok') return say('vw-action-msg', 'That could not be done just now. Please try again in a minute.', true);
+      VIEW = null; KEY = null; $('vw-body').hidden = true; $('vw-ask').hidden = false;
+      say('vw-msg', 'This class has been deleted.'); history.replaceState(null, '', location.pathname);
+    });
+  });
+
+  // the site's menu, as on its other pages
+  var menuBtn = $('menuBtn'), mobileMenu = $('mobileMenu');
+  menuBtn.addEventListener('click', function () { var x = menuBtn.getAttribute('aria-expanded') === 'true'; menuBtn.setAttribute('aria-expanded', String(!x)); mobileMenu.classList.toggle('active'); });
+
+  fromHash();
+})();
+</script>
+</body>
+</html>

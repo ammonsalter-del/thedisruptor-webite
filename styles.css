@@ -8,13 +8,13 @@ html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', -apple-system, sans-serif;
   background: #f7f7f7;
-  color: #1a1a1a;
+  color: #141414;   /* 22 Nov: was #1a1a1a */
   line-height: 1.6;
 }
 
 :root {
   /* ── Warm Neutrals (from game :root) ── */
-  --neutral-900: #1a1a1a;  --neutral-800: #2d2d2d;  --neutral-700: #404040;
+  --neutral-900: #111111;  --neutral-800: #2d2d2d;   /* 22 Nov: neutral-900 was #1a1a1a, darker for headings */  --neutral-700: #404040;
   --neutral-600: #555555;  --neutral-500: #777777;  --neutral-400: #999999;
   --neutral-300: #c4c4c4;  --neutral-200: #e0e0e0;  --neutral-100: #eeeeee;
   --neutral-50:  #f7f7f7;
@@ -32,7 +32,8 @@ body {
   --border: #e0e0e0;   --border-light: #ececec;
   --shadow-sm: rgba(0,0,0,0.04);  --shadow: rgba(0,0,0,0.08);  --shadow-lg: rgba(0,0,0,0.14);
   /* ── Text (from game) ── */
-  --text-primary: #1a1a1a;  --text-secondary: #555555;  --text-muted: #888888;
+  /* 22 Nov: text darker and crisper; was #1a1a1a / #555555 / #888888 */
+  --text-primary: #141414;  --text-secondary: #2e2e2e;  --text-muted: #555555;
   --text-on-red: #ffffff;
   /* ── Aliases (from game) ── */
   --primary: var(--red-500);
@@ -116,7 +117,7 @@ h3 { font-size: 20px; font-weight: 700; color: var(--neutral-900); margin-bottom
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  color: #64748b;
+  color: #475569;   /* 22 Nov: was #64748b */
   margin-bottom: 12px;
   padding-bottom: 6px;
   border-bottom: 1px solid #e2e8f0;
@@ -346,7 +347,7 @@ a.card { cursor: pointer; text-decoration: none; color: inherit; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  color: #64748b;
+  color: #475569;   /* 22 Nov: was #64748b */
   margin-bottom: 8px;
   padding-bottom: 4px;
   border-bottom: 1px solid #e2e8f0;
@@ -487,7 +488,7 @@ a.card { cursor: pointer; text-decoration: none; color: inherit; }
 }
 .timeline-item.milestone::before { background: var(--primary); }
 .timeline-year { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
-.timeline-text { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+.timeline-text { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
 .timeline-text strong { color: var(--neutral-900); }
 
 /* ═══════ FOOTER ═══════ */
@@ -509,3 +510,266 @@ footer { border-top: 1px solid var(--border); margin-top: 32px; background: var(
   color: var(--text-muted);
 }
 .footer-bottom a { color: var(--primary); text-decoration: none; }
+
+/* ══════════════════════════════════════════
+   22 Nov LOOK PASS: the game's own cards, pills and Horta drawings
+   (values from TRY THE BUILD/index.html: .mc-card ~656, .mc-card-color ~670,
+   .mc-crit-pill/.mc-new-pill ~624, system tags ~41452; see ../LOOK-NOTES.txt)
+   ══════════════════════════════════════════ */
+:root {
+  --g-border: #e2e8f0; --g-border-hover: #cbd5e1;
+  --g-title: #0f172a; --g-body: #334155; --g-label: #475569;
+  --g-indigo: #4338ca;
+  --stripe-red: #dc2626; --stripe-amber: #f59e0b; --stripe-blue: #3b82f6;
+  --stripe-grey: #cbd5e1; --stripe-green: #059669; --stripe-indigo: #4338ca;
+  --horta-teal: #2f5964; --horta-gold: #b08f5a;
+}
+img { max-width: 100%; }
+
+/* Section divider: a thin line in the Horta drawings' teal and gold */
+.section-divider {
+  border: none; height: 1px; max-width: 912px;
+  background: linear-gradient(90deg, transparent 0%, rgba(47,89,100,0.35) 20%, rgba(176,143,90,0.7) 50%, rgba(47,89,100,0.35) 80%, transparent 100%);
+}
+
+/* The game's card: white face, thin border, radius 12, quiet shadow, a stripe down the left */
+.g-card, .card, .explore-card, .exp-card, .mode-card, .sys-card, .edu-item, .stat-box, .highlight-box, .callout, .intro-box {
+  border-radius: 12px;
+}
+.g-card, .card, .explore-card, .exp-card, .mode-card, .sys-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--g-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  padding-left: 30px;
+}
+.g-card::before, .card::before, .explore-card::before, .exp-card::before, .mode-card::before, .sys-card::before {
+  content: ''; position: absolute; left: 12px; top: 14px; bottom: 14px;
+  width: 5px; border-radius: 3px; background: var(--stripe, var(--stripe-grey));
+}
+.g-card:hover, .card:hover, .explore-card:hover, .exp-card:hover, .mode-card:hover, .sys-card:hover {
+  border-color: var(--g-border-hover);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transform: none;
+}
+a.card:hover, a.explore-card:hover { border-color: var(--g-border-hover); box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+.s-red { --stripe: var(--stripe-red); } .s-amber { --stripe: var(--stripe-amber); }
+.s-blue { --stripe: var(--stripe-blue); } .s-grey { --stripe: var(--stripe-grey); }
+.s-green { --stripe: var(--stripe-green); } .s-indigo { --stripe: var(--stripe-indigo); }
+.card h3, .explore-card h3, .exp-card h3, .g-card h3 { color: var(--g-title); }
+.card p, .exp-card p, .g-card p { color: var(--g-body); }
+
+/* Highlight boxes and callouts take the stripe too, in the game's red */
+.highlight-box, .callout { border: 1px solid var(--g-border); border-left: 1px solid var(--g-border); position: relative; padding-left: 34px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); background: #fff; }
+.highlight-box::before, .callout::before { content: ''; position: absolute; left: 14px; top: 16px; bottom: 16px; width: 5px; border-radius: 3px; background: var(--stripe, var(--stripe-red)); }
+
+/* Pills, as in the game's card heads */
+.g-pill { display: inline-block; font-size: 10px; font-weight: 700; line-height: 1.5; padding: 1px 7px; border-radius: 3px; letter-spacing: 0.2px; vertical-align: middle; white-space: nowrap; color: #334155; background: #e2e8f0; }
+.g-pill.crit { color: #fff; background: #b91c1c; text-transform: uppercase; letter-spacing: 0.4px; font-size: 9px; font-weight: 800; }
+.g-pill.indigo { color: #4338ca; background: rgba(67,56,202,0.10); }
+.g-pill.violet { color: #7c3aed; background: rgba(124,58,237,0.12); }
+.g-pill.teal { color: #0891b2; background: rgba(8,145,178,0.12); }
+.g-pill.green { color: #047857; background: rgba(5,150,105,0.12); }
+.g-pill.blue { color: #1d4ed8; background: rgba(37,99,235,0.12); }
+.g-pill.amber { color: #b45309; background: rgba(245,158,11,0.15); }
+.g-pill.red { color: #b91c1c; background: rgba(220,38,38,0.12); }
+.g-pill.slate { color: #475569; background: rgba(100,116,139,0.12); }
+.g-count { display: inline-block; font-size: 10.5px; font-weight: 700; color: #3730a3; background: rgba(67,56,202,0.10); border: 1px solid rgba(67,56,202,0.22); border-radius: 9px; padding: 0 7px; line-height: 16px; margin-left: 6px; }
+
+/* Horta drawings in place of emoji: never smaller than 28px, on white */
+.h-ico { width: 32px; height: 32px; object-fit: contain; display: block; flex-shrink: 0; }
+.h-ico-lg { width: 44px; height: 44px; }
+.h-ico-inline { width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 8px; }
+.card-icon-box { background: transparent !important; width: 44px; height: 44px; margin-bottom: 6px; justify-content: flex-start; }
+.card-icon-box img { width: 40px; height: 40px; object-fit: contain; }
+
+/* The band of the game's system drawings */
+.sys-band { max-width: 960px; margin: 0 auto; padding: 8px 24px 28px; }
+.sys-band-inner { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
+.sys-band figure { margin: 0; background: #fff; border: 1px solid var(--g-border); border-radius: 12px; padding: 10px 6px 8px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.sys-band img { width: 44px; height: 44px; object-fit: contain; display: block; margin: 0 auto 4px; }
+.sys-band figcaption { font-size: 11px; font-weight: 600; color: var(--g-label); line-height: 1.25; }
+.sys-band-note { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 10px; }
+
+/* Pictures from the game */
+.g-photo { margin: 0 0 20px; border-radius: 12px; overflow: hidden; border: 1px solid var(--g-border); background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.g-photo img { width: 100%; height: auto; display: block; aspect-ratio: 1280 / 714; object-fit: cover; }
+.g-photo figcaption { font-size: 12px; color: var(--text-muted); padding: 8px 14px; }
+.g-photo.wide img { aspect-ratio: 16 / 6; }
+
+/* The end-screen illustration */
+.end-ill { max-width: 640px; margin: 8px auto 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--g-border); background: #fafaf9; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.end-ill-top { position: relative; }
+.end-ill-top img { width: 100%; height: 190px; object-fit: cover; display: block; }
+.end-ill-band { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, #d97706aa 40%, #d97706ee 100%); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; color: #fff; padding: 0 20px 18px; }
+.end-ill-band .k { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; margin-bottom: 4px; }
+.end-ill-band .t { font-size: 26px; font-weight: 900; line-height: 1.15; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+.end-ill-band .s { font-size: 14px; opacity: 0.95; }
+.end-ill-score { margin: 16px; background: #fff; border: 2px solid #1c1917; border-radius: 16px; padding: 16px 18px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.end-ill-score .l { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; color: #1c1917; }
+.end-ill-score .n { font-size: 40px; font-weight: 900; letter-spacing: -1px; line-height: 1.1; color: #1c1917; }
+.end-ill-score .n span { font-size: 16px; font-weight: 500; color: #57534e; margin-left: 6px; letter-spacing: 0; }
+.end-ill-score .bar { height: 14px; background: #e7e5e4; border-radius: 7px; overflow: hidden; margin: 6px 0 0; }
+.end-ill-score .bar div { height: 100%; background: #1c1917; }
+.end-ill-score .fig { flex: 0 0 auto; width: 110px; text-align: center; font-size: 12px; font-weight: 700; color: #1c1917; }
+.end-ill-score .fig img { height: 120px; width: auto; display: block; margin: 0 auto 4px; }
+.end-ill-cap { font-size: 12px; color: var(--text-muted); text-align: center; padding: 0 16px 14px; font-style: italic; }
+
+/* The four level figures */
+.levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+@media (max-width: 640px) { .levels { grid-template-columns: repeat(2, 1fr); } }
+.levels figure { margin: 0; background: #fff; border: 1px solid var(--g-border); border-radius: 12px; padding: 12px 8px 10px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.levels img { height: 120px; width: auto; display: block; margin: 0 auto 6px; }
+.levels figcaption { font-size: 12px; font-weight: 700; color: var(--g-title); line-height: 1.3; }
+
+/* Version pictures beside the versions */
+.mode-card .mode-pic { width: calc(100% + 12px); margin: -4px -4px 12px -8px; height: 110px; object-fit: cover; border-radius: 8px; display: block; }
+
+/* Rival logos and the board's faces on the Vélox World */
+.logo-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+@media (max-width: 640px) { .logo-strip { grid-template-columns: repeat(2, 1fr); } }
+.logo-strip figure { margin: 0; background: #fff; border: 1px solid var(--g-border); border-radius: 12px; padding: 10px; text-align: center; }
+.logo-strip img { height: 64px; width: auto; max-width: 100%; object-fit: contain; display: block; margin: 0 auto 6px; }
+.logo-strip figcaption { font-size: 11px; color: var(--g-label); line-height: 1.3; }
+.faces { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+@media (max-width: 760px) { .faces { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 420px) { .faces { grid-template-columns: repeat(3, 1fr); } }
+.faces figure { margin: 0; text-align: center; }
+.faces img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; object-position: top; border: 1px solid var(--g-border); display: block; margin: 0 auto 6px; }
+.faces figcaption { font-size: 11px; color: var(--g-label); line-height: 1.3; }
+.faces figcaption strong { display: block; color: var(--g-title); font-size: 12px; }
+
+/* Phones: no sideways scroll */
+html, body { overflow-x: hidden; }
+@media (max-width: 520px) {
+  .g-card, .card, .explore-card, .exp-card, .mode-card, .sys-card { padding-left: 26px; }
+  .g-card::before, .card::before, .explore-card::before, .exp-card::before, .mode-card::before, .sys-card::before { left: 10px; }
+}
+
+/* Page <style> blocks come after this file; these keep the game's card over them */
+html body .card, html body .explore-card, html body .exp-card, html body .mode-card, html body .sys-card, html body .g-card {
+  border-radius: 12px; border: 1px solid var(--g-border); background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.04); padding-left: 30px;
+}
+html body .card:hover, html body .explore-card:hover, html body .exp-card:hover, html body .mode-card:hover, html body .sys-card:hover, html body .g-card:hover {
+  border-color: var(--g-border-hover); box-shadow: 0 2px 8px rgba(0,0,0,0.07); transform: none;
+}
+html body .highlight-box, html body .callout { border-radius: 12px; border: 1px solid var(--g-border); background: #fff; padding-left: 34px; }
+html body .intro-box { border-radius: 12px; border-color: var(--g-border); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+@media (max-width: 520px) {
+  html body .card, html body .explore-card, html body .exp-card, html body .mode-card, html body .sys-card, html body .g-card { padding-left: 26px; }
+}
+
+/* Generic intro box (the home page had none of its own) */
+.intro-box { background: #fff; border: 1px solid var(--g-border); border-radius: 12px; padding: 24px 28px; font-size: 15px; line-height: 1.75; color: var(--text-secondary); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.intro-box strong { color: var(--neutral-900); font-weight: 600; }
+@media (max-width: 520px) { .intro-box { padding: 18px 18px; } }
+
+/* The tenure timeline as a column of the game's cards */
+.timeline-item { background: #fff; border: 1px solid var(--g-border); border-radius: 12px; padding: 12px 16px 12px 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin-bottom: 12px; }
+.timeline-item::before { left: -27px; top: 16px; }
+.timeline-item::after { content: ''; position: absolute; left: 12px; top: 12px; bottom: 12px; width: 5px; border-radius: 3px; background: var(--stripe-grey); }
+.timeline-item.milestone::after { background: var(--stripe-red); }
+.timeline::before { left: 8px; }
+
+
+/* ══════════════════════════════════════════
+   22 Nov DESIGN PASS 2: centred composition, figures in the game's manner,
+   boxes with more presence. One card style throughout.
+   ══════════════════════════════════════════ */
+:root { --measure: 68ch; --col: 760px; }
+
+/* 1. CENTRED COMPOSITION
+   Headings centred; prose in a readable measure, centred as a block, left-aligned inside.
+   Only paragraphs marked .is-short (two lines or fewer) are centred as text. */
+section > h1, section > h2, main section > h1, main section > h2 { text-align: center; }
+section > p, section > .section-intro, section > .page-intro {
+  max-width: var(--measure) !important; margin-left: auto !important; margin-right: auto !important; text-align: left;
+}
+section > p.is-short, .section-intro.is-short, .page-intro.is-short { text-align: center; }
+.hero-lede { max-width: 62ch; text-align: left; }
+.hero-sub { font-size: 15px; font-weight: 600; color: var(--neutral-900); margin: -16px 0 26px; }
+.intro-box, .timeline, .highlight-box, .callout, .g-photo, .end-ill, .ver-wrap {
+  max-width: var(--col); margin-left: auto !important; margin-right: auto !important;
+}
+section > div[style*="max-width: 820px"] { margin-left: auto; margin-right: auto; }
+.faq-jump { justify-content: center; }
+
+/* Rows of cards and tiles: centred, an incomplete last row sits in the middle, cards in a row the same height */
+.card-grid, .exp-grid-2, .modes-grid, .sys-grid, .explore-grid, .fun-facts, .flavour-grid, .product-grid, .levels, .logo-strip, .faces {
+  display: flex !important; flex-wrap: wrap; justify-content: center; align-items: stretch;
+}
+.card-grid { gap: 16px; } .exp-grid-2, .modes-grid, .explore-grid { gap: 14px; } .sys-grid { gap: 10px; }
+.card-grid-2 > *, .exp-grid-2 > *, .modes-grid > *, .sys-grid > *, .flavour-grid > * { flex: 0 1 calc(50% - 8px); min-width: 0; }
+.card-grid-3 > *, .explore-grid > *, .product-grid > * { flex: 0 1 calc(33.333% - 12px); min-width: 0; }
+.card-grid-4 > *, .levels > *, .fun-facts > * { flex: 0 1 calc(25% - 12px); min-width: 0; }
+.logo-strip > * { flex: 0 1 calc(20% - 8px); min-width: 0; }
+.faces > * { flex: 0 1 calc(14.28% - 9px); min-width: 0; }
+@media (max-width: 1024px) and (min-width: 769px) { .card-grid-3 > *, .card-grid-4 > *, .explore-grid > * { flex-basis: calc(50% - 8px); } }
+@media (max-width: 768px) {
+  .card-grid > *, .exp-grid-2 > *, .modes-grid > *, .sys-grid > *, .flavour-grid > *, .product-grid > * { flex-basis: 100%; }
+  .explore-grid > * { flex-basis: calc(50% - 7px); }
+  .levels > *, .fun-facts > * { flex-basis: calc(50% - 6px); }
+  .logo-strip > * { flex-basis: calc(50% - 5px); }
+  .faces > * { flex-basis: calc(25% - 8px); }
+}
+@media (max-width: 520px) { .explore-grid > * { flex-basis: 100%; } .faces > * { flex-basis: calc(33.333% - 7px); } }
+
+/* The band of system drawings: tiles of one width, rows centred */
+.sys-band-inner { display: flex !important; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.sys-band figure { flex: 0 0 96px; }
+@media (max-width: 520px) { .sys-band figure { flex-basis: calc(33.333% - 6px); } }
+
+/* 2. FIGURES, in the manner of the game's top bar (icon, small label, bold value) and the end screen's year cards (value, bar) */
+.fig-row { max-width: 760px; margin: 0 auto 28px; padding: 0 24px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.fig-tile { position: relative; flex: 1 1 200px; max-width: 240px; background: #fff; border: 1px solid var(--g-border); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); padding: 16px 16px 14px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; }
+.fig-tile::after { content: ''; position: absolute; left: 16px; right: 16px; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--stripe, var(--stripe-red)); }
+.fig-ico { width: 40px; height: 40px; object-fit: contain; margin-bottom: 4px; }
+.fig-num { font-size: 34px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.05; color: var(--g-title); }
+.fig-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--g-label); line-height: 1.35; }
+
+/* The three yearly targets: a rising sequence */
+.rise { display: flex; align-items: flex-end; justify-content: center; gap: 18px; margin: 18px auto 4px; max-width: 520px; }
+.rise-col { flex: 1 1 0; display: flex; flex-direction: column; align-items: stretch; text-align: center; }
+.rise-num { font-size: 30px; font-weight: 800; letter-spacing: -0.6px; color: var(--g-title); line-height: 1.1; margin-bottom: 6px; }
+.rise-bar { border-radius: 8px 8px 0 0; background: linear-gradient(180deg, var(--c1), var(--c2)); box-shadow: inset 0 -1px 0 rgba(0,0,0,0.08); }
+.rise-col:nth-child(1) .rise-bar { height: 44px;  --c1: #f5b3b8; --c2: #e8626e; }
+.rise-col:nth-child(2) .rise-bar { height: 90px;  --c1: #e8626e; --c2: #cc2936; }
+.rise-col:nth-child(3) .rise-bar { height: 180px; --c1: #cc2936; --c2: #7f1d1d; }
+.rise-label { border-top: 2px solid #1c1917; padding-top: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--g-label); }
+@media (max-width: 520px) { .rise { gap: 10px; } .rise-num { font-size: 22px; } .rise-col:nth-child(3) .rise-bar { height: 140px; } .rise-col:nth-child(2) .rise-bar { height: 70px; } .rise-col:nth-child(1) .rise-bar { height: 34px; } }
+
+/* A budget with its bar, as the end screen draws income against a goal */
+.bud { font-weight: 700; color: var(--g-title); }
+.bud-bar { display: block; height: 8px; background: #e7e5e4; border-radius: 4px; overflow: hidden; margin-top: 5px; max-width: 140px; }
+.bud-bar i { display: block; height: 100%; background: #cc2936; border-radius: 4px; }
+
+/* The Vélox figures in the red box */
+.hero-box .stat { font-size: 34px !important; letter-spacing: -0.8px; line-height: 1.1; }
+
+/* 3. BOXES WITH MORE PRESENCE */
+.highlight-box h3, .callout h3, .exp-card h3, .g-card > h3 { display: flex; align-items: center; gap: 10px; }
+.h-ico-head { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; }
+.highlight-box, .callout { padding-top: 22px; padding-bottom: 22px; padding-right: 26px; }
+.highlight-box h3, .callout h3 { font-size: 16px; margin-bottom: 10px; }
+.timeline-year { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 3px; color: #475569; background: #e2e8f0; margin-bottom: 6px; }
+.timeline-item.milestone .timeline-year { color: #fff; background: #b91c1c; }
+.timeline-item { padding: 14px 18px 14px 32px; }
+.ver-table thead th { background: #f8fafc; }
+.ver-table tbody tr:hover td { background: #fafafa; }
+.ver-wrap { overflow: hidden; }
+.faq-jump .g-count, .faq-section-label .g-count { margin-left: 8px; }
+
+/* 4. FIXES */
+/* End-screen illustration on phones: the figure stays beside the score */
+@media (max-width: 520px) {
+  .end-ill-score { flex-wrap: nowrap; gap: 10px; padding: 14px; }
+  .end-ill-score > div:first-child { min-width: 0 !important; }
+  .end-ill-score .n { font-size: 34px; }
+  .end-ill-score .fig { width: 70px; font-size: 11px; }
+  .end-ill-score .fig img { height: 84px; }
+  .end-ill-band .t { font-size: 22px; }
+}
+/* The BibTeX entry keeps its lines; it scrolls inside its own box on a phone, the page does not */
+@media (max-width: 640px) { code { display: inline-block; max-width: 100%; overflow-x: auto; white-space: nowrap; vertical-align: top; } }
+
+.end-ill { margin-top: 22px !important; margin-bottom: 8px !important; }

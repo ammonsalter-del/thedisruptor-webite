@@ -42,5 +42,4 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
-# UPDATE: replace with the real sitemap URL if one exists, or delete this line.
 Sitemap: https://disruptorsim.org/sitemap.xml

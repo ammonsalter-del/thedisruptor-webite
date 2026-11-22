@@ -4,22 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="L6WPHQIqkHuG6TXy7IQdQXmUgiPcX0sscttr6GbzxdQ" />
-  <meta name="description" content="The Disruptor — a free, open-source corporate entrepreneurship and innovation management simulation. Step into the CIO role at Vélox Dynamics.">
+  <meta name="description" content="The Disruptor: a free, open-source corporate entrepreneurship and innovation management simulation. Step into the CIO role at Vélox Dynamics.">
   <meta name="keywords" content="The Disruptor, innovation management simulation, corporate entrepreneurship simulation, business simulation for teaching, free business simulation game, innovation teaching tool, R&D management, open innovation">
   <meta name="author" content="Ammon Salter">
-  <title>The Disruptor — Free Innovation Management &amp; Corporate Entrepreneurship Simulation</title>
+  <title>The Disruptor: Free Corporate Entrepreneurship &amp; Innovation Simulation</title>
 
   <!-- SEO: canonical + social preview -->
   <link rel="canonical" href="https://disruptorsim.org/">
   <meta property="og:site_name" content="The Disruptor">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://disruptorsim.org/">
-  <meta property="og:title" content="The Disruptor — Free Innovation Management &amp; Corporate Entrepreneurship Simulation">
+  <meta property="og:title" content="The Disruptor: Free Corporate Entrepreneurship &amp; Innovation Simulation">
   <meta property="og:description" content="A free, open-source corporate entrepreneurship and innovation management simulation. Step into the CIO role at Vélox Dynamics.">
   <meta property="og:image" content="https://disruptorsim.org/infographic.png">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Disruptor — Free Innovation Management &amp; Corporate Entrepreneurship Simulation">
+  <meta name="twitter:title" content="The Disruptor: Free Corporate Entrepreneurship &amp; Innovation Simulation">
   <meta name="twitter:description" content="A free, open-source corporate entrepreneurship and innovation management simulation. Step into the CIO role at Vélox Dynamics.">
   <meta name="twitter:image" content="https://disruptorsim.org/infographic.png">
 
@@ -29,9 +29,9 @@
     "@context": "https://schema.org",
     "@type": ["VideoGame", "LearningResource", "SoftwareApplication"],
     "name": "The Disruptor",
-    "alternateName": "The Disruptor: An Innovation Management and Corporate Entrepreneurship Simulation",
+    "alternateName": "The Disruptor: A Corporate Entrepreneurship & Innovation Simulation",
     "url": "https://disruptorsim.org",
-    "description": "A free, open-source single-player simulation of running a company's innovation portfolio, built for teaching corporate entrepreneurship and innovation management. The player takes the role of Chief Innovation Officer at a fictional European fitness-equipment company and makes consequential decisions under uncertainty across a three-year tenure. It runs in the browser with nothing to install and no data collected.",
+    "description": "A free, open-source single-player simulation of running a company's innovation portfolio, built for teaching corporate entrepreneurship and innovation management. The player takes the role of Chief Innovation Officer at a fictional European fitness-equipment company and makes consequential decisions under uncertainty across a three-year tenure. It runs in the browser with nothing to install and no student data collected.",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Any (web browser)",
     "isAccessibleForFree": true,
@@ -64,7 +64,7 @@
     },
     "publisher": { "@type": "Organization", "name": "Warwick Business School, University of Warwick" },
     "datePublished": "2026",
-    "softwareVersion": "1.0.2",
+    "softwareVersion": "2.0.0",
     "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
     "sameAs": [
       "https://github.com/ammonsalter-del/thedisruptor-sim",
@@ -99,8 +99,35 @@
       font-size: 16px; line-height: 1.7; color: var(--text-secondary);
       max-width: 680px; margin: 0 auto 24px;
     }
+    /* 22 Nov, tight home */
+    .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .quick-grid { max-width: 960px; margin: 0 auto 26px; padding: 0 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    @media (max-width: 860px) { .quick-grid { grid-template-columns: repeat(2, 1fr); } }
+    .quick-card { background: linear-gradient(180deg, #ffffff 0%, var(--wash, #fdf4f5) 100%); border: 1px solid var(--g-border); border-radius: 16px; padding: 22px 16px 20px; text-align: center; box-shadow: 0 12px 26px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.04), inset 0 1px 0 #fff; }
+    .quick-card img { width: 38px; height: 38px; object-fit: contain; padding: 13px; box-sizing: content-box; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #ffffff 0%, var(--tint, #fdecee) 70%); box-shadow: 0 4px 10px rgba(15,23,42,0.08), inset 0 -3px 6px rgba(15,23,42,0.05); }
+    .quick-card.s-red { --tint: #fbdfe2; --wash: #fdf3f4; } .quick-card.s-blue { --tint: #dce8fd; --wash: #f2f6fe; } .quick-card.s-amber { --tint: #fbe9c8; --wash: #fef8ec; } .quick-card.s-green { --tint: #d3f0e3; --wash: #f0faf5; }
+    .quick-card h3 { font-size: 16px; font-weight: 800; letter-spacing: -0.2px; margin: 12px 0 4px; color: var(--neutral-900); }
+    .quick-card p { font-size: 13px; line-height: 1.5; color: var(--text-muted); margin: 0; }
+    .num-band { max-width: 912px; margin: 6px auto 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .num { padding: 26px 12px 22px; text-align: center; border-radius: 16px; background: radial-gradient(120% 95% at 12% 0%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0) 55%), linear-gradient(165deg, #e33c4a 0%, #c42633 52%, #98161f 100%); box-shadow: 0 16px 30px rgba(170,28,42,0.34), 0 3px 6px rgba(120,15,25,0.25), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -10px 22px rgba(70,0,10,0.18); }
+    .num b { display: block; font-size: 46px; line-height: 1; font-weight: 800; letter-spacing: -1.5px; color: #fff; }
+    .num b::after { content: ""; display: block; width: 34px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.85); margin: 12px auto 10px; }
+    .num span { font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(255,255,255,0.92); }
+    @media (max-width: 960px) { .num-band { margin-left: 24px; margin-right: 24px; } }
+    @media (max-width: 560px) { .num-band { gap: 8px; } .num b { font-size: 28px; letter-spacing: -0.8px; } .num span { font-size: 9px; letter-spacing: 0.8px; } .num { padding: 18px 4px 16px; border-radius: 12px; } }
+    .sys-band .sys-band-inner { background: linear-gradient(180deg, #ffffff 0%, #f6f7f9 100%); border: 1px solid var(--g-border); border-radius: 18px; padding: 18px 16px 10px; box-shadow: 0 12px 26px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.04), inset 0 1px 0 #fff; }
+    .sys-band figure { border: 0; background: none; box-shadow: none; }
+    .tool-grid { max-width: 960px; margin: 6px auto 30px; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 860px) { .tool-grid { grid-template-columns: 1fr; } }
+    .tool-tile { display: flex; gap: 16px; align-items: center; background: linear-gradient(180deg, #ffffff 0%, #f6f7f9 100%); border: 1px solid var(--g-border); border-radius: 16px; padding: 18px; box-shadow: 0 12px 26px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.04), inset 0 1px 0 #fff; text-align: left; }
+    .tool-tile img { width: 132px; height: 132px; flex-shrink: 0; border-radius: 12px; object-fit: cover; object-position: top; box-shadow: 0 6px 14px rgba(15,23,42,0.18); }
+    .tool-tile h2 { font-size: 18px; margin: 0 0 6px; text-align: left; }
+    .tool-tile p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin: 0 0 10px; }
+    .tool-link { color: var(--red-500); font-weight: 700; font-size: 14px; text-decoration: none; }
+    .link-row { max-width: 960px; margin: 0 auto; padding: 0 24px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    @media (max-width: 520px) { .tool-tile { flex-direction: column; text-align: center; } .tool-tile h2 { text-align: center; } }
     .hero-meta { margin-top: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.5px; }
-    .explore-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }   /* 22 Nov: six cards, was four */
     @media (max-width: 900px) { .explore-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 520px) { .explore-grid { grid-template-columns: 1fr; } }
     .explore-card {
@@ -110,7 +137,58 @@
     .explore-card:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(204,41,54,0.15); transform: translateY(-1px); }
     .explore-card h3 { font-size: 14px; font-weight: 700; margin: 10px 0 4px; color: var(--neutral-900); }
     .explore-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 0; }
-  </style>
+  /* ==== 22 Nov CARDS FROM THE GAME: each look below is copied from the game (github-working/index.html), lines named in each comment ==== */
+
+/* index: the four quick cards, each in a look of the game (structure and words as approved) */
+/* 22 Nov, his words: "The pictures in the two boxes are odd with none in the first two". All four quick cards share one build, the start screen's version card (game lines 117279 to 117290): a picture from the game under a dark fall, the icon in a white round over its lower edge, a pale body. */
+.quick-grid > * { position: relative; overflow: hidden; padding-top: 86px; border: 2px solid #e2e8f0; box-shadow: 0 14px 26px -16px rgba(15,23,42,0.45); }
+.quick-grid > *::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 84px; background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.5) 100%), var(--pic) center var(--pos, 40%) / cover no-repeat; }
+.quick-grid > * img { position: relative; margin-top: -58px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+.quick-grid > :nth-child(1) { --pic: url("img/boardroom.webp"); --pos: 45%; background: linear-gradient(180deg, #ffffff 0%, #f5f5f4 100%); }
+.quick-grid > :nth-child(2) { --pic: url("shots/16-cockpit-messages-view.jpg"); --pos: 30%; background: linear-gradient(180deg, #ffffff 0%, #fbeaea 100%); }
+.quick-grid > :nth-child(3) { --pic: url("img/version-forge.webp"); --pos: 40%; background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%); }
+.quick-grid > :nth-child(4) { --pic: url("img/cargovil-campus.webp"); --pos: 55%; background: linear-gradient(180deg, #ffffff 0%, #eef7f2 100%); }
+/* the icon panel: each system on a small tile in ITS OWN cockpit colours (game lines 486 to 545; colours lines 3521 to 3708;
+   the Innovation Launchpad as the dark bar under the cockpit, lines 350 to 364); title colour #1a1a1a as on the cockpit cards */
+.sys-band figure { --ct: #f7f7f7; --cb: #e0e0e0; background: var(--ct); border: 1px solid var(--cb); border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 8px 16px -12px rgba(15,23,42,0.30); padding: 10px 6px 9px; }
+.sys-band figcaption { color: #1a1a1a; font-weight: 600; }
+.sys-band img { width: 48px; height: 48px; }
+.sys-band figure:has(img[src*="sys-rd-portfolio"]) { --ct: #fef5f5; --cb: #f0d4d4; }
+.sys-band figure:has(img[src*="sys-ip"]) { --ct: #fdf1f1; --cb: #eecece; }
+.sys-band figure:has(img[src*="sys-crowdsourcing"]) { --ct: #fceded; --cb: #ecc8c8; }
+.sys-band figure:has(img[src*="sys-staff"]) { --ct: #fbeaea; --cb: #eac2c2; }
+.sys-band figure:has(img[src*="sys-organisation"]) { --ct: #fae6e6; --cb: #e8bcbc; }
+.sys-band figure:has(img[src*="sys-grants"]) { --ct: #f9e2e2; --cb: #e6b6b6; }
+.sys-band figure:has(img[src*="sys-strategy"]) { --ct: #f8dede; --cb: #e4b0b0; }
+.sys-band figure:has(img[src*="sys-scouting"]) { --ct: #f6f8fe; --cb: #d8e0ee; }
+.sys-band figure:has(img[src*="sys-universities"]) { --ct: #f3f6fd; --cb: #d3ddec; }
+.sys-band figure:has(img[src*="sys-alliances"]) { --ct: #eff4fc; --cb: #cdd9ea; }
+.sys-band figure:has(img[src*="sys-standards"]) { --ct: #ecf2fb; --cb: #c8d6e8; }
+.sys-band figure:has(img[src*="sys-platform"]) { --ct: #e9f0fa; --cb: #c3d3e6; }
+.sys-band figure:has(img[src*="sys-venturing"]) { --ct: #e5eef9; --cb: #bdcfe4; }
+.sys-band figure:has(img[src*="sys-competitors"]) { --ct: #e2ecf8; --cb: #b8cce2; }
+.sys-band figure:has(img[src*="sys-launchpad"]) { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #7f1d1d 100%); border-color: #1a1a1a; }
+.sys-band figure:has(img[src*="sys-launchpad"]) figcaption { color: #ffffff; }
+/* the panel as a small picture of the cockpit: the warm seven in the cockpit's order, then the cool seven, then the Launchpad bar */
+.sys-band-inner { display: grid !important; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; max-width: 760px; margin: 0 auto; }
+.sys-band figure { flex: none; }
+.sys-band figure:has(img[src*="sys-rd-portfolio"]) { order: 1; } .sys-band figure:has(img[src*="sys-ip"]) { order: 2; }
+.sys-band figure:has(img[src*="sys-crowdsourcing"]) { order: 3; } .sys-band figure:has(img[src*="sys-staff"]) { order: 4; }
+.sys-band figure:has(img[src*="sys-organisation"]) { order: 5; } .sys-band figure:has(img[src*="sys-grants"]) { order: 6; }
+.sys-band figure:has(img[src*="sys-strategy"]) { order: 7; }
+.sys-band figure:has(img[src*="sys-scouting"]) { order: 8; } .sys-band figure:has(img[src*="sys-universities"]) { order: 9; }
+.sys-band figure:has(img[src*="sys-alliances"]) { order: 10; } .sys-band figure:has(img[src*="sys-standards"]) { order: 11; }
+.sys-band figure:has(img[src*="sys-platform"]) { order: 12; } .sys-band figure:has(img[src*="sys-venturing"]) { order: 13; }
+.sys-band figure:has(img[src*="sys-competitors"]) { order: 14; }
+.sys-band figure:has(img[src*="sys-launchpad"]) { order: 15; grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 7px 10px; }
+.sys-band figure:has(img[src*="sys-launchpad"]) img { width: 30px; height: 30px; margin: 0; }
+.sys-band figure:has(img[src*="sys-launchpad"]) figcaption { font-size: 13px; font-weight: 700; }
+@media (max-width: 640px) { .sys-band-inner { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .sys-band-inner { grid-template-columns: repeat(3, minmax(0, 1fr)); } .sys-band figcaption { font-size: 10px; } }
+
+
+/* ==== end of 22 Nov CARDS ==== */
+</style>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -125,6 +203,7 @@
         <a href="screenshots.html">Screenshots</a>
         <a href="case-study.html">The Vélox World</a>
         <a href="educators.html">For Educators</a>
+        <a href="classroom.html">Competitive Play</a>
         <a href="faq.html">FAQ</a>
         <a href="licence.html">Licence</a>
       </div>
@@ -139,89 +218,110 @@
       <a href="screenshots.html">Screenshots</a>
       <a href="case-study.html">The Vélox World</a>
       <a href="educators.html">For Educators</a>
+      <a href="classroom.html">Competitive Play</a>
       <a href="faq.html">FAQ</a>
       <a href="licence.html">Licence</a>
     </div>
   </nav>
 
-  <!-- ═══ HERO: LOGO + VIDEO CENTRAL ═══ -->
-  <div class="hero" style="padding-bottom: 0;">
+  <!-- ═══ HOME, REBUILT TIGHT 22 Nov 2026 on the pattern of the Slingshot's home page (his brief: the front door, visually rich, things from the game, his voice, no technical detail; "Keep the first index page tight"). His own words are used wherever they exist: the pitch and the Challenge are from the live site, the Katrien text from the live educators page. The earlier draft is _not-for-upload/index.PRE-tight-home-2211.html. ═══ -->
+  <div class="hero">
     <img src="Logocropped.png" alt="The Disruptor">
-    <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;">The Disruptor — Free Innovation Management and Corporate Entrepreneurship Simulation</h1>
+    <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;">The Disruptor: Free Corporate Entrepreneurship and Innovation Simulation</h1>
     <div class="hero-tagline">A Corporate Entrepreneurship &amp; Innovation Simulation</div>
-
-    <div class="hero-video" style="margin-bottom: 0;">
-      <iframe src="https://drive.google.com/file/d/13lOUT_Bnb1gzScFCEd5xDB1Yv3f74kk2/preview" allow="autoplay" allowfullscreen></iframe>
+    <p class="hero-lede" style="text-align:center;">Step into the cockpit of Chief Innovation Officer at Vélox Dynamics. Make the trade-offs. Watch the consequences unfold.</p>
+    <div class="hero-buttons">
+      <a href="play/" class="btn-primary">Play The Disruptor →</a>
+      <a href="how-to-play.html" class="btn-secondary">Learn How to Play</a>
     </div>
-  </div>
-
-  <!-- ═══ INTRO ═══ -->
-  <section style="margin: 20px auto 24px;">
-    <div class="intro-box">
-      <p style="margin: 0 0 14px;">Schumpeter called it the <em>"perennial gale of creative destruction"</em>: the force that builds new industries on the ruins of old ones. Innovation drives that gale. But managing it means making difficult choices under uncertainty.</p>
-      <p style="margin: 0 0 14px;"><strong>What to fund and what to kill.</strong> When to explore and when to exploit. How to build a pipeline of new products, services, and AI-driven solutions while protecting your intellectual property. How to forge alliances, build platforms, tap into crowdsourced ideas, and meet industry standards, all while shaping the organisation and watching competitors who are doing the same.</p>
-      <p style="margin: 0 0 14px;"><strong>Knowing when to give people autonomy to imagine new futures, and when to rein them in.</strong> Nurturing concepts, validating them, and driving them through to commercial sales or operational change. Enlisting employees, exciting customers, building capabilities that competitors cannot easily imitate — under a board that sets ambitious goals.</p>
-      <p style="margin: 0 0 14px;"><strong>This simulation will challenge you.</strong> You will need to create and capture value using every tool you have, making trade-offs between competing goals where discipline matters just as much as creativity.</p>
-      <p style="margin: 0;">Get it right and you reshape an industry. Get it wrong and the gale sweeps you away. <em>Can you shape the future?</em></p>
-    </div>
-  </section>
-
-  <!-- ═══ CALL TO ACTION ═══ -->
-  <div class="hero" style="padding-top: 0;">
-    <p class="hero-lede">Step into the cockpit of Chief Innovation Officer at Vélox Dynamics. Make the trade-offs. Watch the consequences unfold.</p>
-   <a href="https://ammonsalter-del.github.io/thedisruptor-sim/" class="btn-primary">Play The Disruptor →</a>
     <div class="hero-meta">Free · Open Source · No Installation · Works Offline</div>
   </div>
 
-  <div style="max-width: 680px; margin: 0 auto 28px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-    <div style="flex: 1; min-width: 180px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; text-align: center;">
-      <div style="font-size: 28px; font-weight: 800; color: var(--neutral-900); line-height: 1;">600+</div>
-      <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">players since April 2026</div>
+  <!-- ═══ THE CHALLENGE: his passage, then the video ═══ -->
+  <section style="margin: 8px auto 24px;">
+    <h2 style="text-align:center;">The Challenge</h2>
+    <div class="intro-box">
+      <p style="margin: 0 0 14px;">Schumpeter called it the <em>"perennial gale of creative destruction"</em>: the force that builds new industries on the ruins of old ones. Innovation drives that gale. But managing it means making difficult choices under uncertainty.</p>
+      <p style="margin: 0 0 14px;"><strong>What to fund and what to kill.</strong> When to explore and when to exploit. How to build a pipeline of new products, services, and AI-driven solutions while protecting your intellectual property. How to forge alliances, build platforms, tap into crowdsourced ideas, and meet industry standards, all while shaping the organisation and watching competitors who are doing the same. <!-- CHANGED 20 Nov: the game's own front page has this sentence on generative AI since Version 2 (game line 3147) -->How far to bring generative AI into the firm’s own work, and what that asks of your people and your budget.</p>
+      <p style="margin: 0 0 14px;"><strong>Knowing when to give people autonomy to imagine new futures, and when to rein them in.</strong> Nurturing concepts, validating them, and driving them through to commercial sales or operational change. Enlisting employees, exciting customers, building capabilities that competitors cannot easily imitate, under a board that sets ambitious goals.</p>
+      <p style="margin: 0 0 14px;"><strong>This simulation will challenge you.</strong> You will need to create and capture value using every tool you have, making trade-offs between competing goals where discipline matters just as much as creativity.</p>
+      <p class="is-short" style="margin: 0;">Get it right and you reshape an industry. Get it wrong and the gale sweeps you away. <em>Can you shape the future?</em></p>
     </div>
-    <div style="flex: 1; min-width: 180px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; text-align: center;">
-      <div style="font-size: 28px; font-weight: 800; color: var(--neutral-900); line-height: 1;">50</div>
-      <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">countries</div>
+    <p class="is-short" style="text-align:center; margin: 22px 0 10px; font-weight: 600;">New here? Watch the short intro.</p>
+    <div class="hero-video">
+      <iframe src="https://drive.google.com/file/d/13lOUT_Bnb1gzScFCEd5xDB1Yv3f74kk2/preview" allow="autoplay" allowfullscreen></iframe>
     </div>
-    <div style="flex: 1; min-width: 180px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; text-align: center; display: flex; align-items: center; justify-content: center;">
-      <div style="font-size: 13px; font-weight: 700; color: var(--neutral-900); line-height: 1.4;">Educators from<br>31 universities</div>
+  </section>
+
+  <!-- ═══ FOUR QUICK CARDS: one fact each ═══ -->
+  <div class="quick-grid">
+    <div class="quick-card s-red"><img src="icons/h-calendar.png" alt="" width="40" height="40"><h3>Three years in the job</h3><p class="is-short">A board that sets the goals, and a CEO who appraises your year</p></div>
+    <div class="quick-card s-blue"><img src="icons/h-toolbox.png" alt="" width="40" height="40"><h3>Sixteen systems</h3><p class="is-short">From R&amp;D and alliances to patents, platforms and venturing</p></div>
+    <div class="quick-card s-amber"><img src="icons/h-gamepad.png" alt="" width="40" height="40"><h3>Five ways to play</h3><p class="is-short">Forge, Incubator, Pivot, Jugaad and Gauntlet</p></div>
+    <div class="quick-card s-green"><img src="icons/h-page.png" alt="" width="40" height="40"><h3>A report to take away</h3><p class="is-short">Your tenure at Vélox, as a PDF, with a postcard to keep</p></div>
+  </div>
+
+  <!-- 22 Nov, his words: "The boxes are pretty ugly on the first page ... especially for the ones with numbers". The three figures are now one band, no boxes. Figures are his of 19 Nov (VIDEO-SCRIPT-V2.txt, scene 1); "50+" stands for "more than 50". -->
+  <div class="num-band">
+    <div class="num"><b>c.&nbsp;2,000</b><span>people since April 2026</span></div>
+    <div class="num"><b>77</b><span>countries</span></div>
+    <div class="num"><b>50+</b><span>universities</span></div>
+  </div>
+
+  <div class="sys-band" aria-label="The game's systems">
+    <div class="sys-band-inner">
+      <figure><img src="icons/sys-strategy.png" alt="" width="44" height="44"><figcaption>Innovation Strategy</figcaption></figure>
+      <figure><img src="icons/sys-rd-portfolio.png" alt="" width="44" height="44"><figcaption>R&amp;D Portfolio</figcaption></figure>
+      <figure><img src="icons/sys-launchpad.png" alt="" width="44" height="44"><figcaption>Innovation Launchpad</figcaption></figure>
+      <figure><img src="icons/sys-staff.png" alt="" width="44" height="44"><figcaption>Staff &amp; Hiring</figcaption></figure>
+      <figure><img src="icons/sys-organisation.png" alt="" width="44" height="44"><figcaption>Organisation</figcaption></figure>
+      <figure><img src="icons/sys-ip.png" alt="" width="44" height="44"><figcaption>IP Management</figcaption></figure>
+      <figure><img src="icons/sys-crowdsourcing.png" alt="" width="44" height="44"><figcaption>Crowdsourcing</figcaption></figure>
+      <figure><img src="icons/sys-grants.png" alt="" width="44" height="44"><figcaption>Grant Funding</figcaption></figure>
+      <figure><img src="icons/sys-scouting.png" alt="" width="44" height="44"><figcaption>Tech Scouting</figcaption></figure>
+      <figure><img src="icons/sys-universities.png" alt="" width="44" height="44"><figcaption>Universities &amp; Research</figcaption></figure>
+      <figure><img src="icons/sys-alliances.png" alt="" width="44" height="44"><figcaption>Alliances</figcaption></figure>
+      <figure><img src="icons/sys-standards.png" alt="" width="44" height="44"><figcaption>Standards</figcaption></figure>
+      <figure><img src="icons/sys-platform.png" alt="" width="44" height="44"><figcaption>Platform</figcaption></figure>
+      <figure><img src="icons/sys-venturing.png" alt="" width="44" height="44"><figcaption>Corp. Venturing</figcaption></figure>
+      <figure><img src="icons/sys-competitors.png" alt="" width="44" height="44"><figcaption>Competitors &amp; Markets</figcaption></figure>
     </div>
   </div>
 
-  <hr class="section-divider">
-
-  <!-- ═══ EXPLORE ═══ -->
-  <section>
-    <h2>Explore</h2>
-    <p class="section-intro">The rest of the site sits behind these four links.</p>
-    <div class="explore-grid">
-      <a href="about.html" class="explore-card">
-        <div class="card-icon-box blue">🏢</div>
-        <h3>About the Game</h3>
-        <p>The experience, managerial practices, game modes, and the end-of-game scorecard.</p>
-      </a>
-      <a href="how-to-play.html" class="explore-card">
-        <div class="card-icon-box green">🎮</div>
-        <h3>How to Play</h3>
-        <p>Quick start, tutorials, how time flows, and board reviews.</p>
-      </a>
-      <a href="educators.html" class="explore-card">
-        <div class="card-icon-box cyan">🎓</div>
-        <h3>For Educators</h3>
-        <p>Educator's Pack, the Incubator, and ways to use the game in your course.</p>
-      </a>
-      <a href="licence.html" class="explore-card">
-        <div class="card-icon-box red">📜</div>
-        <h3>Licence</h3>
-        <p>CC BY-NC-SA 4.0. Educational use is free; commercial use needs a separate licence.</p>
-      </a>
+  <!-- ═══ TWO TOOLS, each with a picture ═══ -->
+  <div class="tool-grid">
+    <div class="tool-tile">
+      <img src="katrien.jpg" alt="Katrien De Wolf, CEO of Vélox Dynamics">
+      <div>
+        <h2>Meet Katrien</h2>
+        <p>At the end of your tenure, sit down with Katrien De Wolf, CEO of Vélox Dynamics, for an exit interview about your run. She reads your end-of-game report before she says a word. No report, no debrief.</p>
+        <a href="https://claude.ai/public/artifacts/30c8d721-18e6-4c77-9e3b-9d50859226ed" target="_blank" rel="noopener" class="tool-link">Open the Executive Debrief →</a>
+      </div>
     </div>
-  </section>
+    <div class="tool-tile">
+      <img src="img/boardroom.webp" alt="The boardroom at Vélox Dynamics">
+      <div>
+        <h2>Teaching with it</h2>
+        <p>The Educator's Pack, the Incubator, and ways to use the game in your course.</p>
+        <a href="educators.html" class="tool-link">For Educators →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ THE REST OF THE SITE: links, not cards ═══ -->
+  <div class="link-row">
+    <a href="about.html" class="btn-secondary">About the Game →</a>
+    <a href="screenshots.html" class="btn-secondary">See Screenshots →</a>
+    <a href="case-study.html" class="btn-secondary">The Vélox World →</a>
+    <a href="faq.html" class="btn-secondary">FAQ →</a>
+  </div>
+  <p class="is-short" style="text-align:center; margin: 14px auto 40px; font-size: 13px; color: var(--text-muted);">New in Version 2: the board meets in person, the CEO appraises your year, AI arrives in R&amp;D, and the ending is new. <a href="about.html" style="color: var(--red-500); font-weight: 600;">See what changed</a></p>
 
   <footer>
     <div class="footer-inner">
       <div>
         <h4>The Disruptor</h4>
-        <p>A corporate entrepreneurship and innovation management simulation for educational use.</p>
+        <p class="is-short">A corporate entrepreneurship and innovation management simulation for educational use.</p>
       </div>
       <div>
         <h4>Pages</h4>
@@ -230,6 +330,7 @@
         <a href="screenshots.html">Screenshots</a>
         <a href="case-study.html">The Vélox World</a>
         <a href="educators.html">For Educators</a>
+        <a href="classroom.html">Competitive Play</a>
         <a href="faq.html">FAQ</a>
         <a href="licence.html">Licence</a>
       </div>
@@ -244,7 +345,7 @@
         <iframe src="https://ieplaybook.substack.com/embed" width="100%" height="150" style="max-width:480px; border:1px solid #eee; background:white; border-radius:6px;" frameborder="0" scrolling="no" title="Subscribe to the Innovation and Entrepreneurship Playbook"></iframe>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. <!-- CHANGED 20 Nov: both licences, as the game states them -->Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
   </footer>
 
   <script>
