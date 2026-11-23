@@ -1252,7 +1252,7 @@ var commits = [];
 document.querySelector('#page h4').textContent = 'End of year appraisal';
 (function(){ var pg = document.getElementById('page'), keep = [pg.querySelector('img'), pg.querySelector('h4')]; pg.innerHTML = ''; keep.forEach(function(e){ pg.appendChild(e); });
   var y = document.createElement('div'); y.className = 'yr'; y.textContent = 'Year ' + YR + ' \u00b7 Chief Innovation Officer'; pg.appendChild(y);
-  (MD.facts || []).forEach(function(x){ var r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<span>' + x.name + '</span><b style="opacity:0;transition:opacity .5s;font-size:19px">' + (x.met ? '\u2713' : '\u2717') + '</b>'; pg.appendChild(r); });
+  (MD.facts || []).forEach(function(x){ var r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<span>' + esc(x.name) + '</span><b style="opacity:0;transition:opacity .5s;font-size:19px">' + (x.met ? '\u2713' : '\u2717') + '</b>'; pg.appendChild(r); });
   var o = document.createElement('div'); o.className = 'row'; o.style.borderTop = '2px solid #003060'; o.style.paddingTop = '8px'; o.innerHTML = '<span><strong>The year</strong></span><b id="pageScore" style="opacity:0;transition:opacity .5s"></b>'; pg.appendChild(o); })();
 document.getElementById('tint').style.background = YR === 2 ? 'linear-gradient(rgba(70,100,140,.24), rgba(60,80,110,.10))' : YR === 3 ? 'linear-gradient(rgba(60,30,70,.30), rgba(180,90,40,.16))' : 'none';
 var stepNo = 0, cur = null;
@@ -1566,7 +1566,7 @@ timer = setTimeout(function(){ run(0); }, 200);   // the meeting begins on openi
 }
 (function(){ if (!/[?&]game=1/.test(location.search)) { boot(null); return; }
   var started = false, late = setTimeout(function(){ if (!started) try { parent.postMessage({ type:'scene-no-facts', scene:'appraisal' }, '*'); } catch (e) {} }, 4000);
-  window.addEventListener('message', function(e){ if (started || !e.data || e.data.type !== 'scene-facts' || !e.data.meeting) return; started = true; clearTimeout(late); boot(e.data.meeting);
+  window.addEventListener('message', function(e){ if (started || !e.data || e.data.type !== 'scene-facts' || !e.data.meeting) return; if (e.source !== window.parent || (location.protocol !== 'file:' && e.origin !== location.origin)) return;   /* 23 Nov 2026: facts are taken only from the game that opened this page, on the same site (a folder opened from disk has no site to compare) */ started = true; clearTimeout(late); boot(e.data.meeting);
     try { parent.postMessage({ type:'scene-started', scene:'appraisal' }, '*'); } catch (x) {} });
   /* a fault in the scene's own script while it plays: tell the game, which then opens the review it has always had */
   window.addEventListener('error', function(){ try { parent.postMessage({ type:'scene-error', scene:'appraisal' }, '*'); } catch (x) {} });

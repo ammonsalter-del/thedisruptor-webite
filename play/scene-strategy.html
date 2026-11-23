@@ -717,14 +717,14 @@ function caseBy(d){ if (!PRESENTER[d.id]) setPresenters(); return PRESENTER[d.id
 function replyText(d){ return String(d.reply[1]).replace('[who]', first(caseBy(d))); }   // a reply that names whoever put the case
 if (GIVEN) {   // the game's own meeting
   JOINED = true; document.body.classList.add('ingame');
-  DIRS = GIVEN.table.map(function(id, i){ var d = ALL_DIRS[id]; d.at = TABLE_SLOT[i].at; d.rot = TABLE_SLOT[i].rot; return d; });
+  DIRS = GIVEN.table.map(function(id, i){ if (!Object.prototype.hasOwnProperty.call(ALL_DIRS, id)) return null; var d = ALL_DIRS[id]; d.at = TABLE_SLOT[i].at; d.rot = TABLE_SLOT[i].rot; return d; }).filter(Boolean);   // 23 Nov 2026: only the directions this page knows
   VOTES = (GIVEN.votes || []).map(function(v){ return [v[0], GIVEN.table.indexOf(v[1])]; }).filter(function(v){ return v[1] >= 0 && MEM[v[0]] && v[0] !== 'katrien' && v[0] !== 'you'; });
   if (GIVEN.goalLabel) HEAD.label = GIVEN.goalLabel;
   if (GIVEN.goalWords) LINE_TARGET = TARGET_FORM.replace('{goal}', GIVEN.goalWords);   // AMMON's line; only the figure changes with the version of the game
   // 14 Nov, probation: the version's own mix (the game's incrCap, ntfFloor, ntwFloor). Where nothing new to the world is asked for, Katrien's line stops before it.
   if (GIVEN.mix) { ['incrCap', 'ntfFloor', 'ntwFloor'].forEach(function(k){ if (typeof GIVEN.mix[k] === 'number') HEAD[k] = GIVEN.mix[k]; });
     if (HEAD.ntwFloor === 0) LINE_MIX = 'I would like a mix. Some from improving what we have, and more from things new to us.'; }
-  if (GIVEN.cases) for (var gk in GIVEN.cases) Y2_CASE[gk] = GIVEN.cases[gk];
+  if (GIVEN.cases) for (var gk in GIVEN.cases) { if (Object.prototype.hasOwnProperty.call(GIVEN.cases, gk) && Object.prototype.hasOwnProperty.call(ALL_DIRS, gk)) Y2_CASE[gk] = GIVEN.cases[gk]; }   // 23 Nov 2026: only for the directions this page knows
   if (GIVEN.player && GIVEN.player.avatar) MEM.you.photo = GIVEN.player.avatar;
 }
 if (OPENING) for (var cid in ALL_DIRS) { var cd = ALL_DIRS[cid];   // 16 Nov: the case and the reply in Year 1, drawn for the game (the same people speak)
@@ -1071,7 +1071,7 @@ function meeting(from){
   steps.push([6000, function(){ speak('katrien', 'you', LINE_DIR + pick.name + '.' + askLine(pick.id));
       brief.style.setProperty('--c', pick.c);
       brief.innerHTML = '<small>Your first year</small><h3>' + esc(pick.name) + '</h3>'
-        + '<div class="blk" id="bk1"><div class="big"><b>' + HEAD.label + '</b><span>in innovation income this year</span></div></div>'
+        + '<div class="blk" id="bk1"><div class="big"><b>' + esc(HEAD.label) + '</b><span>in innovation income this year</span></div></div>'
         + '<div class="blk" id="bk2"><h4>Make it a mix</h4><div class="bar"><i style="width:' + HEAD.incrCap + '%;background:#9aa7b5"></i><i style="width:' + HEAD.ntfFloor + '%;background:#2563eb"></i><i style="width:' + HEAD.ntwFloor + '%;background:#7c3aed"></i><i style="flex:1;background:#e6dfd2"></i></div>'
         + '<div class="row"><i style="background:#9aa7b5"></i><span><b>' + (HEAD.incrCap === 50 ? 'Up to half' : 'Up to ' + HEAD.incrCap + '%') + '</b> from improving what we sell</span></div>'
         + '<div class="row"><i style="background:#2563eb"></i><span><b>At least ' + HEAD.ntfFloor + '%</b> from things new to Vélox</span></div>'
@@ -1122,7 +1122,7 @@ requestAnimationFrame(frame); meeting();   // (meeting('enter') would begin at t
 }
 (function(){ if (!/[?&]game=1/.test(location.search)) { boot(null); return; }
   var started = false, late = setTimeout(function(){ if (!started) try { parent.postMessage({ type:'scene-no-facts', scene:'strategy' }, '*'); } catch (e) {} }, 4000);
-  window.addEventListener('message', function(e){ if (started || !e.data || e.data.type !== 'scene-facts' || !e.data.meeting) return; started = true; clearTimeout(late); boot(e.data.meeting);
+  window.addEventListener('message', function(e){ if (started || !e.data || e.data.type !== 'scene-facts' || !e.data.meeting) return; if (e.source !== window.parent || (location.protocol !== 'file:' && e.origin !== location.origin)) return;   /* 23 Nov 2026: facts are taken only from the game that opened this page, on the same site (a folder opened from disk has no site to compare) */ started = true; clearTimeout(late); boot(e.data.meeting);
     try { parent.postMessage({ type:'scene-started', scene:'strategy' }, '*'); } catch (x) {} });
   /* a fault in the scene's own script while it plays: tell the game, which then carries on with the screens it has always had */
   window.addEventListener('error', function(){ try { parent.postMessage({ type:'scene-error', scene:'strategy' }, '*'); } catch (x) {} });

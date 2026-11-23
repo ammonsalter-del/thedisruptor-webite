@@ -573,7 +573,7 @@ window.addEventListener('resize', resize); resize(); drawPack();
 }
 (function(){ if (!/[?&]game=1/.test(location.search)) { boot(null); return; }
   var started = false, late = setTimeout(function(){ if (!started) try { parent.postMessage({ type:'scene-no-facts', scene:'desk' }, '*'); } catch (e) {} }, 4000);
-  window.addEventListener('message', function(e){ if (started || !e.data || e.data.type !== 'scene-facts' || !e.data.meeting) return; started = true; clearTimeout(late); boot(e.data.meeting);
+  window.addEventListener('message', function(e){ if (started || !e.data || e.data.type !== 'scene-facts' || !e.data.meeting) return; if (e.source !== window.parent || (location.protocol !== 'file:' && e.origin !== location.origin)) return;   /* 23 Nov 2026: facts are taken only from the game that opened this page, on the same site (a folder opened from disk has no site to compare) */ started = true; clearTimeout(late); boot(e.data.meeting);
     try { parent.postMessage({ type:'scene-started', scene:'desk' }, '*'); } catch (x) {} });
   /* a fault in the scene's own script while it plays: tell the game, which then carries on with the screens it has always had */
   window.addEventListener('error', function(){ try { parent.postMessage({ type:'scene-error', scene:'desk' }, '*'); } catch (x) {} });
