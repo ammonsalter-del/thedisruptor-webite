@@ -11445,6 +11445,13 @@ const PIVOT_OBJECTIVES_POOL = [
             high:   { progressNoise: 0.45, budgetNoise: 0.40, milestoneNoise: 0.45, completionNoise: 25 }
         };
         var QUALITY_BIAS = { strong: 0.06, decent: 0.01, marginal: -0.04, weak: -0.12 };
+        // PLAYTEST 23 Nov (over budget, version 2): the base of a project's quarterly progress (18 + 3 x team), named so the plan reads the same figure as the
+        // quarterly step; the plan's factor for the usual lifts, set from played games so that about as many projects finish before their plan as after it; and the
+        // two parts of a quarter's spend (work, time). On plan a project spends RD_SPEND_WORK + RD_SPEND_TIME of the money it had left and returns the rest.
+        var RD_BASE_PROGRESS = 17;   // PLAYTEST 23 Nov, evening: 17 on his word ("17, a little slower") after his own Year 1 came to 38M against a goal of 22M; it was 18 since the morning, 19 before
+        var RD_PLAN_FACTOR = 1.4;
+        var RD_SPEND_WORK = 0.75;
+        var RD_SPEND_TIME = 0.20;
 
         // Roll true quality for a project using seeded random per game session
         function rollTrueQuality(project) {
@@ -15834,6 +15841,7 @@ const PIVOT_OBJECTIVES_POOL = [
                         }
                     });
                 }
+                rdSetPlan(proj);   // PLAYTEST 23 Nov: the plan, set once at the start
                 G.projects.push(proj);
             });
 
@@ -21047,7 +21055,7 @@ const PIVOT_OBJECTIVES_POOL = [
                     if (capLabel) h += '<span style="font-size:10px;color:' + hc.text + ';font-weight:600;">🔬 ' + capLabel + '</span>';
                     h += '<span style="font-size:10px;color:' + riskColor + ';font-weight:600;">⚡ ' + (p.risk ? p.risk.charAt(0).toUpperCase() + p.risk.slice(1) : '') + ' risk</span>';
                     h += '<span style="font-size:10px;color:#64748b;">' + catIcon + ' ' + (p.type || '') + '</span>';
-                    if (p.timeline) h += '<span style="font-size:10px;color:#64748b;">⏱ ' + p.timeline + ' quarters</span>';
+                    if (p.planQuarters || p.timeline) h += '<span style="font-size:10px;color:#64748b;">⏱ ' + (p.planQuarters || p.timeline) + ' quarters</span>';   // PLAYTEST 23 Nov: a running project shows its planned quarters; a proposal its card figure
                     h += '</div>';
                     h += '</div>';
                     h += '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">';
@@ -21296,6 +21304,7 @@ const PIVOT_OBJECTIVES_POOL = [
                         }
                     });
                 }
+                rdSetPlan(newProj);   // PLAYTEST 23 Nov: the plan, set once at the start
                 G.projects.push(newProj);
             });
 
@@ -24396,7 +24405,7 @@ const PIVOT_OBJECTIVES_POOL = [
             h += '<div style="font-size:12px;color:#475569;line-height:1.6;">Finished projects become innovations on the Innovation Launchpad. Projects build the capabilities they target. Some lead to patents.</div></div>';
             h += '<div style="padding:10px 12px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;">';
             h += '<div style="font-size:13px;font-weight:700;color:#991b1b;margin-bottom:4px;">What It Costs</div>';
-            h += '<div style="font-size:12px;color:#475569;line-height:1.6;">Each project has a budget drawn from the innovation budget, and it needs staff whose time is then not spent elsewhere. Projects can run over budget.</div></div>';
+            h += '<div style="font-size:12px;color:#475569;line-height:1.6;">Each project has a budget drawn from the innovation budget, and it needs staff whose time is then not spent elsewhere. Projects can run over budget, and the extra comes from the innovation budget.</div></div>';   // PLAYTEST 23 Nov: his addition
             h += '</div>';
             h += '</div>';
 
@@ -24670,7 +24679,9 @@ const PIVOT_OBJECTIVES_POOL = [
             html += '<div style="font-size:22px;font-weight:800;">' + fmtBudget() + '</div>';
             html += '<div style="font-size:11px;opacity:0.8;">Innovation Budget</div>';
             html += '<div style="font-size:13px;margin-top:4px;"><strong>' + G.poolPicksThisYear + '/' + maxYearly + '</strong> started this year</div>';
-            html += '</div></div></div>';
+            html += '</div></div>';
+            html += '<div style="margin-top:10px;padding:7px 10px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:12px;color:#92400e;line-height:1.5;">⚠️ The innovation budget has to cover all other systems. Only invest in R&D what you can afford.</div>';   // PLAYTEST 23 Nov: his warning, in his words
+            html += '</div>';
 
             // Filter bar
             var filters = [
@@ -25224,8 +25235,9 @@ const PIVOT_OBJECTIVES_POOL = [
         // runs over or under its plan (an even share of its budget each quarter). Both use only figures the player can already see on the
         // project: progress, team, health, money spent, budget. The green band is wider for a more exploratory project (H1 narrow, H3
         // wide), as designed, so a late or costly H3 project reads as ordinary and the same in H1 reads as trouble.
-        // The plan is noted on the project the first time the game sees it (planGateQ and planStage for each stage; planSpendQ0 and
-        // planSpent0 once); nothing else reads these.
+        // PLAYTEST 23 Nov (over budget, over time; his decisions A to E): the plan is set once, when the project starts running (rdSetPlan below, called from every
+        // route into the portfolio and from a loaded save): planQuarters, the quarters left from where it starts (the game's own estimate, rdEstPlanQuarters), planWork0, the work left then,
+        // planStartQ, the quarter it started, and planSpent0, what it had spent by then. The quarterly spend, the card and both gauges read this one plan.
         function rdEstGateQuarters(p) {   // the card's own estimate (see "Estimated completion" in renderRdPipelineCard), kept the same
             var team = (typeof getProjectTeamMembers === 'function') ? getProjectTeamMembers(p.id) : [];
             var n = team.length > 0 ? team.length : (p.team || 1);
@@ -25236,9 +25248,39 @@ const PIVOT_OBJECTIVES_POOL = [
             var nowQ = ((G.year || 1) - 1) * 4 + (G.quarter || 1);
             (G.projects || []).forEach(function(p) {
                 if (!p || typeof p.stage !== 'number') return;
-                if (p.planStage !== p.stage || typeof p.planGateQ !== 'number') { p.planStage = p.stage; p.planGateQ = nowQ + rdEstGateQuarters(p); }
-                if (typeof p.planSpendQ0 !== 'number') { p.planSpendQ0 = nowQ; p.planSpent0 = p.spent || 0; }
+                rdSetPlan(p);   // PLAYTEST 23 Nov: the plan (was the gate quarter of each stage and the spend from the first time the game saw the project)
             });
+        }
+        // PLAYTEST 23 Nov (version 2): the work still to do, in points of progress, counted as the quarterly step moves a project: progress stops at 100, and
+        // passing a gate starts the next stage at 75 (Math.max(50, progress - 25)), so each later stage holds 25 points. It falls as work is done and rises when
+        // progress is lost (a stalled gate, a failed validation, a setback), so lost work is done, and paid for, again.
+        function rdWorkLeft(p) { return Math.max(0, (100 - Math.min(100, p.progress || 0)) + 25 * (2 - Math.min(2, p.stage || 0))); }
+        // The plan: the quarterly steps the project needs from where it stands, gaining (RD_BASE_PROGRESS + 3 x its team) x RD_PLAN_FACTOR a quarter and
+        // passing its gates as the quarterly step does. The same rule for every kind of project; the factor stands for the usual lifts (health, the year, the strategy).
+        function rdEstPlanQuarters(p) {
+            var g = Math.max(1, Math.round((RD_BASE_PROGRESS + 3 * (p.team || 2)) * RD_PLAN_FACTOR));
+            var s = Math.min(2, p.stage || 0), pr = Math.min(100, p.progress || 0), n = 0;
+            while (n < 40) { n++; pr = Math.min(100, pr + g); if (pr >= 100 && s < 2) { s++; pr = Math.max(50, pr - 25); } else if (pr >= 100) break; }
+            return n;
+        }
+        // PLAYTEST 23 Nov (his decision E): set once, when a project starts running.
+        function rdSetPlan(p) {
+            if (!p || typeof p.planQuarters === 'number') return;
+            p.planQuarters = rdEstPlanQuarters(p);
+            p.planWork0 = Math.max(1, rdWorkLeft(p));
+            p.planStartQ = ((G.year || 1) - 1) * 4 + (G.quarter || 1);
+            p.planSpent0 = p.spent || 0;
+        }
+        // PLAYTEST 23 Nov (version 2): a quarter's planned spend. B0 is the money the project had left at the start. A work part follows the work done this quarter
+        // (all of it over the plan: RD_SPEND_WORK x B0), a time part follows the quarters (RD_SPEND_TIME x B0 over the planned quarters, and on for every quarter more).
+        // On plan the two come to less than B0, and the rest comes back at the end; extra quarters, work done twice and bad luck on cost take a project over.
+        // The scouting and grant figures apply as before; the risk swing is applied after, in the quarterly step, unchanged.
+        function rdPlanSpendRate(p, workDone) {
+            rdSetPlan(p);
+            var sc = (p.scoutingModifier && p.scoutingModifier.type === 'cost') ? (1.0 + p.scoutingModifier.factor) : 1.0;
+            var gr = (p.grantFunding && p.grantFunding.costReduction) ? (1.0 - p.grantFunding.costReduction) : 1.0;
+            var b0 = Math.max(0, (p.budget || 0) - (p.planSpent0 || 0));
+            return b0 * (RD_SPEND_WORK * Math.max(0, workDone || 0) / (p.planWork0 || 1) + RD_SPEND_TIME / p.planQuarters) * sc * gr;
         }
         var rdGaugeSeen = {};
         function rdGaugeDraw(key, v, T, W, H) {   // v from +100 (the top, good) to -100 (the bottom, trouble); T the tolerance
@@ -25261,15 +25303,18 @@ const PIVOT_OBJECTIVES_POOL = [
         }
         function rdGauges(p, W, H) {
             var nowQ = ((G.year || 1) - 1) * 4 + (G.quarter || 1);
-            if (p.planStage !== p.stage || typeof p.planGateQ !== 'number') { p.planStage = p.stage; p.planGateQ = nowQ + rdEstGateQuarters(p); }
-            if (typeof p.planSpendQ0 !== 'number') { p.planSpendQ0 = nowQ; p.planSpent0 = p.spent || 0; }
+            rdSetPlan(p);   // PLAYTEST 23 Nov: both gauges read the project's plan from its start
             var T = p.horizon === 1 ? 10 : p.horizon === 2 ? 20 : 35;                     // the tolerance widens with the horizon
-            // schedule: quarters late (+) or ahead (-); full scale is three quarters
-            var late = (nowQ + rdEstGateQuarters(p)) - p.planGateQ;
+            // schedule: quarters late (+) or ahead (-) against the quarter the plan finishes in; the finish is the card's own estimate to the next gate plus a quarter
+            // for each stage after it (PLAYTEST 23 Nov; it was the gate quarter expected when the project entered its present stage); full scale is three quarters
+            var late = (nowQ + rdEstGateQuarters(p) + (2 - (p.stage || 0))) - (p.planStartQ + p.planQuarters);
             var sched = rdGaugeDraw(p.id + 's', Math.max(-100, Math.min(100, -late * 33.3)), T, W, H);
             sched.word = late <= -1 ? (Math.abs(late) + 'Q ahead') : late < 1 ? 'On plan' : (late + 'Q late');
-            // budget: per cent over (+) or under (-) the plan for the quarters since the game first saw the project; full scale is 50 per cent
-            var planned = (nowQ - p.planSpendQ0) * ((p.budget || 0) / (4 * (p.timeline || 8)));
+            // budget: per cent over (+) or under (-) the planned spend for the quarters since the project started, up to its planned quarters (PLAYTEST 23 Nov: the
+            // spend the quarterly step plans, so a late project that has gone past its budget reads as over); full scale is 50 per cent
+            rdPlanSpendRate(p, 0);   // the plan is set
+            var planned = Math.min(nowQ - p.planStartQ, p.planQuarters) / p.planQuarters * Math.max(0, (p.budget || 0) - p.planSpent0) * (RD_SPEND_WORK + RD_SPEND_TIME)
+                * ((p.scoutingModifier && p.scoutingModifier.type === 'cost') ? (1.0 + p.scoutingModifier.factor) : 1.0) * ((p.grantFunding && p.grantFunding.costReduction) ? (1.0 - p.grantFunding.costReduction) : 1.0);
             var over = planned > 0 ? Math.round(((p.spent || 0) - p.planSpent0 - planned) / planned * 100) : 0;
             var budget = rdGaugeDraw(p.id + 'b', Math.max(-100, Math.min(100, -over * 2)), T, W, H);
             budget.word = over >= 1 ? (over + '% over') : over <= -1 ? (Math.abs(over) + '% under') : 'On plan';
@@ -25442,7 +25487,7 @@ const PIVOT_OBJECTIVES_POOL = [
                 var _gg = rdGauges(p, 34, 84);
                 var _gCol = function(g, cap, tip) { return '<div style="width:84px;display:flex;flex-direction:column;align-items:center;" title="' + tip + '">' + g.svg + '<div style="font-size:9px;font-weight:700;letter-spacing:0.6px;color:#64748b;margin-top:3px;">' + cap + '</div><div style="font-size:11px;font-weight:700;color:' + g.color + ';">' + g.word + '</div></div>'; };
                 h += '<div style="display:flex;align-items:stretch;justify-content:center;gap:10px;padding:12px 8px 10px;margin:10px 0 2px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;">';
-                h += _gCol(_gg.sched, 'SCHED', 'Against the gate quarter expected when this project entered its present stage. The green band is wider at H2, and wider again at H3.');
+                h += _gCol(_gg.sched, 'SCHED', 'Against the quarter this project\'s plan finishes in, set when it started. The green band is wider at H2, and wider again at H3.');   // PLAYTEST 23 Nov: the gauge reads the plan from the start
                 h += '<div style="width:1px;background:#e2e8f0;margin:4px 0;"></div>';
                 h += _gCol(_gg.budget, 'BUDGET', 'Money spent against the plan of an even share of the budget each quarter. The green band is wider at H2, and wider again at H3.');
                 h += '</div>';
@@ -27003,7 +27048,7 @@ const PIVOT_OBJECTIVES_POOL = [
                             <div class="info-stat"><span class="info-stat-label">Budget</span><span class="info-stat-value">€${Math.round(p.budget * 10) / 10}M</span></div>
                             <div class="info-stat"><span class="info-stat-label">Spent</span><span class="info-stat-value">€${Math.round(p.spent * 10) / 10}M</span></div>
                             <div class="info-stat"><span class="info-stat-label">Team</span><span class="info-stat-value">${(typeof getProjectTeamMembers === 'function' && getProjectTeamMembers(p.id).length > 0) ? getProjectTeamMembers(p.id).length + '/' + p.team + ' assigned' : 'Being assigned'}</span></div>
-                            ${p.timeline ? `<div class="info-stat"><span class="info-stat-label">Timeline</span><span class="info-stat-value">${p.timeline}Q</span></div>` : ''}
+                            ${(p.planQuarters || p.timeline) ? `<div class="info-stat"><span class="info-stat-label">Timeline</span><span class="info-stat-value">${p.planQuarters || p.timeline}Q</span></div>` : ''}<!-- PLAYTEST 23 Nov: the planned quarters from its start -->
                             ${p.successRate ? `<div class="info-stat"><span class="info-stat-label">Base Success Rate</span><span class="info-stat-value">${p.successRate}%</span></div>` : ''}
                             ${p._effectiveSuccessRate ? `<div class="info-stat"><span class="info-stat-label">Effective Rate</span><span class="info-stat-value" style="color:${p._effectiveSuccessRate >= (p.successRate||50) ? '#059669' : '#dc2626'};">${p._effectiveSuccessRate}%</span></div>` : ''}
                             ${p._overBudget ? `<div class="info-stat"><span class="info-stat-label">Over Budget</span><span class="info-stat-value" style="color:#dc2626;">+${(p._cumulativeOverrun||0).toFixed(0)}%</span></div>` : ''}
@@ -52287,6 +52332,7 @@ const PIVOT_OBJECTIVES_POOL = [
                 scores: { strategic: 3, technical: 3, market: 3, financial: 3 }
             };
             G.budget = +(G.budget - proj.budget).toFixed(2);   // V2 (21 Nov 2026): accounting batch
+            rdSetPlan(proj);   // PLAYTEST 23 Nov: the plan, set once at the start
             G.projects.push(proj);
             return proj;
         }
@@ -80779,7 +80825,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                         var _sidx = G.proposedProjects.indexOf(_scoutRdProj);
                         if (_sidx >= 0) G.proposedProjects.splice(_sidx, 1);
                     }
-                    if (_scoutRdProj) { if (!G.projects) G.projects = []; G.projects.push(_scoutRdProj); }
+                    if (_scoutRdProj) { if (!G.projects) G.projects = []; rdSetPlan(_scoutRdProj); G.projects.push(_scoutRdProj); }   // PLAYTEST 23 Nov: the plan, set once at the start
                     f.routedTo = 'rd';
                     try { pushEvent('🔬 Scouting discovery entered R&D pipeline: ' + _scoutRdProj.name, 'info'); } catch(e) {}
                     openSubPopup('Discovery Entered R&D Pipeline', '<div style="text-align:center;padding:12px 0;"><div style="font-size:36px;margin-bottom:10px;">🔬</div><div style="font-size:15px;font-weight:800;color:#2563eb;margin-bottom:8px;">Active in R&D</div><div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:14px;">This ' + f.type + ' discovery has been added directly to your <strong>active R&D pipeline</strong>. Development has begun.</div><div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:6px;">' + _scoutRdProj.name + '</div><div style="font-size:12px;color:#888;margin-bottom:14px;">Confidence: ' + '★'.repeat(f.confidence) + '☆'.repeat(5 - f.confidence) + '</div><button onclick="closeSubPopup();openRdModal();" style="padding:8px 20px;border-radius:8px;border:none;background:#a16207;color:white;font-size:13px;font-weight:700;cursor:pointer;">View R&D Portfolio</button></div>', { icon: '🔬', width: '460px' });
@@ -82677,6 +82723,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                 if (p._completionResult === undefined) p._completionResult = null;
                 if (p._effectiveSuccessRate === undefined) p._effectiveSuccessRate = null;
                 if (typeof p._diminishedFactor !== 'number') p._diminishedFactor = 1.0;
+                rdSetPlan(p);   // PLAYTEST 23 Nov: a save from before the plan gets one from where the project stands now
                 // Migrate trapType → hiddenRisk for old saves
                 if (p.trapType && !p.hiddenRisk) { p.hiddenRisk = p.trapType; delete p.trapType; }
                 // Migrate quality: 'trap' → 'marginal' for old saves
@@ -86846,6 +86893,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
             // Stamp purpose alignment (matching startPoolProject pattern)
             proj.purposeAlignment = (typeof getPurposeAlignment === 'function') ? getPurposeAlignment(proj) : null;
 
+            rdSetPlan(proj);   // PLAYTEST 23 Nov: the plan, set once at the start
             G.projects.push(proj);
             // Does NOT count against poolPicksThisYear — grant-backed starts are extra capacity
 
@@ -86938,6 +86986,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
             // Stamp purpose alignment on the project
             p.purposeAlignment = getPurposeAlignment(p);
 
+            rdSetPlan(p);   // PLAYTEST 23 Nov: the plan, set once at the start
             G.projects.push(p);
             G.poolPicksThisYear++;
             // Track early promotions (outside annual review)
@@ -96341,7 +96390,15 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
             // Auto-selected details shown as info, not dropdowns
             h += '<div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;border-left:3px solid #1e3a8a;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#334155;line-height:1.7;">';
             var capExpl = proposalContext ? 'matches proposer\'s expertise' : 'your weakest capability';
-            h += '<div>📌 <strong>Target:</strong> ' + autoCapName + ' <span style="color:#64748b;">(' + capExpl + ')</span></div>';
+            if (proposalContext) {
+                h += '<div>📌 <strong>Target:</strong> ' + autoCapName + ' <span style="color:#64748b;">(' + capExpl + ')</span></div>';
+            } else {
+                // PLAYTEST 23 Nov: the player chooses the field. It was always the weakest capability, so an objective such as "Start a programme with a university in Biomechanics" could not be met by choice.
+                var _uniFieldCaps = (G.caps || []).filter(function(c) { return !c.isComposite; });
+                h += '<div>📌 <strong>Field:</strong> <select id="uni-auto-cap" style="font-size:12px;padding:3px 6px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;color:#334155;">';
+                _uniFieldCaps.forEach(function(c) { h += '<option value="' + c.id + '"' + (c.id === autoCapId ? ' selected' : '') + '>' + c.name + (c.id === autoCapId ? ' (your weakest capability)' : '') + '</option>'; });
+                h += '</select></div>';
+            }
             if (autoSupervisorNames.length > 0) {
                 h += '<div>👤 <strong>Supervisor' + (autoSupervisorNames.length > 1 ? 's' : '') + ':</strong> ' + autoSupervisorNames.join(', ') + '</div>';
             }
@@ -96366,7 +96423,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                     h += '</div>';
                 }
                 // Store auto-selected values for confirmStartProgramme to read
-                h += '<input type="hidden" id="uni-auto-cap" value="' + autoCapId + '">';
+                if (proposalContext) h += '<input type="hidden" id="uni-auto-cap" value="' + autoCapId + '">';   // PLAYTEST 23 Nov: without a proposal the Field list above carries the choice
                 h += '<input type="hidden" id="uni-auto-sups" value="' + autoSupervisorIds.join(',') + '">';
                 h += '<input type="hidden" id="uni-proposal-id" value="' + ((proposalContext && proposalContext.proposalId) || '') + '">';   // V2 (16 Nov 2026)
                 h += '<div style="display:flex;gap:8px;">';
@@ -102117,6 +102174,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                 proj.teamSize = (typeof TEAM_SIZE_BY_TYPE !== 'undefined' && TEAM_SIZE_BY_TYPE[projType]) || 2;
                 proj.ipPotential = projType === 'Breakthrough' ? 3 : projType === 'Platform' ? 2 : 1;
                 try { proj.suggestedTeam = autoSuggestTeam(proj); } catch(e) { proj.suggestedTeam = []; }
+                rdSetPlan(proj);   // PLAYTEST 23 Nov: the plan, set once at the start
                 G.projects.push(proj);
                 if (typeof assignMilestones === 'function') assignMilestones(proj);
                 cs.stats.promoted++;
@@ -102362,6 +102420,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                     // Good quality → R&D at Validate stage (~65-74% progress)
                     try {
                         var _licProj = { id: 'licrd_' + idea.id, name: idea.title, description: idea.description || '', type: idea.category || 'product', category: idea.category === 'service' ? 'service' : 'product', targetCap: idea.capability || idea.targetCap, horizon: 1, quality: _licQ, stage: 2, progress: 65 + Math.round(Math.random() * 9), spent: 0, budget: 1.5, health: 'good', team: 2, teamSize: 2, risk: 'low', reward: 'moderate', ipPotential: 1, innovationType: 'sustaining', origin: 'licensed', originBadge: '📜 Licensed', narrative: 'Licensed technology — entering validation.', sourceIdea: idea.id };
+                        rdSetPlan(_licProj);   // PLAYTEST 23 Nov: the plan, set once at the start
                         G.projects.push(_licProj);
                         if (typeof assignMilestones === 'function') assignMilestones(_licProj);
                         pushEvent('Licensed idea "' + idea.title + '" enters R&D at Validate stage.', 'good');
@@ -102372,6 +102431,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                     // Was `else if (_licQ >= 3)` — Q<3 fell through, player paid fees for nothing. Now Q<4 all route here.
                     try {
                         var _licProj2 = { id: 'licrd_' + idea.id, name: idea.title, description: idea.description || '', type: idea.category || 'product', category: idea.category === 'service' ? 'service' : 'product', targetCap: idea.capability || idea.targetCap, horizon: 1, quality: _licQ, stage: 1, progress: 40 + Math.round(Math.random() * 9), spent: 0, budget: 1.5, health: 'good', team: 2, teamSize: 2, risk: 'medium', reward: 'moderate', ipPotential: 1, innovationType: 'sustaining', origin: 'licensed', originBadge: '📜 Licensed', narrative: 'Licensed technology — entering development.', sourceIdea: idea.id };
+                        rdSetPlan(_licProj2);   // PLAYTEST 23 Nov: the plan, set once at the start
                         G.projects.push(_licProj2);
                         if (typeof assignMilestones === 'function') assignMilestones(_licProj2);
                         pushEvent('Licensed idea "' + idea.title + '" enters R&D at Develop stage.', 'good');
@@ -102503,6 +102563,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                     csProj._apparentQuality = idea.quality;
                 }
                 try { csProj.suggestedTeam = autoSuggestTeam(csProj); } catch(e) { csProj.suggestedTeam = []; }
+                rdSetPlan(csProj);   // PLAYTEST 23 Nov: the plan, set once at the start
                 G.projects.push(csProj);
                 if (typeof assignMilestones === 'function') assignMilestones(csProj);
                 cs.stats.promoted++;
@@ -106308,6 +106369,8 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
             G.projects.forEach(function(p) { if (typeof p.health === 'number') p.health = _healthStr(p.health); });
 
             G.projects.forEach(p => {
+                rdSetPlan(p);   // PLAYTEST 23 Nov: a project that came in by a route without the plan gets it here, before it moves
+                var _rdWorkStart = rdWorkLeft(p);   // PLAYTEST 23 Nov: the work left before this quarter, so the spend can follow the work done
                 const derivedTeam = getProjectTeamCount(p.id);
                 const effectiveTeam = derivedTeam > 0 ? derivedTeam : (p.team || 1);
                 // PT13-1 fix (18 Apr 2026): base progress reduced from 30 to 22.
@@ -106317,7 +106380,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                 // PT13-66 fix (20 Apr 2026): baseline further shaved 20 → 19. A 1-point
                 // nudge on every project every quarter — invisible per tick, compounds
                 // to ~5-7% slower over the whole pipeline. Feather on the scale.
-                var baseProgress = 18 + effectiveTeam * 3;   // PLAYTEST 23 Nov: 18 with portfolio projects now meeting their risks (his word: "mend at 18"); it was 19, then 16 that morning
+                var baseProgress = RD_BASE_PROGRESS + effectiveTeam * 3;   // PLAYTEST 23 Nov: 18 with portfolio projects now meeting their risks (his word: "mend at 18"); it was 19, then 16 that morning. RD_BASE_PROGRESS is 18, named so the R&D plan reads the same figure
                 // ── Legacy momentum: inherited projects carry inertia from before the CIO arrived.
                 // In Y1 Q1-Q2, legacy projects get a 50% speed boost — their teams were already
                 // running and have momentum. This ensures the 2 near-ready projects can graduate
@@ -106607,7 +106670,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                 // Auto-spend proportionally (scouting cost modifier + grant cost reduction apply)
                 const scoutCostMod = (p.scoutingModifier && p.scoutingModifier.type === 'cost') ? (1.0 + p.scoutingModifier.factor) : 1.0;
                 const grantCostMod = (p.grantFunding && p.grantFunding.costReduction) ? (1.0 - p.grantFunding.costReduction) : 1.0;
-                var baseSpendRate = (p.budget / (4 * (p.timeline || 8))) * scoutCostMod * grantCostMod;
+                var baseSpendRate = rdPlanSpendRate(p, _rdWorkStart - rdWorkLeft(p));   // PLAYTEST 23 Nov (version 2): a work part for the work done this quarter and a time part for the quarter (scouting and grant figures inside); was budget / (4 x timeline), so no project could pass its budget
 
                 // ═══ Stochastic Budget Variance (risk-driven) ═══
                 if (typeof RISK_VARIANCE !== 'undefined' && p._trueQuality) {
@@ -106624,10 +106687,14 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                 p.spent = +(p.spent + spendRate).toFixed(2);
                 // Track overrun state
                 if (p.budget > 0 && p.spent > p.budget) {
-                    if (!p._overBudget) {
-                        p._overBudget = true;
+                    // PLAYTEST 23 Nov (his decision C): the part of this quarter's spend above the budget is real money, taken from the innovation budget now (a shortfall
+                    // is carried as an overspend by budgetCarryOverspend, which runs after the quarter's R&D step). One line a quarter says how much.
+                    var _overCharge = +(p.spent - Math.max(prevSpent, p.budget)).toFixed(2);
+                    if (_overCharge > 0) { G.budget = +(G.budget - _overCharge).toFixed(2); p._overCharged = +((p._overCharged || 0) + _overCharge).toFixed(2); }
+                    if (!p._overBudget) p._overBudget = true;
+                    if (_overCharge > 0) {
                         var overPct = Math.round(((p.spent / p.budget) - 1) * 100);
-                        G.quarterEvents.push({ msg: '⚠️ Budget overrun: "' + p.name + '" is now ' + overPct + '% over budget (€' + p.spent.toFixed(1) + 'M / €' + p.budget.toFixed(1) + 'M)', type: 'warning', isStochasticEvent: true });
+                        G.quarterEvents.push({ msg: '⚠️ Budget overrun: "' + p.name + '" is now ' + overPct + '% over budget. The extra €' + (_overCharge < 0.05 ? Math.round(_overCharge * 1000) + 'K' : _overCharge.toFixed(1) + 'M') + ' this quarter comes from the innovation budget.', type: 'warning', isStochasticEvent: true });
                     }
                     p._cumulativeOverrun = +((p.spent - p.budget) / p.budget * 100).toFixed(1);
                 }
@@ -106666,7 +106733,9 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                 // ambition, just poor execution.
                 // PT11-11 fix (17 Apr 2026): Develop (1) and Validate (2) projects skip
                 // random deterioration rolls. Research (0) stays stochastic.
-                if (p._trueQuality && (p.stage || 0) < 1) {
+                // PLAYTEST 23 Nov (his word: "some risk later on as well, but lower"): the stage guard of 17 April is lifted. Develop and Validate take the draw again, at the
+                // chances written below (halved in Develop, quartered in Validate). Measured on copies: 4 slips in 115 Validate project-quarters, the pipeline still moves in Years 2 and 3.
+                if (p._trueQuality) {
                     var _deterSeed = (typeof hashStr === 'function') ? hashStr('deter-' + p.id + '-' + G.year + '-' + G.quarter) : Math.floor(Math.random() * 100);
                     var _deterRoll = (Math.abs(_deterSeed) % 100);
                     // Base deterioration chance by horizon: H1=5%, H2=8%, H3=10%
@@ -106917,6 +106986,15 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                 }
                 // 2. Generate IP assets (skip for failed projects)
                 const ipAssets = _isFailed ? [] : generateIPFromProject(p);
+                // PLAYTEST 23 Nov (his decision D): a project that finishes its last stage under budget, whatever the outcome, returns the rest to the innovation budget.
+                // Inherited projects too (his answer, 23 Nov: "Treat them like any other"). A stopped project never reaches here, so it is not paid twice.
+                if (p.budget > 0 && (p.spent || 0) < p.budget) {
+                    var _unspentBack = +(p.budget - (p.spent || 0)).toFixed(2);
+                    if (_unspentBack >= 0.005) {
+                        G.budget = +(G.budget + _unspentBack).toFixed(2); p._unspentReturned = _unspentBack;
+                        G.quarterEvents.push({ msg: '💰 "' + p.name + '" finished under budget: €' + (_unspentBack < 0.05 ? Math.round(_unspentBack * 1000) + 'K' : _unspentBack.toFixed(1) + 'M') + ' returns to the innovation budget.', type: 'success' });
+                    }
+                }
                 // 3. Archive project
                 if (!G.completedProjects) G.completedProjects = [];
                 G.completedProjects.push({ ...p, completedYear: G.year, completedQuarter: G.quarter, ipAssets: ipAssets });
@@ -111560,7 +111638,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                 '<div style="font-size:12px;color:#475569;line-height:1.6;">Your Probation Year is complete. Download your report as a record of your first year as CIO of V\u00e9lox Dynamics.</div>' +
                 '</div><br>' +
                 '<button id="download-probation-pdf-btn" onclick="downloadProbationPDF()" style="padding:14px 32px;background:linear-gradient(135deg,#cc2936,#dc3545);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(204,41,54,0.3);margin-bottom:16px;">\uD83D\uDCC4 Download Probation Report (PDF)</button><br>' +   // V2 (16 Nov 2026): his answer "Probation gets the Exit Debrief": the end screen's Exit Debrief card, word for word, with the dismissal's 'your time at Vélox'
-                '<a href="https://claude.ai/public/artifacts/30c8d721-18e6-4c77-9e3b-9d50859226ed" target="_blank" rel="noopener" style="text-decoration:none;display:flex;align-items:center;gap:16px;max-width:480px;margin:0 auto 16px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 45%,#7f1d1d 100%);padding:18px 20px;text-align:left;border:1px solid #7f1d1d;transition:transform 0.15s,box-shadow 0.15s;" onmouseover="this.style.transform=\'translateY(-2px)\';this.style.boxShadow=\'0 6px 20px rgba(127,29,29,0.4)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'">' +
+                '<a href="https://claude.ai/artifact/BybaEKTR3EJnvtUp59maPf" target="_blank" rel="noopener" style="text-decoration:none;display:flex;align-items:center;gap:16px;max-width:480px;margin:0 auto 16px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 45%,#7f1d1d 100%);padding:18px 20px;text-align:left;border:1px solid #7f1d1d;transition:transform 0.15s,box-shadow 0.15s;" onmouseover="this.style.transform=\'translateY(-2px)\';this.style.boxShadow=\'0 6px 20px rgba(127,29,29,0.4)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'">' +
                 '<img src="CEO.webp" alt="Katrien De Wolf" style="width:62px;height:62px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:2px solid rgba(255,255,255,0.55);">' +
                 '<div style="flex:1;">' +
                 '<div style="font-size:10px;font-weight:800;color:#fca5a5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;">Exit Debrief with Katrien</div>' +
@@ -112223,7 +112301,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
 
             // ── CEO Exit Interview — external Claude artefact (optional bolt-on).
             // To remove or update, edit this block only. Game has no dependency on it.
-            var ceoDebriefUrl = 'https://claude.ai/public/artifacts/30c8d721-18e6-4c77-9e3b-9d50859226ed';
+            var ceoDebriefUrl = 'https://claude.ai/artifact/BybaEKTR3EJnvtUp59maPf';   // 23 Nov 2026: the debrief rebuilt for the new report
             html += '<a href="' + ceoDebriefUrl + '" target="_blank" rel="noopener" style="text-decoration:none;display:flex;align-items:center;gap:16px;max-width:480px;margin:0 auto 16px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 45%,#7f1d1d 100%);padding:18px 20px;text-align:left;border:1px solid #7f1d1d;transition:transform 0.15s,box-shadow 0.15s;" onmouseover="this.style.transform=\'translateY(-2px)\';this.style.boxShadow=\'0 6px 20px rgba(127,29,29,0.4)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'">';
             html += '<img src="CEO.webp" alt="Katrien De Wolf" style="width:62px;height:62px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:2px solid rgba(255,255,255,0.55);">';
             html += '<div style="flex:1;">';
@@ -115781,6 +115859,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
                     G.budget = +(G.budget - p.budget).toFixed(2);   // V2 (21 Nov 2026): accounting batch
                     // Stamp purpose alignment (matching startPoolProject pattern)
                     p.purposeAlignment = (typeof getPurposeAlignment === 'function') ? getPurposeAlignment(p) : null;
+                    rdSetPlan(p);   // PLAYTEST 23 Nov: the plan, set once at the start
                     G.projects.push(p);
                     G.poolPicksThisYear = (G.poolPicksThisYear || 0) + 1;
                     // Purpose impact: track purpose-aligned project starts
@@ -117132,6 +117211,7 @@ return 'You accept the dependency\u2014no immediate disruption, but you remain v
             if (typeof assignMilestones === 'function') assignMilestones(p);
             // Deduct budget
             G.budget = +(G.budget - p.budget).toFixed(2);   // V2 (21 Nov 2026): accounting batch
+            rdSetPlan(p);   // PLAYTEST 23 Nov: the plan, set once at the start
             G.projects.push(p);
             // Track pool picks for yearly cap
             G.poolPicksThisYear = (G.poolPicksThisYear || 0) + 1;
