@@ -1,0 +1,2744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retro Patrol: Defender Mini-Game</title>
+  <style>
+    :root {
+      --bg: #060a1d;
+      --fg: #e8f7ff;
+      --accent: #23d5ff;
+      --danger: #ff4a79;
+      --gold: #ffcf57;
+      --ground: #233d6d;
+      --hud-bg: rgba(10, 20, 38, 0.84);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(120% 120% at 50% 20%, #2a2261 0%, #151a43 52%, #080c22 100%);
+      color: var(--fg);
+      font-family: "Trebuchet MS", "Verdana", sans-serif;
+      overflow: hidden;
+    }
+
+    .wrap {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 12px;
+    }
+
+    canvas {
+      width: min(100vw - 24px, 1280px);
+      height: min((100vw - 24px) * 0.5625, 720px, calc(100vh - 24px));
+      max-width: 100%;
+      max-height: 100%;
+      image-rendering: pixelated;
+      border: 1px solid rgba(95, 178, 255, 0.4);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55), 0 0 24px rgba(35, 213, 255, 0.2);
+      background: #0a1026;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      background: rgba(0, 0, 0, 0.48);
+      color: #e9f8ff;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+      font-size: clamp(14px, 2vw, 20px);
+      letter-spacing: 1px;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .panel {
+      background: rgba(8, 22, 40, 0.9);
+      border: 2px solid rgba(121, 205, 255, 0.78);
+      border-radius: 12px;
+      padding: 18px 20px;
+      backdrop-filter: blur(3px);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+      pointer-events: auto;
+    }
+
+    .title {
+      font-size: clamp(20px, 3vw, 34px);
+      color: #8fe7ff;
+      margin-bottom: 8px;
+    }
+
+    .btn-row {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      border: 1px solid rgba(126, 219, 255, 0.8);
+      background: rgba(20, 45, 74, 0.9);
+      color: #d9f5ff;
+      font: 700 13px "Trebuchet MS", "Verdana", sans-serif;
+      padding: 8px 11px;
+      border-radius: 8px;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+    }
+
+    .btn.active {
+      background: rgba(38, 111, 164, 0.95);
+      color: #ffffff;
+      border-color: #9ee9ff;
+      box-shadow: 0 0 0 1px rgba(173, 236, 255, 0.5) inset;
+    }
+
+    .btn.launch {
+      background: rgba(122, 73, 18, 0.9);
+      border-color: rgba(255, 215, 119, 0.95);
+      color: #ffe6b7;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="game" width="960" height="540" aria-label="Defender-inspired retro game canvas"></canvas>
+  </div>
+  <div class="overlay" id="overlay">
+    <div class="panel" id="overlayPanel"></div>
+  </div>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById('game');
+      const ctx = canvas.getContext('2d');
+      const overlay = document.getElementById('overlay');
+      const overlayPanel = document.getElementById('overlayPanel');
+
+      const W = canvas.width;
+      const H = canvas.height;
+      const WORLD_W = 4600;
+      const GROUND_BASE = H - 62;
+      const MAX_DT = 1 / 30;
+
+      const keys = new Set();
+      let gameState = 'title';
+      let score = 0;
+      let lives = 3;
+      let shake = 0;
+      let flash = 0;
+      let lastTime = 0;
+      let selectedMissionId = 'practice';
+      let currentMission = null;
+      let missionTimer = 0;
+      let rescuedLeadUsers = 0;
+      let roundCaptured = 0;
+      let lostLeadUsers = 0;
+      let enemiesDestroyed = 0;
+      let lastMissionWon = false;
+      let missionInnovationRescues = {};
+      let missionUnlocks = [];
+      let metaProgress = null;
+      let trainingState = null;
+      let activeChallenge = null;
+      let challengeCooldown = 5;
+      let challengeTicker = 0;
+      const bonusOrbs = [];
+      let nextSurgeAt = 6;
+      let surgeFlash = 0;
+      const insightFeed = [];
+      let campaignRound = 1;
+      let playerExhaustAcc = 0;
+
+      // Embedded detection — are we inside an iframe in the Innovation Manager?
+      const isEmbedded = (window.self !== window.top);
+
+      const innovationCatalog = [
+        { key: 'energy', name: 'PowerPulse Interval Bike', color: '#8ef7ff', threshold: 3, ability: 'Signal from extreme lead users in high-intensity cardio contexts.' },
+        { key: 'mobility', name: 'GlideTrack Rehab Tread', color: '#9aff9a', threshold: 3, ability: 'Signal from mobility-constrained lead users adapting training.' },
+        { key: 'sensing', name: 'FormSense Mirror Coach', color: '#ffd88a', threshold: 3, ability: 'Signal from users hacking feedback loops and self-coaching.' },
+        { key: 'materials', name: 'ComfortFlex Kettlebell Kit', color: '#ffb8b8', threshold: 4, ability: 'Signal from users modifying equipment ergonomics for edge cases.' },
+        { key: 'learning', name: 'HabitLoop Training App', color: '#d2b6ff', threshold: 4, ability: 'Signal from users creating behavior-change routines and services.' },
+      ];
+
+      const rivalFactions = [
+        { name: 'ApexFit Labs', tag: 'APX', body: '#ff8a86', accent: '#ffd8d6', beam: 'rgba(255, 150, 178, 0.75)' },
+        { name: 'PulseForge Corp', tag: 'PFG', body: '#8dc4ff', accent: '#d8efff', beam: 'rgba(122, 201, 255, 0.75)' },
+        { name: 'NovaWell Systems', tag: 'NVS', body: '#91f2be', accent: '#d8ffe9', beam: 'rgba(150, 255, 204, 0.75)' },
+      ];
+
+      const missions = {
+        practice: {
+          id: 'practice',
+          label: 'Practice Sortie',
+          difficulty: 'LOW',
+          valuePerLeadUser: 120,
+          scoreMult: 0.7,
+          lives: 9,
+          startHumans: 6,
+          startEnemies: 2,
+          spawnMinEnemies: 1,
+          spawnChance: 0.004,
+          enemyShots: false,
+          enemyFireRate: 0.1,
+          enemySpeed: 0.72,
+          fireDelay: 999,
+          startGrace: 12,
+          targetRescues: 5,
+          runGoal: 5,
+          targetKills: 4,
+          winMode: 'training',
+          duration: 30,
+        },
+        standard: {
+          id: 'standard',
+          label: 'Field Operation',
+          difficulty: 'MEDIUM',
+          valuePerLeadUser: 250,
+          scoreMult: 1.0,
+          lives: 5,
+          startHumans: 7,
+          startEnemies: 4,
+          spawnMinEnemies: 3,
+          spawnChance: 0.0105,
+          enemyShots: true,
+          enemyFireRate: 0.72,
+          enemySpeed: 0.86,
+          fireDelay: 14,
+          startGrace: 10,
+          targetRescues: 5,
+          runGoal: 5,
+          targetKills: 20,
+          winMode: 'survive',
+          duration: 40,
+        },
+        veteran: {
+          id: 'veteran',
+          label: 'Lead User Surge',
+          difficulty: 'HIGH',
+          valuePerLeadUser: 420,
+          scoreMult: 1.35,
+          lives: 5,
+          startHumans: 8,
+          startEnemies: 5,
+          spawnMinEnemies: 4,
+          spawnChance: 0.013,
+          enemyShots: true,
+          enemyFireRate: 0.76,
+          enemySpeed: 0.74,
+          fireDelay: 12,
+          startGrace: 7,
+          targetRescues: 5,
+          runGoal: 5,
+          targetKills: 34,
+          winMode: 'survive',
+          duration: 34,
+        }
+      };
+
+      const starsFar = makeStars(120, 0.18, 1.5);
+      const starsMid = makeStars(80, 0.35, 2.4);
+      const starsNear = makeStars(48, 0.55, 3.4);
+
+      const player = {
+        x: WORLD_W * 0.5,
+        y: H * 0.45,
+        vx: 0,
+        vy: 0,
+        facing: 1,
+        cool: 0,
+        beam: false,
+        inv: 0,
+      };
+
+      let camX = player.x;
+      const mothership = {
+        x: WORLD_W * 0.5,
+        y: 72,
+        dockW: 120,
+        dockH: 30,
+      };
+
+      const projectiles = [];
+      const laserTrails = [];
+      const enemyShots = [];
+      const particles = [];
+      const enemies = [];
+      const humans = [];
+      const stormHazards = [];
+      const groundTurrets = [];
+
+      let audioCtx = null;
+      let masterGain = null;
+      let beamOsc = null;
+      let beamGain = null;
+      let noiseBuffer = null;
+      let musicNextTime = 0;
+      let musicStep = 0;
+
+      const terrain = buildTerrain();
+      metaProgress = loadMetaProgress();
+
+      resetWave();
+      showTitle();
+
+      function normalizeInputCode(e) {
+        if (e && e.code) return e.code;
+        const key = ((e && e.key) || '').toLowerCase();
+        switch (key) {
+          case 'arrowup': return 'ArrowUp';
+          case 'arrowdown': return 'ArrowDown';
+          case 'arrowleft': return 'ArrowLeft';
+          case 'arrowright': return 'ArrowRight';
+          case 'w': return 'KeyW';
+          case 'a': return 'KeyA';
+          case 's': return 'KeyS';
+          case 'd': return 'KeyD';
+          case 'b': return 'KeyB';
+          case ' ':
+          case 'spacebar':
+            return 'Space';
+          case 'enter':
+            return 'Enter';
+          case '1':
+            return 'Digit1';
+          case '2':
+            return 'Digit2';
+          case '3':
+            return 'Digit3';
+          default:
+            return '';
+        }
+      }
+
+      function findActionButton(target, root) {
+        let node = target && target.nodeType === 1 ? target : (target && target.parentElement);
+        while (node && node !== root) {
+          if (node.tagName === 'BUTTON' && node.getAttribute('data-action')) return node;
+          node = node.parentElement;
+        }
+        return null;
+      }
+
+      window.addEventListener('keydown', (e) => {
+        const code = normalizeInputCode(e);
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].indexOf(code) !== -1) {
+          e.preventDefault();
+        }
+        ensureAudio();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        if (code) keys.add(code);
+
+        if (code === 'Enter') {
+          if (gameState === 'title' || gameState === 'gameover' || gameState === 'missionclear') {
+            startGame();
+          }
+        }
+        if (gameState === 'title' || gameState === 'gameover' || gameState === 'missionclear') {
+          if (code === 'Digit1') {
+            selectedMissionId = 'practice';
+            refreshOverlay();
+          } else if (code === 'Digit2') {
+            selectedMissionId = 'standard';
+            refreshOverlay();
+          } else if (code === 'Digit3') {
+            selectedMissionId = 'veteran';
+            refreshOverlay();
+          }
+        }
+      });
+
+      window.addEventListener('keyup', (e) => {
+        const code = normalizeInputCode(e);
+        if (code) keys.delete(code);
+      });
+
+      overlayPanel.addEventListener('click', (e) => {
+        const btn = (e.target && typeof e.target.closest === 'function')
+          ? e.target.closest('button[data-action]')
+          : findActionButton(e.target, overlayPanel);
+        if (!btn) return;
+        const action = btn.dataset.action;
+        if (action === 'select-mission') {
+          selectedMissionId = btn.dataset.mission || selectedMissionId;
+          refreshOverlay();
+          return;
+        }
+        if (action === 'launch') {
+          if (gameState === 'title' || gameState === 'gameover' || gameState === 'missionclear') startGame();
+          return;
+        }
+        if (action === 'title') {
+          gameState = 'title';
+          showTitle();
+          return;
+        }
+        if (action === 'return-to-manager') {
+          try { window.parent.postMessage({ type: 'miniGameClose', game: 'leadUserPatrol' }, '*'); } catch(e) {}
+        }
+      });
+
+      function startGame() {
+        currentMission = missions[selectedMissionId];
+        score = 0;
+        missionTimer = 0;
+        campaignRound = 1;
+        rescuedLeadUsers = 0;
+        roundCaptured = 0;
+        lostLeadUsers = 0;
+        enemiesDestroyed = 0;
+        missionInnovationRescues = {};
+        missionUnlocks = [];
+        trainingState = createTrainingState(currentMission);
+        activeChallenge = null;
+        challengeCooldown = 5;
+        challengeTicker = 0;
+        bonusOrbs.length = 0;
+        insightFeed.length = 0;
+        nextSurgeAt = 6;
+        surgeFlash = 0;
+        lives = currentMission.lives - 1;
+        player.x = WORLD_W * 0.5;
+        player.y = H * 0.45;
+        player.vx = 0;
+        player.vy = 0;
+        player.facing = 1;
+        player.inv = currentMission.startGrace || 4;
+        projectiles.length = 0;
+        laserTrails.length = 0;
+        enemyShots.length = 0;
+        particles.length = 0;
+        enemies.length = 0;
+        humans.length = 0;
+        stormHazards.length = 0;
+        groundTurrets.length = 0;
+        musicStep = 0;
+        musicNextTime = 0;
+        resetWave();
+        gameState = 'playing';
+        overlay.style.display = 'none';
+        ensureAudio();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      }
+
+      function resetWave() {
+        enemies.length = 0;
+        humans.length = 0;
+        stormHazards.length = 0;
+        groundTurrets.length = 0;
+
+        const humanCount = currentMission ? currentMission.startHumans : 10;
+        const enemyCount = currentMission ? currentMission.startEnemies : 8;
+
+        const remoteOffsets = [-2100, -1600, -1100, 1100, 1600, 2100];
+        for (let i = 0; i < humanCount; i++) {
+          const lane = remoteOffsets[i % remoteOffsets.length];
+          const x = wrapX(player.x + lane + randRange(-170, 170));
+          spawnLeadUserAtX(x);
+        }
+
+        for (let i = 0; i < enemyCount; i++) {
+          const ex = pickEnemyPatrolX();
+          enemies.push(makeLander(ex, randRange(65, H * 0.35)));
+        }
+        buildObstacles();
+      }
+
+      function showTitle() {
+        const m = missions[selectedMissionId];
+        overlay.style.display = 'grid';
+        overlayPanel.innerHTML = `
+          <div class="title">RETRO PATROL: LEAD USER DEFENSE</div>
+          <div><b>Goal:</b> Search for lead users, capture frontier-use insights, and return them to Velox Dynamics R&amp;D Lab.</div>
+          <div style="margin-top: 8px;"><b>Controls:</b> Move: Arrow Keys / WASD | Fire: Space | Tractor: Hold B</div>
+          <div><b>Lead User Method loop:</b> Identify -> Engage -> Capture insight -> Transfer to R&amp;D.</div>
+          <div><b>Field risk:</b> Storm cells, turrets, and rival firms attempting to abduct the same lead-user signals.</div>
+          <div><b>Audio:</b> Dynamic arcade soundtrack + event stingers (capture and delivery).</div>
+          <div style="margin-top: 10px; color: #9fe9ff; font-weight: 700;">Mission Select</div>
+          <div class="btn-row">
+            <button class="btn ${selectedMissionId === 'practice' ? 'active' : ''}" data-action="select-mission" data-mission="practice">Training</button>
+            <button class="btn ${selectedMissionId === 'standard' ? 'active' : ''}" data-action="select-mission" data-mission="standard">Regular</button>
+            <button class="btn ${selectedMissionId === 'veteran' ? 'active' : ''}" data-action="select-mission" data-mission="veteran">Advanced</button>
+          </div>
+          <div style="margin-top: 6px; color: #ffffff; font-weight: 700;">Selected: ${m.label} (${m.difficulty})</div>
+          <div style="margin-top: 6px; color: #d8f2ff;">Concept Value: ${m.valuePerLeadUser} credits each</div>
+          <div class="btn-row">
+            <button class="btn launch" data-action="launch">Launch Mission</button>
+          </div>
+        `;
+      }
+
+      function refreshOverlay() {
+        if (gameState === 'title') {
+          showTitle();
+          return;
+        }
+        if (gameState === 'gameover' || gameState === 'missionclear') {
+          showMissionClear(lastMissionWon);
+        }
+      }
+
+      function makeLander(x, y) {
+        const speedScale = currentMission ? currentMission.enemySpeed * roundEnemyScale() : 1;
+        const fireScale = currentMission ? currentMission.enemyFireRate * roundFireScale() : 1;
+        return {
+          type: 'lander',
+          x: wrapX(x),
+          y,
+          vx: randRange(-60, 60) * speedScale,
+          vy: 0,
+          targetHuman: null,
+          carrying: null,
+          state: 'patrol',
+          t: Math.random() * 10,
+          cool: randRange(1.2, 2.8) / fireScale,
+          faction: pickRivalFaction(),
+          hp: 1,
+        };
+      }
+
+      function makeMutant(x, y, faction = pickRivalFaction()) {
+        const speedScale = currentMission ? currentMission.enemySpeed * roundEnemyScale() : 1;
+        const fireScale = currentMission ? currentMission.enemyFireRate * roundFireScale() : 1;
+        return {
+          type: 'mutant',
+          x: wrapX(x),
+          y,
+          vx: randRange(-140, 140) * speedScale,
+          vy: randRange(-50, 50) * speedScale,
+          targetHuman: null,
+          carrying: null,
+          state: 'hunt',
+          t: Math.random() * 10,
+          cool: randRange(0.8, 1.6) / fireScale,
+          faction,
+          hp: 1,
+        };
+      }
+
+      function loop(ts) {
+        const dt = Math.min(MAX_DT, (ts - lastTime) / 1000 || 0);
+        lastTime = ts;
+
+        if (gameState === 'playing') {
+          update(dt);
+        }
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      requestAnimationFrame(loop);
+
+      function update(dt) {
+        missionTimer += dt;
+        shake = Math.max(0, shake - dt * 10);
+        flash = Math.max(0, flash - dt * 2.8);
+        surgeFlash = Math.max(0, surgeFlash - dt * 1.8);
+
+        updatePlayer(dt);
+        updateProjectiles(dt);
+        updateEnemyShots(dt);
+        updateEnemies(dt);
+        updateObstacles(dt);
+        updateHumans(dt);
+        updateParticles(dt);
+        updateLaserTrails(dt);
+        updateBonusOrbs(dt);
+        spawnIfNeeded();
+        updateChallenges(dt);
+        updateSurges();
+        updateTrainingCoach(dt);
+        updateAudio();
+
+        if (enemies.length === 0 && currentMission.winMode !== 'training') {
+          for (let i = 0; i < 6; i++) {
+            enemies.push(makeLander(randomFarX(player.x, 700), randRange(60, H * 0.35)));
+          }
+        }
+
+        if (currentMission.winMode === 'training') {
+          const complete = roundCaptured >= roundTargetRescues();
+          if (complete) {
+            gameState = 'missionclear';
+            showMissionClear(true);
+          }
+        } else {
+          // Non-training missions should end in success as soon as the campaign goal is reached.
+          if (rescuedLeadUsers >= runGoalForMission()) {
+            gameState = 'missionclear';
+            showMissionClear(true);
+            return;
+          }
+        }
+
+        if (currentMission.winMode !== 'training' && missionTimer >= currentMission.duration) {
+          if (campaignRound < 3) {
+            advanceRound();
+          } else {
+            const success = rescuedLeadUsers >= runGoalForMission();
+            gameState = success ? 'missionclear' : 'gameover';
+            showMissionClear(success);
+          }
+        }
+      }
+
+      function updatePlayer(dt) {
+        if (player.inv > 0) player.inv -= dt;
+
+        const ax = (keys.has('ArrowRight') || keys.has('KeyD') ? 1 : 0) - (keys.has('ArrowLeft') || keys.has('KeyA') ? 1 : 0);
+        const ay = (keys.has('ArrowDown') || keys.has('KeyS') ? 1 : 0) - (keys.has('ArrowUp') || keys.has('KeyW') ? 1 : 0);
+
+        const accel = 720;
+        player.vx += ax * accel * dt;
+        player.vy += ay * accel * dt;
+
+        player.vx *= Math.pow(0.10, dt);
+        player.vy *= Math.pow(0.12, dt);
+
+        const maxSpd = 300;
+        const spd = Math.hypot(player.vx, player.vy);
+        if (spd > maxSpd) {
+          const k = maxSpd / spd;
+          player.vx *= k;
+          player.vy *= k;
+        }
+
+        if (ax !== 0) player.facing = Math.sign(ax);
+        const visualDir = player.facing;
+
+        player.x = wrapX(player.x + player.vx * dt);
+        player.y = clamp(player.y + player.vy * dt, 34, H - 110);
+        const spdNow = Math.hypot(player.vx, player.vy);
+
+        // Pixel vapor trail from the rear while moving.
+        if (spdNow > 36) {
+          playerExhaustAcc += dt * (18 + spdNow * 0.11);
+          const rearX = player.x - visualDir * 30;
+          while (playerExhaustAcc >= 1) {
+            playerExhaustAcc -= 1;
+            const band = Math.random();
+            const col = band < 0.34 ? '#73a4ff' : (band < 0.68 ? '#8f6fff' : '#7cf0ff');
+            particles.push({
+              x: wrapX(rearX + randRange(-1.5, 1.5)),
+              y: player.y + randRange(-6.5, 6.5),
+              vx: -visualDir * randRange(120, 190) + player.vx * 0.18 + randRange(-16, 16),
+              vy: player.vy * 0.12 + randRange(-20, 20),
+              life: randRange(0.16, 0.34),
+              size: randRange(1.4, 3.0),
+              col,
+            });
+          }
+        } else {
+          playerExhaustAcc = Math.max(0, playerExhaustAcc - dt * 8);
+        }
+
+        camX = wrapX(lerpAngleLike(camX, player.x, 1 - Math.pow(0.0005, dt)));
+
+        player.cool -= dt;
+        if (keys.has('Space') && player.cool <= 0) {
+          player.cool = 0.09;
+          const muzzleX = player.x + visualDir * 22;
+          const muzzleY = player.y + randRange(-2, 2);
+          projectiles.push({
+            x: wrapX(muzzleX),
+            y: muzzleY,
+            px: wrapX(muzzleX),
+            py: muzzleY,
+            vx: visualDir * 600 + player.vx * 0.2,
+            vy: randRange(-14, 14),
+            life: 1.0,
+          });
+
+          for (let i = 0; i < 3; i++) {
+            particles.push({
+              x: muzzleX,
+              y: muzzleY,
+              vx: randRange(-30, 30),
+              vy: randRange(-25, 25),
+              life: 0.16,
+              size: 2,
+              col: '#9df8ff'
+            });
+          }
+          playShootSound();
+        }
+
+        player.beam = keys.has('KeyB');
+        if (trainingState) {
+          if (Math.abs(player.vx) > 40 || Math.abs(player.vy) > 40) trainingState.moved = true;
+          if (player.beam) trainingState.beamUsed = true;
+        }
+      }
+
+      function updateProjectiles(dt) {
+        for (let i = projectiles.length - 1; i >= 0; i--) {
+          const p = projectiles[i];
+          p.px = p.x;
+          p.py = p.y;
+          p.x = wrapX(p.x + p.vx * dt);
+          p.y += p.vy * dt;
+          p.life -= dt;
+
+          laserTrails.push({
+            x1: p.px,
+            y1: p.py,
+            x2: p.x,
+            y2: p.y,
+            life: 0.3,
+            col: '#b8ff6a',
+          });
+
+          if (Math.random() < 0.9) {
+            particles.push({
+              x: wrapX(p.x - p.vx * 0.01),
+              y: p.y - p.vy * 0.01,
+              vx: randRange(-18, 18),
+              vy: randRange(-6, 6),
+              life: randRange(0.06, 0.14),
+              size: randRange(1.1, 2.0),
+              col: Math.random() < 0.5 ? '#d5ff7a' : '#95ff7a'
+            });
+          }
+
+          if (p.life <= 0 || p.y < -20 || p.y > H + 20) {
+            projectiles.splice(i, 1);
+            continue;
+          }
+
+          let hit = false;
+          for (let j = enemies.length - 1; j >= 0; j--) {
+            const e = enemies[j];
+            const dx = wrapDelta(e.x - p.x);
+            const dy = e.y - p.y;
+            const rr = e.type === 'mutant' ? 16 : (e.carrying ? 20 : 14);
+            if (dx * dx + dy * dy < rr * rr) {
+              hit = true;
+              explodeEnemy(e);
+              enemies.splice(j, 1);
+              enemiesDestroyed++;
+              score += Math.floor((e.type === 'mutant' ? 400 : 180) * (currentMission ? currentMission.scoreMult : 1));
+              progressChallenge('purge', 1);
+              playHitSound();
+              break;
+            }
+          }
+
+          if (!hit) {
+            for (let j = groundTurrets.length - 1; j >= 0; j--) {
+              const t = groundTurrets[j];
+              const dx = wrapDelta(t.x - p.x);
+              const dy = t.y - p.y;
+              if (dx * dx + dy * dy < 14 * 14) {
+                hit = true;
+                t.hp -= 1;
+                explodeSmall(t.x, t.y - 3, '#ffd782');
+                if (t.hp <= 0) {
+                  groundTurrets.splice(j, 1);
+                  score += 160;
+                  progressChallenge('purge', 1);
+                  playExplosionSound(0.1);
+                } else {
+                  playHitSound();
+                }
+                break;
+              }
+            }
+          }
+
+          if (hit) {
+            projectiles.splice(i, 1);
+          }
+        }
+      }
+
+      function updateEnemyShots(dt) {
+        for (let i = enemyShots.length - 1; i >= 0; i--) {
+          const s = enemyShots[i];
+          s.x = wrapX(s.x + s.vx * dt);
+          s.y += s.vy * dt;
+          s.life -= dt;
+
+          if (s.life <= 0 || s.y < -20 || s.y > H + 20) {
+            enemyShots.splice(i, 1);
+            continue;
+          }
+
+          const dx = wrapDelta(player.x - s.x);
+          const dy = player.y - s.y;
+          if (dx * dx + dy * dy < 15 * 15 && player.inv <= 0) {
+            enemyShots.splice(i, 1);
+            killPlayer();
+          }
+        }
+      }
+
+      function updateEnemies(dt) {
+        for (let i = enemies.length - 1; i >= 0; i--) {
+          const e = enemies[i];
+          e.t += dt;
+          e.cool -= dt;
+
+          if (e.type === 'lander') {
+            updateLander(e, dt);
+          } else if (e.type === 'mutant') {
+            updateMutant(e, dt);
+          }
+
+          if (e.hp <= 0) {
+            enemies.splice(i, 1);
+            continue;
+          }
+
+          e.x = wrapX(e.x + e.vx * dt);
+          // Allow ascending abductors to climb into upper airspace (Defender-style lift-off).
+          const minY = (e.type === 'lander' && e.state === 'ascend') ? -42 : 26;
+          e.y = clamp(e.y + e.vy * dt, minY, H - 95);
+
+          const dx = wrapDelta(player.x - e.x);
+          const dy = player.y - e.y;
+
+          if (dx * dx + dy * dy < 18 * 18 && player.inv <= 0) {
+            explodeEnemy(e);
+            enemies.splice(i, 1);
+            killPlayer();
+            continue;
+          }
+
+          const fireUnlocked = missionTimer >= (currentMission.fireDelay || 0);
+          if (currentMission.enemyShots && fireUnlocked && e.cool <= 0 && Math.abs(dx) < 360) {
+            const rescueWindow = !!getHumanCarriedByPlayer() || (player.beam && player.y > H * 0.55);
+            if (rescueWindow && Math.random() > 0.3) {
+              e.cool = Math.max(e.cool, randRange(0.18, 0.42));
+              continue;
+            }
+            const fireScale = currentMission ? currentMission.enemyFireRate * roundFireScale() : 1;
+            e.cool = (e.type === 'mutant' ? randRange(0.9, 1.6) : randRange(1.4, 2.9)) / fireScale;
+            const n = Math.hypot(dx, dy) || 1;
+            enemyShots.push({
+              x: e.x,
+              y: e.y,
+              vx: (dx / n) * (e.type === 'mutant' ? 240 : 185),
+              vy: (dy / n) * (e.type === 'mutant' ? 240 : 185),
+              life: 3,
+            });
+          }
+        }
+      }
+
+      function updateLander(e, dt) {
+        if (e.state === 'patrol') {
+          e.vx += Math.sin(e.t * 1.2) * 12 * dt;
+          e.vy = Math.sin(e.t * 2.3) * 20;
+          e.vx = clamp(e.vx, -90, 90);
+
+          const abductChance = (0.14 + campaignRound * 0.03) * dt;
+          if (!e.targetHuman && activeAbductorCount() < maxConcurrentAbductors() && Math.random() < abductChance) {
+            e.targetHuman = pickNearestGroundHuman(e.x);
+            if (e.targetHuman) e.state = 'abduct';
+          }
+        }
+
+        if (e.state === 'abduct') {
+          if (!e.targetHuman || e.targetHuman.state !== 'ground') {
+            e.targetHuman = null;
+            e.state = 'patrol';
+            return;
+          }
+
+          const tx = e.targetHuman.x;
+          const ty = e.targetHuman.y - 16;
+          const dx = wrapDelta(tx - e.x);
+          const dy = ty - e.y;
+
+          e.vx += clamp(dx * 2.4, -120, 120) * dt;
+          e.vy += clamp(dy * 2.4, -130, 130) * dt;
+          e.vx = clamp(e.vx, -110, 110);
+          e.vy = clamp(e.vy, -140, 140);
+
+          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) {
+            e.carrying = e.targetHuman;
+            e.targetHuman.state = 'abducted';
+            e.targetHuman.wasInDanger = true;
+            e.targetHuman.recoveryGrace = 0;
+            e.targetHuman.carrier = e;
+            e.targetHuman = null;
+            e.state = 'ascend';
+          }
+        }
+
+        if (e.state === 'ascend') {
+          // Keep carriers in fight space longer so player can intercept.
+          e.vx *= Math.pow(0.22, dt);
+          e.vy += (-132 - e.vy) * Math.min(1, dt * 1.8);
+
+          if (e.carrying) {
+            e.carrying.x = e.x;
+            e.carrying.y = e.y + 16;
+          }
+
+            if (e.y < -38) {
+              if (e.carrying) {
+                removeHuman(e.carrying);
+                e.carrying = null;
+                const m = makeMutant(e.x, e.y + 20, e.faction);
+                explodeSmall(e.x, e.y, '#ffb347');
+                enemies.push(m);
+                e.type = 'spent';
+                e.hp = 0;
+              }
+          }
+        }
+      }
+
+      function updateMutant(e, dt) {
+        const dx = wrapDelta(player.x - e.x);
+        const dy = player.y - e.y;
+        const veteranSlow = currentMission && currentMission.id === 'veteran';
+        const steerScale = veteranSlow ? 1.45 : 1.8;
+        const steerCap = veteranSlow ? 220 : 300;
+        const vyScale = veteranSlow ? 1.65 : 2.2;
+        const vxCap = veteranSlow ? 180 : 250;
+        const vyCap = veteranSlow ? 165 : 220;
+        const steer = clamp(dx * steerScale, -steerCap, steerCap);
+
+        e.vx += steer * dt;
+        e.vy += clamp(dy * vyScale, -220, 220) * dt;
+
+        e.vx = clamp(e.vx, -vxCap, vxCap);
+        e.vy = clamp(e.vy, -vyCap, vyCap);
+      }
+
+      function updateHumans(dt) {
+        for (const h of humans) {
+          if (h.state === 'abducted') {
+            continue;
+          }
+
+          if (h.state === 'carried') {
+            h.x = wrapX(player.x - player.facing * 6);
+            h.y = player.y + 17;
+            if (isInMothershipDock(h.x, h.y)) {
+              secureLeadUser(h);
+              if (trainingState) trainingState.droppedSafe = true;
+            }
+            continue;
+          }
+
+          if (h.state === 'falling') {
+            if (h.recoveryGrace && h.recoveryGrace > 0) {
+              h.recoveryGrace -= dt;
+              h.vy += 220 * dt;
+            } else {
+              h.vy += 360 * dt;
+            }
+            h.y += h.vy * dt;
+            applyBeamAssist(h, dt);
+
+            if (player.beam && !getHumanCarriedByPlayer() && canBeamHuman(h)) {
+              h.state = 'carried';
+              h.vy = 0;
+              score += Math.floor(20 * (currentMission ? currentMission.scoreMult : 1));
+              playCaptureSound();
+              if (trainingState) trainingState.pickedUp = true;
+              continue;
+            }
+
+            const gy = groundYAt(h.x) - 7;
+            if (h.y >= gy) {
+              h.y = gy;
+              if (h.vy > 180) {
+                h.state = 'dead';
+                explodeSmall(h.x, gy, '#ff6b7a');
+                lostLeadUsers++;
+              } else {
+                h.state = 'ground';
+                h.vy = 0;
+                score += Math.floor(120 * (currentMission ? currentMission.scoreMult : 1));
+              }
+            }
+          }
+
+          if (h.state === 'ground' && player.beam && !getHumanCarriedByPlayer() && canBeamHuman(h)) {
+            h.state = 'carried';
+            h.vy = 0;
+            playCaptureSound();
+            if (trainingState) trainingState.pickedUp = true;
+          }
+        }
+
+        for (let i = humans.length - 1; i >= 0; i--) {
+          if (humans[i].state === 'dead') humans.splice(i, 1);
+        }
+      }
+
+      function applyBeamAssist(h, dt) {
+        if (!player.beam) return;
+        const dx = wrapDelta(h.x - player.x);
+        const dy = h.y - player.y;
+        if (Math.abs(dx) > 20 || dy < 8 || dy > 95) return;
+        h.x = wrapX(h.x - dx * Math.min(1, dt * 2.8));
+        h.vy *= Math.pow(0.45, dt);
+      }
+
+      function isInMothershipDock(x, y) {
+        const dx = Math.abs(wrapDelta(x - mothership.x));
+        return dx <= mothership.dockW * 0.5 && y >= mothership.y + 4 && y <= mothership.y + mothership.dockH + 24;
+      }
+
+      function secureLeadUser(h) {
+        rescuedLeadUsers++;
+        roundCaptured++;
+        progressChallenge('rescue', 1);
+        registerInnovationRescue(h);
+        const base = currentMission ? currentMission.valuePerLeadUser : 200;
+        score += h.wasInDanger ? base : Math.floor(base * 0.35);
+        playDeliverySound();
+        pushInsightFeed(h.innovationName);
+        h.wasInDanger = false;
+        removeHumanFromRoster(h);
+
+        spawnLeadUserRemote();
+      }
+
+      function advanceRound() {
+        campaignRound += 1;
+        missionTimer = 0;
+        roundCaptured = 0;
+        activeChallenge = null;
+        challengeCooldown = 4;
+        nextSurgeAt = 5;
+        surgeFlash = 1;
+        player.inv = Math.max(player.inv, 2.5);
+        for (let i = 0; i < 2 + campaignRound; i++) {
+          enemies.push(makeLander(randomFarX(player.x, 620), randRange(55, H * 0.34)));
+        }
+      }
+
+      function removeHumanFromRoster(h) {
+        const idx = humans.indexOf(h);
+        if (idx >= 0) humans.splice(idx, 1);
+      }
+
+      function pushInsightFeed(innovationName) {
+        const message = summarizeInsight(innovationName);
+        insightFeed.unshift({ title: innovationName, message, t: missionTimer });
+        while (insightFeed.length > 3) insightFeed.pop();
+      }
+
+      function summarizeInsight(name) {
+        if (name.includes('Bike')) return 'Use case: short HIIT sessions for space-constrained users.';
+        if (name.includes('Tread')) return 'Use case: low-impact gait training for rehab + aging athletes.';
+        if (name.includes('Mirror')) return 'Use case: real-time form feedback to reduce beginner drop-off.';
+        if (name.includes('Kettlebell')) return 'Use case: ergonomic grip + progressive load for home strength.';
+        if (name.includes('App')) return 'Use case: adaptive plans that sustain weekly adherence.';
+        return 'Use case: edge-user signal for next product sprint.';
+      }
+
+      function updateParticles(dt) {
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x = wrapX(p.x + p.vx * dt);
+          p.y += p.vy * dt;
+          p.life -= dt;
+          p.vx *= Math.pow(0.3, dt);
+          p.vy *= Math.pow(0.3, dt);
+          if (p.life <= 0) particles.splice(i, 1);
+        }
+      }
+
+      function updateLaserTrails(dt) {
+        for (let i = laserTrails.length - 1; i >= 0; i--) {
+          laserTrails[i].life -= dt;
+          if (laserTrails[i].life <= 0) laserTrails.splice(i, 1);
+        }
+      }
+
+      function updateBonusOrbs(dt) {
+        for (let i = bonusOrbs.length - 1; i >= 0; i--) {
+          const o = bonusOrbs[i];
+          o.t += dt;
+          o.life -= dt;
+          o.y += Math.sin(o.t * 3.8) * 10 * dt;
+          if (o.life <= 0) {
+            bonusOrbs.splice(i, 1);
+            continue;
+          }
+          const dx = wrapDelta(player.x - o.x);
+          const dy = player.y - o.y;
+          if (dx * dx + dy * dy < 19 * 19) {
+            bonusOrbs.splice(i, 1);
+            score += 110;
+            player.inv = Math.max(player.inv, 1.2);
+            progressChallenge('orbs', 1);
+            playCaptureSound();
+          }
+        }
+      }
+
+      function updateChallenges(dt) {
+        if (!currentMission || currentMission.winMode === 'training') return;
+        if (activeChallenge) {
+          activeChallenge.timeLeft -= dt;
+          if (activeChallenge.timeLeft <= 0) {
+            activeChallenge = null;
+            challengeCooldown = 8;
+          }
+          return;
+        }
+        challengeTicker += dt;
+        challengeCooldown -= dt;
+        if (challengeCooldown <= 0) {
+          startChallenge();
+          challengeCooldown = randRange(17, 25);
+        }
+      }
+
+      function updateSurges() {
+        if (!currentMission || currentMission.winMode === 'training') return;
+        if (missionTimer < nextSurgeAt) return;
+        nextSurgeAt += 5.5;
+        surgeFlash = 1;
+        enemies.push(makeLander(randomFarX(player.x, 520), randRange(55, H * 0.34)));
+        if (currentMission.id === 'veteran' && Math.random() < 0.45) {
+          enemies.push(makeMutant(randomFarX(player.x, 560), randRange(70, H * 0.35)));
+        }
+        if (Math.random() < 0.7) spawnBonusOrb();
+      }
+
+      function buildObstacles() {
+        if (!currentMission) return;
+        const stormCount = currentMission.id === 'practice' ? 1 : (currentMission.id === 'standard' ? 2 : 3);
+        const turretCount = currentMission.id === 'practice' ? 1 : (currentMission.id === 'standard' ? 3 : 4);
+        for (let i = 0; i < stormCount; i++) {
+          stormHazards.push({
+            x: randRange(0, WORLD_W),
+            y: randRange(90, H - 180),
+            r: randRange(18, 30),
+            t: Math.random() * 10,
+            drift: randRange(-18, 18),
+          });
+        }
+        for (let i = 0; i < turretCount; i++) {
+          const x = randRange(0, WORLD_W);
+          groundTurrets.push({
+            x,
+            y: groundYAt(x) - 8,
+            hp: 2,
+            cool: randRange(1.6, 3.2),
+          });
+        }
+      }
+
+      function updateObstacles(dt) {
+        for (const s of stormHazards) {
+          s.t += dt;
+          s.x = wrapX(s.x + s.drift * dt);
+          s.y += Math.sin(s.t * 1.4) * 10 * dt;
+          const dx = wrapDelta(player.x - s.x);
+          const dy = player.y - s.y;
+          const rr = s.r + 8;
+          if (dx * dx + dy * dy < rr * rr && player.inv <= 0) {
+            shake = Math.max(shake, 0.9);
+            killPlayer();
+            break;
+          }
+        }
+
+        for (const t of groundTurrets) {
+          t.y = groundYAt(t.x) - 8;
+          t.cool -= dt;
+          const dx = wrapDelta(player.x - t.x);
+          const dy = player.y - t.y;
+          const fireUnlocked = missionTimer >= (currentMission.fireDelay || 0);
+          if (currentMission.enemyShots && fireUnlocked && t.cool <= 0 && Math.abs(dx) < 300 && dy < -10) {
+            t.cool = randRange(1.2, 2.2);
+            const n = Math.hypot(dx, dy) || 1;
+            enemyShots.push({
+              x: t.x,
+              y: t.y - 5,
+              vx: (dx / n) * 170,
+              vy: (dy / n) * 170,
+              life: 2.6,
+            });
+          }
+        }
+      }
+
+      function startChallenge() {
+        const roll = Math.random();
+        if (roll < 0.34) {
+          activeChallenge = { id: 'rescue', label: 'Lead User Sprint', target: 2, progress: 0, timeLeft: 20, reward: 500 };
+        } else if (roll < 0.68) {
+          activeChallenge = { id: 'purge', label: 'Barrier Clearing', target: 4, progress: 0, timeLeft: 18, reward: 450 };
+          for (let i = 0; i < 2; i++) enemies.push(makeLander(randomFarX(player.x, 580), randRange(55, H * 0.35)));
+        } else {
+          activeChallenge = { id: 'orbs', label: 'Signal Sweep', target: 3, progress: 0, timeLeft: 20, reward: 520 };
+          for (let i = 0; i < 3; i++) spawnBonusOrb();
+        }
+      }
+
+      function progressChallenge(type, n = 1) {
+        if (!activeChallenge || activeChallenge.id !== type) return;
+        activeChallenge.progress += n;
+        if (activeChallenge.progress >= activeChallenge.target) {
+          score += activeChallenge.reward;
+          player.inv = Math.max(player.inv, 1.5);
+          playDeliverySound();
+          activeChallenge = null;
+          challengeCooldown = randRange(12, 18);
+        }
+      }
+
+      function spawnBonusOrb() {
+        bonusOrbs.push({
+          x: randomFarX(player.x, 420),
+          y: randRange(70, H - 170),
+          life: 22,
+          t: Math.random() * 4,
+          col: '#9ff4ff',
+        });
+      }
+
+      function spawnIfNeeded() {
+        const carrying = !!getHumanCarriedByPlayer();
+        const minEnemies = Math.max(2, currentMission.spawnMinEnemies + Math.floor((campaignRound - 1) * 0.6) - (carrying ? 2 : 0));
+        const maxEnemies = currentMission.id === 'practice' ? 6 : (currentMission.id === 'standard' ? 9 : 10);
+        const spawnChance = roundSpawnChance() * (carrying ? 0.45 : 1);
+        if (enemies.length < minEnemies && enemies.length < maxEnemies && Math.random() < spawnChance) {
+          enemies.push(makeLander(pickEnemyPatrolX(), randRange(50, H * 0.4)));
+        }
+
+        const groundHumans = humans.filter(h => h.state === 'ground' || h.state === 'carried' || h.state === 'falling').length;
+        if (groundHumans < 4) {
+          spawnLeadUserRemote();
+        }
+      }
+
+      function spawnLeadUserAtX(x) {
+        const innovation = pickInnovation();
+        humans.push({
+          x: wrapX(x),
+          y: groundYAt(x) - 7,
+          state: 'ground',
+          vy: 0,
+          carrier: null,
+          wasInDanger: false,
+          innovationKey: innovation.key,
+          innovationName: innovation.name,
+          innovationColor: innovation.color,
+        });
+      }
+
+      function pickRemoteLeadUserX() {
+        // Keep new lead-user signals far from both player and the mothership.
+        for (let i = 0; i < 26; i++) {
+          const x = randRange(0, WORLD_W);
+          const dPlayer = Math.abs(wrapDelta(x - player.x));
+          const dBase = Math.abs(wrapDelta(x - mothership.x));
+          if (dPlayer > 1200 && dBase > 950) return x;
+        }
+        return wrapX(player.x + (Math.random() < 0.5 ? -1 : 1) * 1500);
+      }
+
+      function spawnLeadUserRemote() {
+        spawnLeadUserAtX(pickRemoteLeadUserX());
+      }
+
+      function pickEnemyPatrolX() {
+        // Spawn rivals near lead-user zones so abductions are visible in field patrol.
+        const ground = humans.filter(h => h.state === 'ground');
+        if (ground.length) {
+          const t = ground[Math.floor(Math.random() * ground.length)];
+          return wrapX(t.x + randRange(-240, 240));
+        }
+        return randomFarX(player.x, 900);
+      }
+
+      function killPlayer() {
+        if (player.inv > 0) return;
+
+        if (currentMission && currentMission.winMode !== 'training' && rescuedLeadUsers >= runGoalForMission()) {
+          gameState = 'missionclear';
+          showMissionClear(true);
+          return;
+        }
+
+        lives--;
+        shake = 1.3;
+        flash = 0.8;
+        player.inv = 2.1;
+
+        explodeBig(player.x, player.y, '#7ee8ff');
+        playExplosionSound(0.2);
+
+        player.x = wrapX(player.x - player.facing * 50);
+        player.y = H * 0.38;
+        player.vx = 0;
+        player.vy = 0;
+
+        if (lives < 0) {
+          gameState = 'gameover';
+          showMissionClear(false);
+        }
+      }
+
+      function explodeEnemy(e) {
+        shake = Math.min(2.2, shake + 0.45);
+        flash = Math.min(1, flash + 0.08);
+        explodeBig(e.x, e.y, e.type === 'mutant' ? '#ff8fb3' : '#ffd166');
+        playExplosionSound(e.type === 'mutant' ? 0.16 : 0.12);
+
+        if (e.carrying) {
+          score += Math.floor(180 * (currentMission ? currentMission.scoreMult : 1));
+          flash = Math.min(1, flash + 0.15);
+          playCaptureSound();
+          e.carrying.state = 'falling';
+          e.carrying.vy = -115;
+          e.carrying.recoveryGrace = 2.2;
+          e.carrying.carrier = null;
+          e.carrying = null;
+        }
+      }
+
+      function explodeSmall(x, y, c) {
+        for (let i = 0; i < 10; i++) {
+          particles.push({
+            x: wrapX(x),
+            y,
+            vx: randRange(-80, 80),
+            vy: randRange(-80, 80),
+            life: randRange(0.2, 0.45),
+            size: randRange(1.5, 3),
+            col: c,
+          });
+        }
+      }
+
+      function explodeBig(x, y, c) {
+        for (let i = 0; i < 28; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const s = randRange(50, 220);
+          particles.push({
+            x: wrapX(x),
+            y,
+            vx: Math.cos(a) * s,
+            vy: Math.sin(a) * s,
+            life: randRange(0.35, 0.8),
+            size: randRange(2, 4),
+            col: c,
+          });
+        }
+      }
+
+      function draw() {
+        const sx = shake > 0 ? randRange(-shake * 7, shake * 7) : 0;
+        const sy = shake > 0 ? randRange(-shake * 5, shake * 5) : 0;
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.save();
+        ctx.translate(sx, sy);
+
+        drawSkyGradient();
+        drawStars(starsFar, 0.18, '#4e77c5');
+        drawStars(starsMid, 0.35, '#79b6ff');
+        drawStars(starsNear, 0.52, '#aff4ff');
+        drawDistantHills();
+        drawMothership();
+        drawTerrain();
+        drawObstacles();
+        drawHumans();
+        drawBonusOrbs();
+        drawRescueHint();
+        drawEnemies();
+        drawLaserTrails();
+        drawProjectiles();
+        drawEnemyShots();
+        drawPlayer();
+        drawParticles();
+        drawHUD();
+        drawTrainingCoach();
+
+        if (surgeFlash > 0) {
+          ctx.fillStyle = `rgba(255, 78, 121, ${surgeFlash * 0.12})`;
+          ctx.fillRect(0, 0, W, H);
+        }
+
+        if (flash > 0) {
+          ctx.fillStyle = `rgba(180, 245, 255, ${flash * 0.16})`;
+          ctx.fillRect(0, 0, W, H);
+        }
+
+        ctx.restore();
+      }
+
+      function drawSkyGradient() {
+        const g = ctx.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, '#32296f');
+        g.addColorStop(0.5, '#1b2759');
+        g.addColorStop(1, '#0b132f');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      function drawStars(stars, factor, color) {
+        ctx.fillStyle = color;
+        for (const s of stars) {
+          const sx = worldToScreenX(s.x, factor);
+          const tw = Math.max(1, s.size);
+          ctx.globalAlpha = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(s.t + performance.now() * 0.0018));
+          ctx.fillRect(sx, s.y, tw, tw);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawDistantHills() {
+        const layers = [
+          { y: H - 170, amp: 22, freq: 0.0034, col: '#29386e', par: 0.55 },
+          { y: H - 150, amp: 17, freq: 0.0042, col: '#324a86', par: 0.68 },
+        ];
+
+        for (const l of layers) {
+          ctx.fillStyle = l.col;
+          ctx.beginPath();
+          ctx.moveTo(0, H);
+          for (let x = 0; x <= W; x += 8) {
+            const wx = screenToWorldX(x, l.par);
+            const yy = l.y + Math.sin(wx * l.freq) * l.amp + Math.cos(wx * l.freq * 0.4) * (l.amp * 0.4);
+            ctx.lineTo(x, yy);
+          }
+          ctx.lineTo(W, H);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
+
+      function drawMothership() {
+        const x = worldToScreenX(mothership.x, 1);
+        const y = mothership.y;
+        const pulse = 0.5 + 0.5 * Math.sin(performance.now() * 0.006);
+
+        ctx.fillStyle = 'rgba(90, 210, 255, 0.18)';
+        ctx.fillRect(x - mothership.dockW * 0.5, y + 8, mothership.dockW, mothership.dockH);
+        ctx.strokeStyle = `rgba(141, 243, 255, ${0.45 + pulse * 0.35})`;
+        ctx.strokeRect(x - mothership.dockW * 0.5, y + 8, mothership.dockW, mothership.dockH);
+
+        ctx.fillStyle = '#6fd9ff';
+        ctx.beginPath();
+        ctx.moveTo(x - 64, y - 4);
+        ctx.lineTo(x + 64, y - 4);
+        ctx.lineTo(x + 45, y + 8);
+        ctx.lineTo(x - 45, y + 8);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#c9f6ff';
+        ctx.fillRect(x - 14, y - 2, 28, 5);
+        ctx.fillStyle = '#b2edff';
+        ctx.fillRect(x - 5, y + 8, 10, 5);
+
+        ctx.fillStyle = '#a6f7ff';
+        ctx.font = 'bold 11px Trebuchet MS, Verdana, sans-serif';
+        ctx.fillText('VELOX DYNAMICS R&D LAB', x - 72, y - 10);
+      }
+
+      function drawTerrain() {
+        ctx.fillStyle = 'rgba(27, 49, 92, 0.92)';
+        ctx.beginPath();
+        ctx.moveTo(0, H);
+        for (let x = 0; x <= W; x += 8) {
+          const wx = screenToWorldX(x, 1);
+          ctx.lineTo(x, groundYAt(wx));
+        }
+        ctx.lineTo(W, H);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = '#7ad7ff';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        for (let x = 0; x <= W; x += 7) {
+          const wx = screenToWorldX(x, 1);
+          const gy = groundYAt(wx);
+          if (x === 0) ctx.moveTo(x, gy);
+          else ctx.lineTo(x, gy);
+        }
+        ctx.stroke();
+      }
+
+      function drawObstacles() {
+        for (const s of stormHazards) {
+          const x = worldToScreenX(s.x, 1);
+          const pulse = 0.5 + 0.5 * Math.sin(s.t * 8.2 + performance.now() * 0.01);
+          const r = s.r + pulse * 5;
+          const grad = ctx.createRadialGradient(x, s.y, 2, x, s.y, r);
+          grad.addColorStop(0, 'rgba(255,255,255,0.9)');
+          grad.addColorStop(0.35, 'rgba(120,245,255,0.55)');
+          grad.addColorStop(1, 'rgba(88,185,255,0.05)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(x, s.y, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        for (const t of groundTurrets) {
+          const x = worldToScreenX(t.x, 1);
+          const y = t.y;
+          ctx.fillStyle = '#263d67';
+          ctx.fillRect(x - 7, y - 7, 14, 7);
+          ctx.fillStyle = '#78d9ff';
+          ctx.fillRect(x - 2, y - 11, 4, 8);
+          if (t.cool < 0.35) {
+            ctx.fillStyle = '#ffd68f';
+            ctx.fillRect(x - 3, y - 13, 6, 2);
+          }
+        }
+      }
+
+      function drawHumans() {
+        const pulse = 0.5 + 0.5 * Math.sin(performance.now() * 0.008);
+        for (const h of humans) {
+          const x = worldToScreenX(h.x, 1);
+          const y = h.y;
+
+          if (h.state === 'dead') continue;
+
+          const abducted = h.state === 'abducted';
+          const falling = h.state === 'falling';
+          const carried = h.state === 'carried';
+          const highlight = carried || falling || abducted;
+
+          if (!abducted) {
+            ctx.fillStyle = 'rgba(103, 186, 255, 0.18)';
+            ctx.fillRect(x - 10, y - 1, 20, 3);
+          }
+
+          drawLeadUserGlyph(h, x, y - 9, highlight);
+
+          if (h.state === 'ground') {
+            ctx.fillStyle = `rgba(158, 230, 255, ${0.18 + pulse * 0.24})`;
+            ctx.fillRect(x - 12, y - 20, 24, 2);
+          }
+
+          if (highlight) {
+            ctx.strokeStyle = `rgba(255, 229, 150, ${0.3 + pulse * 0.4})`;
+            ctx.beginPath();
+            ctx.arc(x, y - 9, 11 + pulse * 3.5, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          if (carried) {
+            ctx.strokeStyle = 'rgba(130, 250, 255, 0.8)';
+            ctx.beginPath();
+            ctx.moveTo(worldToScreenX(player.x, 1), player.y + 10);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      function drawBonusOrbs() {
+        if (!bonusOrbs.length) return;
+        for (const o of bonusOrbs) {
+          const x = worldToScreenX(o.x, 1);
+          const a = clamp(o.life / 22, 0.2, 1);
+          ctx.globalAlpha = a;
+          ctx.fillStyle = '#cfffff';
+          ctx.beginPath();
+          ctx.arc(x, o.y, 6.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = '#6eeeff';
+          ctx.lineWidth = 1.4;
+          ctx.stroke();
+          ctx.fillStyle = '#2f7196';
+          ctx.fillRect(x - 2, o.y - 1, 4, 2);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawLeadUserGlyph(h, x, y, highlight) {
+        const c = h.innovationColor || '#ffd166';
+        const tag = innovationTag(h.innovationKey);
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.strokeStyle = c;
+        ctx.lineWidth = 1.6;
+
+        ctx.fillStyle = highlight ? 'rgba(255, 252, 224, 0.98)' : 'rgba(18, 32, 62, 0.95)';
+        ctx.fillRect(-9, -8, 18, 14);
+        ctx.strokeRect(-9, -8, 18, 14);
+        ctx.fillStyle = c;
+
+        switch (h.innovationKey) {
+          case 'energy':
+            ctx.beginPath();
+            ctx.moveTo(-2, -5);
+            ctx.lineTo(2, -5);
+            ctx.lineTo(-0.5, -1);
+            ctx.lineTo(3, -1);
+            ctx.lineTo(-2, 5);
+            ctx.lineTo(-0.5, 1);
+            ctx.lineTo(-4, 1);
+            ctx.closePath();
+            ctx.fill();
+            break;
+          case 'mobility':
+            ctx.strokeRect(-5, -4, 10, 6);
+            ctx.beginPath();
+            ctx.arc(-3.5, 3, 1.9, 0, Math.PI * 2);
+            ctx.arc(3.5, 3, 1.9, 0, Math.PI * 2);
+            ctx.fill();
+            break;
+          case 'sensing':
+            ctx.beginPath();
+            ctx.arc(0, -0.5, 4.4, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(0, -0.5, 1.8, 0, Math.PI * 2);
+            ctx.fill();
+            break;
+          case 'materials':
+            ctx.beginPath();
+            ctx.moveTo(0, -5.5);
+            ctx.lineTo(4.6, -2.7);
+            ctx.lineTo(4.6, 2.7);
+            ctx.lineTo(0, 5.5);
+            ctx.lineTo(-4.6, 2.7);
+            ctx.lineTo(-4.6, -2.7);
+            ctx.closePath();
+            ctx.stroke();
+            break;
+          case 'learning':
+            ctx.strokeRect(-5.5, -5.5, 11, 11);
+            ctx.beginPath();
+            ctx.moveTo(-2.6, 1.2);
+            ctx.lineTo(-0.6, 3.2);
+            ctx.lineTo(3.1, -1.4);
+            ctx.stroke();
+            break;
+          default:
+            ctx.fillRect(-3.5, -3.5, 7, 7);
+        }
+
+        ctx.fillStyle = c;
+        ctx.font = 'bold 8px Trebuchet MS, Verdana, sans-serif';
+        ctx.fillText(tag, -7.5, 10);
+        ctx.restore();
+      }
+
+      function innovationTag(key) {
+        if (key === 'energy') return 'BIKE';
+        if (key === 'mobility') return 'TREAD';
+        if (key === 'sensing') return 'MIRROR';
+        if (key === 'materials') return 'KBELL';
+        if (key === 'learning') return 'APP';
+        return 'FIT';
+      }
+
+      function drawEnemies() {
+        for (const e of enemies) {
+          const x = worldToScreenX(e.x, 1);
+          const y = e.y;
+          const faction = e.faction || rivalFactions[0];
+          if (e.type === 'mutant') {
+            drawMutantSprite(x, y, e.t);
+          } else {
+            drawLanderSprite(x, y, !!e.carrying);
+
+            // Strong visual cue: rival is locking onto a lead-user signal.
+            if (e.state === 'abduct' && e.targetHuman && e.targetHuman.state === 'ground') {
+              const tx = worldToScreenX(e.targetHuman.x, 1);
+              const ty = e.targetHuman.y - 7;
+              ctx.strokeStyle = 'rgba(255, 214, 120, 0.95)';
+              ctx.lineWidth = 1.2;
+              ctx.beginPath();
+              ctx.moveTo(x, y + 8);
+              ctx.lineTo(tx, ty);
+              ctx.stroke();
+              ctx.strokeRect(tx - 8, ty - 8, 16, 16);
+            }
+
+            if (e.state === 'abduct' || e.state === 'ascend') {
+              ctx.strokeStyle = faction.beam;
+              ctx.beginPath();
+              ctx.moveTo(x, y + 7);
+              ctx.lineTo(x, y + 22);
+              ctx.stroke();
+            }
+
+            if (e.carrying) {
+              ctx.fillStyle = 'rgba(24, 9, 12, 0.88)';
+              ctx.fillRect(x - 18, y - 18, 36, 8);
+              ctx.strokeStyle = 'rgba(255, 141, 163, 0.75)';
+              ctx.strokeRect(x - 18, y - 18, 36, 8);
+              ctx.fillStyle = '#ffd1dd';
+              ctx.font = 'bold 7px Trebuchet MS, Verdana, sans-serif';
+              ctx.fillText('CARRYING', x - 15, y - 12);
+            }
+          }
+        }
+      }
+
+      function drawMutantSprite(x, y, t = 0) {
+        // Defender-like aggressive mutant: magenta core with bright wings.
+        const p = 2;
+        const ox = x - 12;
+        const oy = y - 10;
+        const flick = 0.65 + 0.35 * Math.sin(performance.now() * 0.02 + t * 5);
+        const cols = {
+          m: '#ff66d9',
+          v: '#bf7dff',
+          c: '#89f0ff',
+          w: `rgba(245, 232, 255, ${flick})`,
+          k: '#1c1230',
+          y: '#ffe98b'
+        };
+        const sprite = [
+          '............',
+          '....v..v....',
+          '...vvwwvv...',
+          '..vmmkkmmv..',
+          '.vmmmkmmmv..',
+          '.vmmmmm mmv.',
+          '..vmmmmmv...',
+          '...vmmmv....',
+          '..cy....yc..',
+          '.cy......yc.',
+          '............',
+        ];
+        for (let sy = 0; sy < sprite.length; sy++) {
+          const row = sprite[sy];
+          for (let sx = 0; sx < row.length; sx++) {
+            const c = row[sx];
+            if (c === '.' || c === ' ') continue;
+            ctx.fillStyle = cols[c];
+            ctx.fillRect(ox + sx * p, oy + sy * p, p, p);
+          }
+        }
+
+        // Pulsing eye/core
+        ctx.fillStyle = '#fff4c5';
+        ctx.fillRect(x - 1, y - 1, 2, 2);
+      }
+
+      function drawLanderSprite(x, y, carrying) {
+        // Classic Defender-like lander sprite: orange dome, green chassis/legs.
+        const p = 2;
+        const ox = x - 10;
+        const oy = y - 12;
+        const cols = {
+          g: '#41f96c',
+          d: '#15b547',
+          o: '#ffb743',
+          b: '#f58e2d',
+          k: '#0a2430',
+          w: '#ecfff1'
+        };
+        const sprite = [
+          '.....oo.....',
+          '....oooo....',
+          '...obbbbo...',
+          '..gggggggg..',
+          '.gggkggkggg.',
+          '.gggggggggg.',
+          '...gg..gg...',
+          '..gg....gg..',
+          '..g......g..',
+          '.g........g.',
+          '............',
+        ];
+        for (let sy = 0; sy < sprite.length; sy++) {
+          const row = sprite[sy];
+          for (let sx = 0; sx < row.length; sx++) {
+            const c = row[sx];
+            if (c === '.') continue;
+            ctx.fillStyle = cols[c];
+            ctx.fillRect(ox + sx * p, oy + sy * p, p, p);
+          }
+        }
+        ctx.fillStyle = '#b8ffd0';
+        ctx.fillRect(x - 1, y - 2, 2, 2);
+        if (carrying) {
+          ctx.fillStyle = 'rgba(250, 255, 180, 0.95)';
+          ctx.fillRect(x - 3, y + 14, 6, 4);
+          ctx.fillStyle = 'rgba(170, 245, 255, 0.95)';
+          ctx.fillRect(x - 1, y + 15, 2, 2);
+        }
+      }
+
+      function drawProjectiles() {
+        ctx.save();
+        ctx.lineCap = 'butt';
+        ctx.globalCompositeOperation = 'lighter';
+        for (const p of projectiles) {
+          const x = worldToScreenX(p.x, 1);
+          const dir = Math.sign(p.vx) || 1;
+          const tailWorld = wrapX(p.x - dir * 48);
+          const tailX = worldToScreenX(tailWorld, 1);
+          if (Math.abs(x - tailX) < W * 0.45) {
+            // Broad green glow lane.
+            const glow = ctx.createLinearGradient(tailX, p.y, x, p.y);
+            glow.addColorStop(0, 'rgba(110, 255, 90, 0)');
+            glow.addColorStop(0.45, 'rgba(132, 255, 96, 0.55)');
+            glow.addColorStop(1, 'rgba(220, 255, 180, 0.95)');
+            ctx.strokeStyle = glow;
+            ctx.lineWidth = 6.2;
+            ctx.beginPath();
+            ctx.moveTo(tailX, p.y);
+            ctx.lineTo(x, p.y);
+            ctx.stroke();
+
+            // Bright inner beam core.
+            ctx.strokeStyle = 'rgba(240, 255, 190, 0.98)';
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.moveTo(tailX, p.y);
+            ctx.lineTo(x, p.y);
+            ctx.stroke();
+
+            // Defender-like dotted persistence.
+            ctx.fillStyle = 'rgba(255, 245, 150, 0.95)';
+            for (let n = 0; n < 7; n++) {
+              const t = n / 6;
+              const lx = tailX + (x - tailX) * t;
+              if (n % 2 === 0) ctx.fillRect(lx - 1, p.y - 1, 2.2, 2.2);
+            }
+          }
+
+          // Forward emitter flare.
+          ctx.fillStyle = '#f7ffd1';
+          ctx.fillRect(x - 3.8, p.y - 1.2, 7.6, 2.4);
+          ctx.fillStyle = '#c6ff7e';
+          ctx.fillRect(x - 2.4, p.y - 0.8, 4.8, 1.6);
+        }
+        ctx.restore();
+      }
+
+      function drawLaserTrails() {
+        if (!laserTrails.length) return;
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        for (const t of laserTrails) {
+          const x1 = worldToScreenX(t.x1, 1);
+          const x2 = worldToScreenX(t.x2, 1);
+          if (Math.abs(x2 - x1) > W * 0.45) continue;
+          const a = clamp(t.life / 0.3, 0, 1);
+          const steps = 4;
+          for (let i = 0; i < steps; i++) {
+            const q = i / (steps - 1);
+            const lx = x1 + (x2 - x1) * q;
+            const ly = t.y1 + (t.y2 - t.y1) * q;
+            ctx.fillStyle = i % 2 === 0
+              ? `rgba(188, 255, 108, ${a * 0.38})`
+              : `rgba(255, 242, 150, ${a * 0.28})`;
+            ctx.fillRect(lx - 1, ly - 1, 2, 2);
+          }
+        }
+        ctx.restore();
+      }
+
+      function drawEnemyShots() {
+        ctx.fillStyle = '#ff7398';
+        for (const s of enemyShots) {
+          const x = worldToScreenX(s.x, 1);
+          ctx.fillRect(x - 2, s.y - 2, 4, 4);
+        }
+      }
+
+      function drawRescueHint() {
+        const carried = getHumanCarriedByPlayer();
+        if (carried) {
+          const pulse = 0.5 + 0.5 * Math.sin(performance.now() * 0.01);
+          const sx = worldToScreenX(mothership.x, 1);
+          const sy = mothership.y - 18;
+          const onScreen = sx >= 20 && sx <= W - 20;
+          ctx.font = 'bold 12px Trebuchet MS, Verdana, sans-serif';
+          ctx.fillStyle = '#bffcff';
+          ctx.strokeStyle = `rgba(140, 246, 255, ${0.45 + pulse * 0.4})`;
+          if (onScreen) {
+            ctx.beginPath();
+            ctx.moveTo(sx, sy + 6);
+            ctx.lineTo(sx - 7, sy - 6);
+            ctx.lineTo(sx + 7, sy - 6);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fillText('DELIVER TO VELOX DYNAMICS R&D LAB', sx - 108, sy - 10);
+          } else {
+            const edgeX = sx < W * 0.5 ? 18 : W - 18;
+            const dir = sx < W * 0.5 ? -1 : 1;
+            ctx.beginPath();
+            ctx.moveTo(edgeX + dir * 8, H * 0.26);
+            ctx.lineTo(edgeX - dir * 6, H * 0.26 - 8);
+            ctx.lineTo(edgeX - dir * 6, H * 0.26 + 8);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fillText('R&D LAB', edgeX + (dir < 0 ? 8 : -46), H * 0.26 - 10);
+          }
+          return;
+        }
+
+        const target = pickPriorityHuman();
+        if (!target) return;
+
+        const pulse = 0.5 + 0.5 * Math.sin(performance.now() * 0.01);
+        const sx = worldToScreenX(target.x, 1);
+        const sy = target.y - 24;
+        const onScreen = sx >= 20 && sx <= W - 20;
+
+        ctx.font = 'bold 12px Trebuchet MS, Verdana, sans-serif';
+        ctx.fillStyle = '#fff0a6';
+        ctx.strokeStyle = `rgba(255, 229, 150, ${0.4 + pulse * 0.4})`;
+
+        if (onScreen) {
+          ctx.beginPath();
+          ctx.moveTo(sx, sy + 4);
+          ctx.lineTo(sx - 6, sy - 7);
+          ctx.lineTo(sx + 6, sy - 7);
+          ctx.closePath();
+          ctx.stroke();
+          ctx.fillText(player.beam ? 'TRACTOR ON' : 'RESCUE (HOLD B)', sx - 44, sy - 10);
+          return;
+        }
+
+        const edgeX = sx < W * 0.5 ? 18 : W - 18;
+        const dir = sx < W * 0.5 ? -1 : 1;
+        ctx.beginPath();
+        ctx.moveTo(edgeX + dir * 8, H * 0.34);
+        ctx.lineTo(edgeX - dir * 6, H * 0.34 - 8);
+        ctx.lineTo(edgeX - dir * 6, H * 0.34 + 8);
+        ctx.closePath();
+        ctx.stroke();
+      }
+
+      function drawPlayer() {
+        const x = worldToScreenX(player.x, 1);
+        const y = player.y;
+
+        if (player.inv > 0 && Math.floor(player.inv * 12) % 2 === 0) {
+          return;
+        }
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(-player.facing, 1);
+
+        const tilt = clamp(player.vy * 0.002, -0.28, 0.28);
+        ctx.rotate(tilt);
+
+        // 1980-like Defender sprite build (matching provided pixel layout).
+        const u = 2;
+        const ox = -24;
+        const oy = -11;
+
+        // Main white fuselage line
+        ctx.fillStyle = '#f7fbff';
+        ctx.fillRect(ox, oy + 11, 27, 4);
+        ctx.fillRect(ox + 2, oy + 9, 10, 2);
+        ctx.fillRect(ox + 23, oy + 9, 5, 2);
+
+        // Stepped gray top block
+        ctx.fillStyle = '#d4d9e2';
+        ctx.fillRect(ox + 12, oy + 7, 8, 2);
+        ctx.fillRect(ox + 14, oy + 5, 8, 2);
+        ctx.fillRect(ox + 16, oy + 3, 8, 2);
+        ctx.fillRect(ox + 18, oy + 1, 6, 2);
+
+        // Shadow/dark edge around top block
+        ctx.fillStyle = '#596579';
+        ctx.fillRect(ox + 11, oy + 9, 2, 2);
+        ctx.fillRect(ox + 20, oy + 9, 3, 2);
+        ctx.fillRect(ox + 23, oy + 5, 2, 4);
+
+        // Magenta lower module
+        ctx.fillStyle = '#ff73d2';
+        ctx.fillRect(ox + 14, oy + 11, 10, 6);
+        ctx.fillRect(ox + 12, oy + 13, 10, 4);
+
+        // Color stripe (red/blue/red/yellow) on mid body
+        ctx.fillStyle = '#ff4f61';
+        ctx.fillRect(ox + 6, oy + 9, 2, 3);
+        ctx.fillStyle = '#5ca7ff';
+        ctx.fillRect(ox + 8, oy + 9, 2, 3);
+        ctx.fillStyle = '#ff4f61';
+        ctx.fillRect(ox + 10, oy + 9, 2, 3);
+        ctx.fillStyle = '#ffc94f';
+        ctx.fillRect(ox + 12, oy + 9, 2, 3);
+
+        // Green tip accents
+        ctx.fillStyle = '#5cff67';
+        ctx.fillRect(ox - 2, oy + 11, 2, 3);
+        ctx.fillRect(ox + 27, oy + 8, 3, 2);
+        ctx.fillRect(ox + 27, oy + 13, 3, 2);
+
+        // Small cyan accent near front lower edge.
+        ctx.fillStyle = '#79f2ff';
+        ctx.fillRect(ox + 21, oy + 15, 3, 2);
+
+        if (Math.abs(player.vx) > 22 || Math.abs(player.vy) > 22) {
+          // Rear pixel flame stack (blue-violet glow) like the sprite reference.
+          ctx.fillStyle = '#6686ff';
+          ctx.fillRect(ox - 6, oy + 11, 3, 2);
+          ctx.fillRect(ox - 6, oy + 14, 3, 2);
+          ctx.fillStyle = '#8457ff';
+          ctx.fillRect(ox - 8, oy + 11, 2, 2);
+          ctx.fillRect(ox - 8, oy + 14, 2, 2);
+        }
+
+        ctx.restore();
+
+        if (player.beam) {
+          const beamTop = y + 8;
+          const beamBottom = Math.min(H - 18, groundYAt(player.x) + 1);
+          const captureWidth = (currentMission && currentMission.id === 'practice') ? 34 : 26;
+          const width = captureWidth + Math.sin(performance.now() * 0.02) * 6;
+
+          ctx.fillStyle = 'rgba(93, 245, 255, 0.15)';
+          ctx.beginPath();
+          ctx.moveTo(x - 5, beamTop);
+          ctx.lineTo(x + 5, beamTop);
+          ctx.lineTo(x + width, beamBottom);
+          ctx.lineTo(x - width, beamBottom);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.strokeStyle = 'rgba(130, 255, 255, 0.45)';
+          ctx.stroke();
+
+          const candidate = pickNearestBeamCandidate();
+          if (candidate) {
+            const cx = worldToScreenX(candidate.x, 1);
+            ctx.strokeStyle = 'rgba(255, 242, 160, 0.95)';
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(cx - 7, candidate.y - 14, 14, 14);
+          }
+        }
+
+        if (player.beam) {
+          const r = (currentMission && currentMission.id === 'practice') ? 34 : 26;
+          ctx.strokeStyle = 'rgba(117, 253, 255, 0.7)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(x - r, y + 12);
+          ctx.lineTo(x - r, y + 20);
+          ctx.moveTo(x + r, y + 12);
+          ctx.lineTo(x + r, y + 20);
+          ctx.stroke();
+        }
+
+        const carried = getHumanCarriedByPlayer();
+        if (carried) {
+          ctx.fillStyle = 'rgba(5, 14, 30, 0.75)';
+          ctx.fillRect(x - 62, y - 35, 124, 16);
+          ctx.strokeStyle = carried.innovationColor || '#9defff';
+          ctx.strokeRect(x - 62, y - 35, 124, 16);
+          ctx.fillStyle = '#d5f8ff';
+          ctx.font = 'bold 11px Trebuchet MS, Verdana, sans-serif';
+          ctx.fillText(carried.innovationName, x - 56, y - 23);
+        }
+      }
+
+      function drawParticles() {
+        for (const p of particles) {
+          const x = worldToScreenX(p.x, 1);
+          ctx.globalAlpha = Math.max(0, p.life * 1.7);
+          ctx.fillStyle = p.col;
+          ctx.fillRect(x, p.y, p.size, p.size);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawHUD() {
+        const mission = currentMission || missions[selectedMissionId];
+        const carried = getHumanCarriedByPlayer();
+        const rivalAbducting = enemies.filter(e => e.type === 'lander' && e.state === 'abduct').length;
+        const rivalCarrying = enemies.filter(e => e.type === 'lander' && !!e.carrying).length;
+        ctx.fillStyle = 'rgba(6, 20, 36, 0.76)';
+        ctx.fillRect(8, 8, W - 16, 32);
+        ctx.strokeStyle = 'rgba(120, 210, 255, 0.45)';
+        ctx.strokeRect(8, 8, W - 16, 32);
+
+        const alive = humans.filter(h => h.state !== 'dead' && h.state !== 'abducted').length;
+        const timeLeft = Math.max(0, Math.ceil((mission.duration || 80) - missionTimer));
+        const roundGoal = roundTargetRescues();
+        const runGoal = runGoalForMission();
+
+        ctx.fillStyle = '#dff7ff';
+        ctx.font = 'bold 14px Trebuchet MS, Verdana, sans-serif';
+        ctx.fillText(`SCORE ${Math.floor(score).toString().padStart(6, '0')}`, 16, 29);
+        ctx.fillText(`LIVES ${Math.max(0, lives + 1)}`, 170, 29);
+        ctx.fillText(`ROUND ${campaignRound}/3`, 260, 29);
+        ctx.fillText(`TIME ${timeLeft}s`, 370, 29);
+        ctx.fillText(`ROUND GOAL ${roundGoal}`, 455, 29);
+        ctx.fillText(`CAP ${roundCaptured}`, 540, 29);
+        ctx.fillText(`RUN ${rescuedLeadUsers}/${runGoal}`, 615, 29);
+
+        const radarX = W - 210;
+        const radarY = 44;
+        const radarW = 190;
+        const radarH = 18;
+
+        ctx.fillStyle = 'rgba(6, 20, 36, 0.82)';
+        ctx.fillRect(radarX, radarY, radarW, radarH);
+        ctx.strokeStyle = 'rgba(120, 210, 255, 0.65)';
+        ctx.strokeRect(radarX, radarY, radarW, radarH);
+
+        const px = radarX + ((player.x / WORLD_W) * radarW);
+        ctx.fillStyle = '#6effff';
+        ctx.fillRect(px - 2, radarY + 2, 4, radarH - 4);
+
+        const mx = radarX + ((mothership.x / WORLD_W) * radarW);
+        ctx.fillStyle = '#9defff';
+        ctx.fillRect(mx - 3, radarY + 2, 6, 2);
+
+        ctx.fillStyle = '#ff7ba0';
+        for (const e of enemies) {
+          const ex = radarX + ((e.x / WORLD_W) * radarW);
+          ctx.fillRect(ex, radarY + 6, 2, 6);
+        }
+
+        ctx.fillStyle = '#ffe48f';
+        for (const h of humans) {
+          if (h.state === 'dead') continue;
+          const hx = radarX + ((h.x / WORLD_W) * radarW);
+          ctx.fillRect(hx, radarY + 12, 2, 4);
+        }
+
+        // Tiny status chips to avoid blocking core play space.
+        if (carried) {
+          ctx.fillStyle = 'rgba(6, 20, 36, 0.7)';
+          ctx.fillRect(230, 72, 500, 18);
+          ctx.strokeStyle = 'rgba(120, 210, 255, 0.4)';
+          ctx.strokeRect(230, 72, 500, 18);
+          ctx.fillStyle = '#bffcff';
+          ctx.font = 'bold 11px Trebuchet MS, Verdana, sans-serif';
+          ctx.fillText(`CARRYING: ${carried.innovationName} -> VELOX R&D LAB`, 238, 85);
+        } else if (activeChallenge) {
+          ctx.fillStyle = 'rgba(6, 20, 36, 0.7)';
+          ctx.fillRect(248, 72, 482, 18);
+          ctx.strokeStyle = 'rgba(120, 210, 255, 0.4)';
+          ctx.strokeRect(248, 72, 482, 18);
+          ctx.fillStyle = '#95e6ff';
+          ctx.font = 'bold 11px Trebuchet MS, Verdana, sans-serif';
+          ctx.fillText(
+            `TASK: ${activeChallenge.label} ${activeChallenge.progress}/${activeChallenge.target} ${Math.ceil(activeChallenge.timeLeft)}s`,
+            256,
+            85
+          );
+        } else if (rivalAbducting > 0 || rivalCarrying > 0) {
+          ctx.fillStyle = 'rgba(36, 12, 18, 0.8)';
+          ctx.fillRect(242, 72, 478, 18);
+          ctx.strokeStyle = 'rgba(255, 141, 163, 0.55)';
+          ctx.strokeRect(242, 72, 478, 18);
+          ctx.fillStyle = '#ffd1dd';
+          ctx.font = 'bold 11px Trebuchet MS, Verdana, sans-serif';
+          ctx.fillText(`RIVALS: ${rivalAbducting} LOCKING | ${rivalCarrying} CARRYING`, 250, 85);
+        }
+      }
+
+      function drawTrainingCoach() {
+        if (!trainingState) return;
+        const pulse = 0.4 + 0.6 * Math.sin(performance.now() * 0.008);
+        ctx.fillStyle = 'rgba(7, 14, 34, 0.75)';
+        ctx.fillRect(170, H - 44, 620, 30);
+        ctx.strokeStyle = `rgba(126, 234, 255, ${0.4 + pulse * 0.5})`;
+        ctx.strokeRect(170, H - 44, 620, 30);
+        ctx.fillStyle = '#bff7ff';
+        ctx.font = 'bold 14px Trebuchet MS, Verdana, sans-serif';
+        ctx.fillText(`TRAINING: ${trainingState.message}`, 182, H - 24);
+      }
+
+      function createTrainingState(mission) {
+        if (!mission || mission.id !== 'practice') return null;
+        return {
+          moved: false,
+          beamUsed: false,
+          pickedUp: false,
+          droppedSafe: false,
+          step: 0,
+          message: 'Move around (WASD/Arrows), then hold B near a lead-user signal.',
+        };
+      }
+
+      function updateTrainingCoach() {
+        if (!trainingState) return;
+        if (trainingState.step === 0) {
+          if (trainingState.moved) {
+            trainingState.step = 1;
+            trainingState.message = 'Find a lead-user marker, hover close, and hold B to capture signal.';
+          }
+          return;
+        }
+        if (trainingState.step === 1) {
+          if (trainingState.beamUsed && trainingState.pickedUp) {
+            trainingState.step = 2;
+            trainingState.message = 'Now transfer that insight to Velox Dynamics R&D Lab at the top.';
+          }
+          return;
+        }
+        if (trainingState.step === 2) {
+          if (trainingState.droppedSafe || rescuedLeadUsers > 0) {
+            trainingState.step = 3;
+            trainingState.message = 'Great transfer. Repeat to complete Lead User Method training.';
+          }
+        }
+      }
+
+      function pickNearestBeamCandidate() {
+        if (!player.beam) return null;
+        let best = null;
+        let bestD = Infinity;
+        const mode = currentMission ? currentMission.id : 'standard';
+        const hmax = mode === 'practice' ? 96 : (mode === 'standard' ? 92 : 78);
+        const r = mode === 'practice' ? 21 : (mode === 'standard' ? 20 : 16);
+        for (const h of humans) {
+          if (h.state !== 'ground' && h.state !== 'falling') continue;
+          const dx = Math.abs(wrapDelta(h.x - player.x));
+          const dy = h.y - player.y;
+          if (dx > r || dy < 8 || dy > hmax) continue;
+          const d = dx + Math.abs(dy - 70) * 0.2;
+          if (d < bestD) {
+            bestD = d;
+            best = h;
+          }
+        }
+        return best;
+      }
+
+      function pickNearestGroundHuman(x) {
+        let best = null;
+        let bestD = Infinity;
+        for (const h of humans) {
+          if (h.state !== 'ground') continue;
+          const d = Math.abs(wrapDelta(h.x - x));
+          if (d < bestD) {
+            bestD = d;
+            best = h;
+          }
+        }
+        return best;
+      }
+
+      function pickPriorityHuman() {
+        let best = null;
+        let bestScore = -1;
+        for (const h of humans) {
+          if (h.state === 'dead') continue;
+          if (h.state === 'carried') continue;
+          const d = Math.abs(wrapDelta(h.x - player.x));
+          let urgency = 0;
+          if (h.state === 'abducted') urgency = 4;
+          else if (h.state === 'falling') urgency = 3;
+          else if (h.state === 'ground') urgency = 1;
+          const score = urgency * 1000 - d;
+          if (score > bestScore) {
+            bestScore = score;
+            best = h;
+          }
+        }
+        return best;
+      }
+
+      function getHumanCarriedByPlayer() {
+        return humans.find(h => h.state === 'carried') || null;
+      }
+
+      function canBeamHuman(h) {
+        const mode = currentMission ? currentMission.id : 'standard';
+        const beamHalfWidth = mode === 'practice' ? 21 : (mode === 'standard' ? 20 : 16);
+        const beamHeight = mode === 'practice' ? 96 : (mode === 'standard' ? 92 : 78);
+        const dx = Math.abs(wrapDelta(h.x - player.x));
+        const dy = h.y - player.y;
+        return dx < beamHalfWidth && dy > 8 && dy < beamHeight;
+      }
+
+      function removeHuman(h) {
+        const idx = humans.indexOf(h);
+        if (idx >= 0) {
+          humans.splice(idx, 1);
+          lostLeadUsers++;
+        }
+      }
+
+      function showMissionClear(won) {
+        lastMissionWon = won;
+        const alive = humans.filter(h => h.state !== 'dead' && h.state !== 'abducted').length;
+        const m = missions[selectedMissionId];
+        const sync = buildSimSyncPayload();
+        window.retroPatrolLastSync = sync;
+        const syncShort = sync.length > 76 ? `${sync.slice(0, 76)}...` : sync;
+        const insightSummary = insightFeed.length
+          ? insightFeed.map(i => `${i.title}: ${i.message}`).join(' | ')
+          : 'No captured insights this run.';
+        const unlockedLine = missionUnlocks.length
+          ? missionUnlocks.map(k => findInnovation(k).name).join(', ')
+          : 'No new unlocks this mission';
+        const topInnovation = pickTopMissionInnovation();
+        const runGoal = runGoalForMission();
+        overlay.style.display = 'grid';
+        const statusColor = won ? '#9ef3a3' : '#ff8ca2';
+        const trainingDone = currentMission && currentMission.winMode === 'training' && won;
+        const statusText = trainingDone ? 'TRAINING COMPLETE' : (won ? 'MISSION COMPLETE' : 'MISSION LOST');
+
+        // Send results to parent Innovation Manager via postMessage when embedded
+        if (isEmbedded) {
+          try {
+            window.parent.postMessage({
+              type: 'miniGameComplete',
+              game: 'leadUserPatrol',
+              rescuedLeadUsers: rescuedLeadUsers,
+              lostLeadUsers: lostLeadUsers,
+              score: Math.floor(score),
+              won: won,
+              topDomain: topInnovation ? topInnovation.name : 'General Innovation',
+              topDomainKey: topInnovation ? topInnovation.key : null
+            }, '*');
+          } catch(e) {}
+        }
+
+        const followup = trainingDone
+          ? 'Press 2 to continue to Field Operation, or Enter to replay training.'
+          : (won
+            ? 'Run complete. Press Enter to replay, or choose another mode.'
+            : 'Press Enter to retry, or choose another mission with 1/2/3.');
+
+        const returnBtn = isEmbedded
+          ? `<button class="btn" data-action="return-to-manager">\u2190 Return to The Disruptor</button>`
+          : '';
+
+        overlayPanel.innerHTML = `
+          <div class="title" style="color:${statusColor}">${statusText}</div>
+          <div>Mission: ${currentMission.label}</div>
+          <div>Rounds Completed: ${campaignRound}/3</div>
+          <div>Run Goal: ${rescuedLeadUsers}/${runGoal} captured insights</div>
+          <div style="margin-top: 4px; color: #9defff;">Next Selection</div>
+          <div class="btn-row">
+            <button class="btn ${selectedMissionId === 'practice' ? 'active' : ''}" data-action="select-mission" data-mission="practice">Training</button>
+            <button class="btn ${selectedMissionId === 'standard' ? 'active' : ''}" data-action="select-mission" data-mission="standard">Regular</button>
+            <button class="btn ${selectedMissionId === 'veteran' ? 'active' : ''}" data-action="select-mission" data-mission="veteran">Advanced</button>
+          </div>
+          <div style="margin-top: 4px; color: #ffe59c;">Selected: ${m.label} (${m.difficulty})</div>
+          <div>Score: ${Math.floor(score)}</div>
+          <div>Lead User Insights Captured: ${rescuedLeadUsers}</div>
+          <div>Lead User Signals Missed: ${lostLeadUsers}</div>
+          <div>Lead User Signals Active: ${alive}</div>
+          <div style="margin-top: 8px;">Innovation Value Transferred: ${rescuedLeadUsers * currentMission.valuePerLeadUser}</div>
+          <div style="margin-top: 6px;">Insight Notes: ${insightSummary}</div>
+          <div style="margin-top: 6px; color: #9defff;">Top Lead-User Domain: ${topInnovation ? topInnovation.name : 'None'}</div>
+          <div style="margin-top: 6px; color: #9defff;">Unlocks: ${unlockedLine}</div>
+          <div style="margin-top: 6px; color: #b9f7ff;">Educational Sim Sync: ${syncShort}</div>
+          <div style="margin-top: 10px; color: #ffd166;">${followup}</div>
+          <div class="btn-row">
+            <button class="btn launch" data-action="launch">Play Selected Mission</button>
+            <button class="btn" data-action="title">Back to Briefing</button>
+            ${returnBtn}
+          </div>
+        `;
+      }
+
+      function pickInnovation() {
+        return innovationCatalog[Math.floor(Math.random() * innovationCatalog.length)];
+      }
+
+      function findInnovation(key) {
+        return innovationCatalog.find(i => i.key === key);
+      }
+
+      function loadMetaProgress() {
+        const fallback = {
+          totalRescues: 0,
+          innovations: Object.fromEntries(innovationCatalog.map(i => [i.key, { rescued: 0, unlocked: false }])),
+        };
+        try {
+          const raw = localStorage.getItem('retro_patrol_progress_v1');
+          if (!raw) return fallback;
+          const parsed = JSON.parse(raw);
+          if (!parsed || typeof parsed !== 'object') return fallback;
+          parsed.innovations = parsed.innovations || {};
+          for (const i of innovationCatalog) {
+            if (!parsed.innovations[i.key]) {
+              parsed.innovations[i.key] = { rescued: 0, unlocked: false };
+            }
+          }
+          return parsed;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function saveMetaProgress() {
+        try {
+          localStorage.setItem('retro_patrol_progress_v1', JSON.stringify(metaProgress));
+        } catch {}
+      }
+
+      function registerInnovationRescue(human) {
+        const key = human.innovationKey;
+        if (!key || !metaProgress.innovations[key]) return;
+        missionInnovationRescues[key] = (missionInnovationRescues[key] || 0) + 1;
+        metaProgress.totalRescues += 1;
+        metaProgress.innovations[key].rescued += 1;
+        const meta = metaProgress.innovations[key];
+        const info = findInnovation(key);
+        if (!meta.unlocked && meta.rescued >= info.threshold) {
+          meta.unlocked = true;
+          missionUnlocks.push(key);
+          score += 250;
+        }
+        saveMetaProgress();
+      }
+
+      function pickTopMissionInnovation() {
+        let bestKey = null;
+        let best = -1;
+        for (const [k, v] of Object.entries(missionInnovationRescues)) {
+          if (v > best) {
+            best = v;
+            bestKey = k;
+          }
+        }
+        return bestKey ? findInnovation(bestKey) : null;
+      }
+
+      function buildSimSyncPayload() {
+        const payload = {
+          mission: currentMission.id,
+          rescuedLeadUsers,
+          lostLeadUsers,
+          rescuedByInnovation: missionInnovationRescues,
+          unlocked: missionUnlocks,
+          totals: metaProgress,
+          ts: Date.now(),
+        };
+        return `SIMSYNC1:${btoa(JSON.stringify(payload))}`;
+      }
+
+      function ensureAudio() {
+        if (audioCtx) return;
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        audioCtx = new AC();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.value = 0.18;
+        masterGain.connect(audioCtx.destination);
+        noiseBuffer = makeNoiseBuffer();
+        musicNextTime = audioCtx.currentTime + 0.05;
+        musicStep = 0;
+      }
+
+      function makeNoiseBuffer() {
+        if (!audioCtx) return null;
+        const len = Math.floor(audioCtx.sampleRate * 0.25);
+        const b = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+        const ch = b.getChannelData(0);
+        for (let i = 0; i < len; i++) ch[i] = Math.random() * 2 - 1;
+        return b;
+      }
+
+      function playTone(freq, type, attack, decay, gainAmt, glide = null) {
+        if (!audioCtx || !masterGain) return;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        if (glide) osc.frequency.exponentialRampToValueAtTime(Math.max(35, glide), now + decay);
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(gainAmt, now + attack);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+        osc.connect(g);
+        g.connect(masterGain);
+        osc.start(now);
+        osc.stop(now + decay + 0.03);
+      }
+
+      function playNoise(decay, gainAmt) {
+        if (!audioCtx || !masterGain || !noiseBuffer) return;
+        const now = audioCtx.currentTime;
+        const src = audioCtx.createBufferSource();
+        src.buffer = noiseBuffer;
+        const hp = audioCtx.createBiquadFilter();
+        hp.type = 'highpass';
+        hp.frequency.value = 600;
+        const g = audioCtx.createGain();
+        g.gain.setValueAtTime(gainAmt, now);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+        src.connect(hp);
+        hp.connect(g);
+        g.connect(masterGain);
+        src.start(now);
+        src.stop(now + decay + 0.02);
+      }
+
+      function playShootSound() {
+        // Short, bright dual-pulse zap closer to classic arcade cadence.
+        playTone(1040, 'square', 0.001, 0.05, 0.07, 760);
+        playTone(1680, 'square', 0.001, 0.028, 0.04, 1200);
+        playTone(620, 'triangle', 0.001, 0.055, 0.026, 450);
+      }
+
+      function playHitSound() {
+        playTone(430, 'sawtooth', 0.001, 0.07, 0.045, 220);
+      }
+
+      function playExplosionSound(level = 0.14) {
+        playNoise(0.18, Math.max(0.01, Math.min(0.09, level)));
+        playTone(180, 'triangle', 0.001, 0.14, 0.05, 60);
+      }
+
+      function playCaptureSound() {
+        playTone(520, 'square', 0.001, 0.06, 0.032, 700);
+        playTone(700, 'triangle', 0.001, 0.08, 0.026, 920);
+      }
+
+      function playDeliverySound() {
+        if (!audioCtx || !masterGain) return;
+        const now = audioCtx.currentTime;
+        const notes = [392, 523.25, 659.25, 783.99];
+        for (let i = 0; i < notes.length; i++) {
+          const t = now + i * 0.075;
+          const osc = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          osc.type = i % 2 === 0 ? 'triangle' : 'square';
+          osc.frequency.setValueAtTime(notes[i], t);
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(0.045, t + 0.008);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+          osc.connect(g);
+          g.connect(masterGain);
+          osc.start(t);
+          osc.stop(t + 0.18);
+        }
+      }
+
+      function updateMusic() {
+        if (!audioCtx || !masterGain || gameState !== 'playing') return;
+        const now = audioCtx.currentTime;
+        const intensity = Math.min(1.8, enemies.length / 10 + (activeChallenge ? 0.5 : 0));
+        const bpm = 128 + intensity * 34;
+        const stepDur = 60 / bpm / 2;
+        while (musicNextTime < now + 0.22) {
+          const s = musicStep % 16;
+          if (s % 4 === 0) {
+            const bass = [98, 98, 110, 123][Math.floor(s / 4)];
+            playToneAt(bass, 'triangle', musicNextTime, 0.001, stepDur * 0.9, 0.026 + intensity * 0.010, bass * 0.98);
+          }
+          if (s % 2 === 0) {
+            const seq = [392, 440, 523.25, 587.33, 659.25, 587.33, 523.25, 440];
+            const n = seq[(musicStep / 2) % seq.length];
+            playToneAt(n, 'square', musicNextTime, 0.001, stepDur * 0.55, 0.017 + intensity * 0.008, n * 0.98);
+          }
+          if (s === 4 || s === 12) {
+            playNoiseAt(musicNextTime, stepDur * 0.4, 0.012 + intensity * 0.004);
+          }
+          musicNextTime += stepDur;
+          musicStep++;
+        }
+      }
+
+      function playToneAt(freq, type, t0, attack, decay, gainAmt, glide = null) {
+        if (!audioCtx || !masterGain) return;
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, t0);
+        if (glide) osc.frequency.exponentialRampToValueAtTime(Math.max(35, glide), t0 + decay);
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(gainAmt, t0 + attack);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + decay);
+        osc.connect(g);
+        g.connect(masterGain);
+        osc.start(t0);
+        osc.stop(t0 + decay + 0.03);
+      }
+
+      function playNoiseAt(t0, decay, gainAmt) {
+        if (!audioCtx || !masterGain || !noiseBuffer) return;
+        const src = audioCtx.createBufferSource();
+        src.buffer = noiseBuffer;
+        const bp = audioCtx.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.value = 1450;
+        const g = audioCtx.createGain();
+        g.gain.setValueAtTime(gainAmt, t0);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + decay);
+        src.connect(bp);
+        bp.connect(g);
+        g.connect(masterGain);
+        src.start(t0);
+        src.stop(t0 + decay + 0.02);
+      }
+
+      function updateAudio() {
+        if (!audioCtx || !masterGain) return;
+        updateMusic();
+        if (player.beam && !beamOsc) {
+          const now = audioCtx.currentTime;
+          beamOsc = audioCtx.createOscillator();
+          beamGain = audioCtx.createGain();
+          beamOsc.type = 'sawtooth';
+          beamOsc.frequency.setValueAtTime(118, now);
+          beamGain.gain.setValueAtTime(0.0001, now);
+          beamGain.gain.exponentialRampToValueAtTime(0.028, now + 0.03);
+          beamOsc.connect(beamGain);
+          beamGain.connect(masterGain);
+          beamOsc.start(now);
+        } else if (!player.beam && beamOsc) {
+          const now = audioCtx.currentTime;
+          beamGain.gain.cancelScheduledValues(now);
+          beamGain.gain.setValueAtTime(Math.max(0.0001, beamGain.gain.value), now);
+          beamGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+          beamOsc.stop(now + 0.06);
+          beamOsc = null;
+          beamGain = null;
+        }
+
+        if (beamOsc && beamGain) {
+          const now = audioCtx.currentTime;
+          const mod = 104 + Math.abs(player.vy) * 0.15 + (Math.sin(performance.now() * 0.02) * 7 + 7);
+          beamOsc.frequency.setTargetAtTime(mod, now, 0.03);
+        }
+      }
+
+      function buildTerrain() {
+        const pts = [];
+        const samples = 512;
+        for (let i = 0; i < samples; i++) {
+          const x = i / (samples - 1);
+          const y = GROUND_BASE
+            + Math.sin(x * Math.PI * 4.7) * 18
+            + Math.sin(x * Math.PI * 13.3 + 1.1) * 9
+            + Math.cos(x * Math.PI * 2.1 + 0.4) * 14;
+          pts.push(y);
+        }
+        return pts;
+      }
+
+      function groundYAt(wx) {
+        const x = wrapX(wx) / WORLD_W;
+        const idx = x * (terrain.length - 1);
+        const i0 = Math.floor(idx);
+        const i1 = (i0 + 1) % terrain.length;
+        const t = idx - i0;
+        return terrain[i0] * (1 - t) + terrain[i1] * t;
+      }
+
+      function worldToScreenX(wx, parallax = 1) {
+        const cx = wrapDelta(wx - camX * parallax);
+        return cx + W * 0.5;
+      }
+
+      function screenToWorldX(sx, parallax = 1) {
+        return wrapX((sx - W * 0.5) + camX * parallax);
+      }
+
+      function wrapX(x) {
+        x %= WORLD_W;
+        if (x < 0) x += WORLD_W;
+        return x;
+      }
+
+      function wrapDelta(dx) {
+        dx = ((dx + WORLD_W * 0.5) % WORLD_W + WORLD_W) % WORLD_W - WORLD_W * 0.5;
+        return dx;
+      }
+
+      function lerpAngleLike(a, b, t) {
+        return a + wrapDelta(b - a) * t;
+      }
+
+      function randRange(a, b) {
+        return a + Math.random() * (b - a);
+      }
+
+      function randomFarX(center, minDist) {
+        for (let i = 0; i < 18; i++) {
+          const x = randRange(0, WORLD_W);
+          if (Math.abs(wrapDelta(x - center)) >= minDist) return x;
+        }
+        return wrapX(center + (Math.random() < 0.5 ? -1 : 1) * minDist);
+      }
+
+      function roundTargetRescues() {
+        const m = currentMission || missions[selectedMissionId];
+        if (!m) return 0;
+        if (m.winMode === 'training') return m.targetRescues || 0;
+        const runGoal = m.runGoal || m.targetRescues || 0;
+        return Math.ceil((runGoal * campaignRound) / 3);
+      }
+
+      function runGoalForMission() {
+        const m = currentMission || missions[selectedMissionId];
+        if (!m) return 0;
+        if (m.winMode === 'training') return m.targetRescues || 0;
+        return m.runGoal || m.targetRescues || 0;
+      }
+
+      function activeAbductorCount() {
+        let count = 0;
+        for (const e of enemies) {
+          if (e.type === 'lander' && (e.state === 'abduct' || e.state === 'ascend')) count++;
+        }
+        return count;
+      }
+
+      function maxConcurrentAbductors() {
+        if (!currentMission || currentMission.id === 'practice') return 1;
+        if (currentMission.id === 'standard') return 1;
+        return campaignRound >= 3 ? 3 : 2;
+      }
+
+      function pickRivalFaction() {
+        return rivalFactions[Math.floor(Math.random() * rivalFactions.length)];
+      }
+
+      function roundEnemyScale() {
+        return 1 + (campaignRound - 1) * 0.1;
+      }
+
+      function roundFireScale() {
+        return 1 + (campaignRound - 1) * 0.12;
+      }
+
+      function roundSpawnChance() {
+        return currentMission.spawnChance * (1 + (campaignRound - 1) * 0.2);
+      }
+
+      function clamp(v, lo, hi) {
+        return Math.max(lo, Math.min(hi, v));
+      }
+
+      function makeStars(n, driftFactor, maxSize) {
+        const stars = [];
+        for (let i = 0; i < n; i++) {
+          stars.push({
+            x: Math.random() * WORLD_W,
+            y: Math.random() * (H - 120),
+            size: Math.max(1, Math.random() * maxSize),
+            t: Math.random() * Math.PI * 2,
+            d: driftFactor,
+          });
+        }
+        return stars;
+      }
+
+      // subtle star drift to keep sky alive
+      setInterval(() => {
+        for (const s of starsFar) s.x = wrapX(s.x + s.d * 0.8);
+        for (const s of starsMid) s.x = wrapX(s.x + s.d * 1.2);
+        for (const s of starsNear) s.x = wrapX(s.x + s.d * 1.8);
+      }, 33);
+    })();
+  </script>
+</body>
+</html>

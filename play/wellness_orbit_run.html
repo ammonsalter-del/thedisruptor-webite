@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Wellness Ecosystem Chase</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 143, 64, 0.22), transparent 42%),
+    radial-gradient(circle at 80% 0%, rgba(123, 255, 214, 0.16), transparent 40%),
+    linear-gradient(180deg, #1d2229 0%, #0f1317 100%);
+  color: #f5f5f5;
+  font-family: "Trebuchet MS", "Verdana", sans-serif;
+}
+#wrap {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  background:
+    linear-gradient(180deg, rgba(255, 143, 64, 0.08), transparent 28%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.015) 0 16px,
+      rgba(0, 0, 0, 0) 16px 32px
+    ),
+    linear-gradient(180deg, #222831 0%, #12161b 100%);
+}
+#hud {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(20, 24, 29, 0.9);
+  border-bottom: 2px solid #ff7e3d;
+  letter-spacing: 0.4px;
+  font-weight: 700;
+}
+#hud span { color: #9effd8; }
+#storyBar {
+  text-align: center;
+  padding: 8px 12px;
+  background: rgba(28, 33, 39, 0.96);
+  border-bottom: 2px solid #ff7e3d;
+  color: #ffd8b6;
+  font-size: 14px;
+  letter-spacing: 0.25px;
+  min-height: 34px;
+}
+#board {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+canvas {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  border: 3px solid #7e8794;
+  box-shadow:
+    0 0 0 4px rgba(255, 126, 61, 0.2),
+    0 14px 40px rgba(0, 0, 0, 0.58);
+  background: #171c22;
+}
+#controls {
+  display: none;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(20, 24, 29, 0.9);
+  border-top: 2px solid #ff7e3d;
+}
+.dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 56px);
+  grid-template-rows: repeat(3, 56px);
+  gap: 6px;
+}
+.ctrl {
+  border: 2px solid #ff7e3d;
+  border-radius: 8px;
+  background: linear-gradient(#3f4a57, #222a34);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+}
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: grid;
+  place-items: center;
+  z-index: 20;
+}
+#card {
+  width: min(500px, 84vw);
+  max-height: min(86vh, 620px);
+  overflow-y: auto;
+  border: 3px solid #ff7e3d;
+  border-radius: 12px;
+  background: linear-gradient(160deg, rgba(39, 46, 56, 0.97), rgba(19, 24, 30, 0.99));
+  box-shadow: 0 0 30px rgba(255, 126, 61, 0.32);
+  padding: 16px;
+  text-align: center;
+}
+#card h1 {
+  color: #ffd39a;
+  margin-bottom: 7px;
+  font-size: clamp(20px, 3.2vw, 28px);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+#card p {
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 7px;
+}
+#card strong { color: #9effd8; }
+#startBtn {
+  margin-top: 12px;
+  border: 2px solid #ffb37a;
+  border-radius: 10px;
+  background: linear-gradient(#ffb56c, #ff7e3d);
+  color: #111;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  padding: 10px 22px;
+  font-size: 13px;
+  cursor: pointer;
+}
+#startBtn:hover { filter: brightness(1.05); }
+#returnBtn { margin-top: 8px; margin-left: 8px; border: 2px solid #7bffd6; border-radius: 10px; background: transparent; color: #7bffd6; font-weight: 700; letter-spacing: 0.6px; padding: 10px 18px; font-size: 13px; cursor: pointer; }
+#returnBtn:hover { filter: brightness(1.15); }
+@media (max-width: 900px) {
+  #controls { display: flex; }
+  #hud { font-size: 13px; gap: 10px; flex-wrap: wrap; }
+  #storyBar { font-size: 12px; }
+  #card { width: min(430px, 88vw); padding: 14px; }
+}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="hud">
+    <div>Level <span id="level">1</span>/2</div>
+    <div>Subscribers <span id="subs">0</span></div>
+    <div>Nodes Left <span id="dots">0</span></div>
+    <div>Time <span id="time">90</span>s</div>
+    <div>Stars <span id="stars">0</span></div>
+    <div id="mode">Mode: <span>Compete</span></div>
+  </div>
+  <div id="storyBar">COMPETE: avoid rival elliptical machines. Use top-bottom transfer tunnels and grab magenta Ecosystem Deals to flip rivals into ALLY bikes for 10 seconds.</div>
+  <div id="board"><canvas id="game" width="950" height="780" aria-label="Wellness Orbit Run game board"></canvas></div>
+  <div id="controls">
+    <div class="dpad">
+      <button class="ctrl" data-dir="up" style="grid-column:2;grid-row:1">▲</button>
+      <button class="ctrl" data-dir="left" style="grid-column:1;grid-row:2">◀</button>
+      <button class="ctrl" data-dir="right" style="grid-column:3;grid-row:2">▶</button>
+      <button class="ctrl" data-dir="down" style="grid-column:2;grid-row:3">▼</button>
+    </div>
+  </div>
+</div>
+
+<div id="overlay">
+  <div id="card">
+    <h1>Wellness Ecosystem Chase</h1>
+    <p><strong>Your ride:</strong> a neon exercise bike built for fast route pivots.</p>
+    <p><strong>Story:</strong> Rival fitness scouts are competing for the same subscribers.</p>
+    <p>Magenta <strong>Ecosystem Deal</strong> nodes transform rival ellipticals into green ally bikes for 10 seconds.</p>
+    <p>While they are allies, intercept them for bonus subscribers.</p>
+    <p>Clear all nodes in both arenas to complete the run.</p>
+    <p><strong>Controls:</strong> Arrow keys or on-screen D-pad.</p>
+    <button id="startBtn">Start Run</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const canvas = document.getElementById("game");
+  const ctx = canvas.getContext("2d");
+  const overlay = document.getElementById("overlay");
+  const storyBar = document.getElementById("storyBar");
+
+  const hud = {
+    level: document.getElementById("level"),
+    subs: document.getElementById("subs"),
+    dots: document.getElementById("dots"),
+    time: document.getElementById("time"),
+    stars: document.getElementById("stars"),
+    mode: document.querySelector("#mode span")
+  };
+
+  const DIR = {
+    left: { x: -1, y: 0 },
+    right: { x: 1, y: 0 },
+    up: { x: 0, y: -1 },
+    down: { x: 0, y: 1 }
+  };
+
+  const MAPS = [
+    [
+      "# ################# #",
+      "#o.........#.......o#",
+      "#.###.###..#..###.###",
+      "#.....#........#....#",
+      "###.#.#.###.###.#.#.#",
+      "#...#...#..G..#...#.#",
+      "#.#####.#.###.#.###.#",
+      "#.......#.....#.....#",
+      "#.###.#####.#####.###",
+      "#...#....P....#.....#",
+      "###.#.###.###.#.###.#",
+      "#...#.....#...#...#.#",
+      "#.###.###.#.###.#.#.#",
+      "#o......#.....#....o#",
+      "# ################# #"
+    ],
+    [
+      "# ################# #",
+      "#o......#.....#....o#",
+      "#.###.#.#.###.#.#.###",
+      "#.....#...#...#.....#",
+      "#.###.###.#.###.###.#",
+      "#...#..G..#..G..#...#",
+      "###.#.###.#.###.#.###",
+      "#...#.....#.....#...#",
+      "#.#####.#####.#####.#",
+      "#.....#...P...#.....#",
+      "###.#.#.#####.#.#.###",
+      "#...#.#...#...#.#...#",
+      "#.#.#.###.#.###.#.#.#",
+      "#o#.......#.......#o#",
+      "# ################# #"
+    ],
+    [
+      "# ################# #",
+      "#o....#.......#....o#",
+      "#.###.#.###.###.###.#",
+      "#.....#...#.....#...#",
+      "#.#######.#.###.#.#.#",
+      "#...#..G..#..G..#.#.#",
+      "###.#.###.#.###.#.#.#",
+      "#...#.....G.....#...#",
+      "#.###.###.#.###.###.#",
+      "#.....#...P...#.....#",
+      "#.###.#.#####.#.###.#",
+      "#.#...#...#...#...#.#",
+      "#.#.#####.#.#####.#.#",
+      "#o........#........o#",
+      "# ################# #"
+    ]
+  ];
+
+  const LEVELS = [
+    { rivals: 2, star: 3, rivalSpeed: 3.2 },
+    { rivals: 3, star: 3, rivalSpeed: 4.1 }
+  ];
+
+  const COMPETITORS = [
+    { name: "VitaPro", short: "VitaPro" },
+    { name: "IronCore Athletics", short: "IronCore" },
+    { name: "CycleStream Inc.", short: "CycleStream" },
+    { name: "PeakMotion Inc.", short: "PeakMotion" },
+    { name: "PacificWave Fitness Corp.", short: "PacificWave" },
+    { name: "FitLogic GmbH", short: "FitLogic" },
+    { name: "DragonForge Industrial Co.", short: "DragonForge" },
+    { name: "Fortezza Fitness S.r.l.", short: "Fortezza" },
+    { name: "Phoenix Athletics Co.", short: "Phoenix" }
+  ];
+
+  const state = {
+    levelIndex: 0,
+    totalStars: 0,
+    running: false,
+    seconds: 90,
+    subscribers: 0,
+    cell: 24,
+    lastTs: 0,
+    map: [],
+    pellets: 0,
+    powerActive: 0,
+    powerWasActive: false,
+    invuln: 0,
+    deathTimer: 0,
+    deathDuration: 0.95,
+    messageTimer: 0,
+    levelRivals: "",
+    player: null,
+    rivals: []
+  };
+
+  let ac = null;
+  let musicTickAccum = 0;
+  let musicBeat = 0;
+
+  function initAudio() {
+    if (ac) return;
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    ac = new Ctx();
+  }
+
+  function beep(freq, duration = 0.08, type = "square", volume = 0.06, when = 0) {
+    if (!ac) return;
+    const t0 = ac.currentTime + when;
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t0);
+    gain.gain.setValueAtTime(volume, t0);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+    osc.connect(gain);
+    gain.connect(ac.destination);
+    osc.start(t0);
+    osc.stop(t0 + duration);
+  }
+
+  function playCollectNode() {
+    beep(520, 0.055, "triangle", 0.03);
+    beep(610, 0.045, "sine", 0.022, 0.05);
+  }
+  function playPower() {
+    beep(360, 0.11, "sine", 0.05);
+    beep(540, 0.1, "triangle", 0.04, 0.08);
+    beep(720, 0.08, "sine", 0.03, 0.16);
+  }
+  function playTagRival() {
+    beep(240, 0.1, "triangle", 0.055);
+    beep(420, 0.08, "sine", 0.03, 0.09);
+  }
+  function playDeath() {
+    const notes = [392, 349, 311, 262, 220, 196];
+    notes.forEach((n, i) => beep(n, 0.12, "triangle", 0.05, i * 0.11));
+  }
+
+  function playMusicStep() {
+    if (!state.running || !ac || state.deathTimer > 0) return;
+    if (state.powerActive > 0) {
+      const seq = [262, 330, 392, 330, 440, 330];
+      beep(seq[musicBeat % seq.length], 0.1, "sine", 0.022);
+    } else {
+      const seq = [196, 220, 247, 220, 196, 165];
+      beep(seq[musicBeat % seq.length], 0.12, "triangle", 0.02);
+    }
+    musicBeat++;
+  }
+
+  function setMessage(text, duration = 2.4) {
+    storyBar.textContent = text;
+    state.messageTimer = duration;
+  }
+
+  function parseMap(levelIndex) {
+    const rows = MAPS[levelIndex];
+    const grid = rows.map((row) => row.split(""));
+    const rivalSpawns = [];
+    let playerSpawn = { x: 1, y: 1 };
+    let pellets = 0;
+
+    for (let y = 0; y < grid.length; y++) {
+      for (let x = 0; x < grid[y].length; x++) {
+        const c = grid[y][x];
+        if (c === "." || c === "o") pellets++;
+        if (c === "P") {
+          playerSpawn = { x, y };
+          grid[y][x] = " ";
+        }
+        if (c === "G") {
+          rivalSpawns.push({ x, y });
+          grid[y][x] = " ";
+        }
+      }
+    }
+
+    if (rivalSpawns.length === 0) rivalSpawns.push({ x: 10, y: 7 });
+    return { grid, rivalSpawns, playerSpawn, pellets };
+  }
+
+  function tileAt(x, y) {
+    if (y < 0) y = state.map.length - 1;
+    if (y >= state.map.length) y = 0;
+    if (x < 0 || x >= state.map[0].length) return "#";
+    return state.map[y][x];
+  }
+
+  function passableTile(x, y) {
+    return tileAt(x, y) !== "#";
+  }
+
+  function setLevel(idx) {
+    state.levelIndex = idx;
+    state.seconds = 90;
+    state.subscribers = 0;
+    state.powerActive = 0;
+    state.powerWasActive = false;
+    state.invuln = 0;
+    state.deathTimer = 0;
+
+    const parsed = parseMap(idx);
+    state.map = parsed.grid;
+    state.pellets = parsed.pellets;
+
+    state.player = {
+      x: parsed.playerSpawn.x + 0.5,
+      y: parsed.playerSpawn.y + 0.5,
+      startX: parsed.playerSpawn.x + 0.5,
+      startY: parsed.playerSpawn.y + 0.5,
+      dir: "left",
+      nextDir: "left",
+      speed: 4.8,
+      mouth: 0
+    };
+
+    state.rivals = [];
+    const lvl = LEVELS[idx];
+
+    for (let i = 0; i < lvl.rivals; i++) {
+      const spawn = parsed.rivalSpawns[i % parsed.rivalSpawns.length];
+      const comp = COMPETITORS[(idx * 4 + i) % COMPETITORS.length];
+      state.rivals.push({
+        x: spawn.x + 0.5 + (i * 0.15),
+        y: spawn.y + 0.5,
+        homeX: spawn.x + 0.5,
+        homeY: spawn.y + 0.5,
+        dir: ["left", "right", "up", "down"][i % 4],
+        speed: lvl.rivalSpeed,
+        stunned: 0,
+        color: ["#ff4f70", "#4dd0ff", "#ffb347", "#8efb6f"][i % 4],
+        name: comp.name,
+        short: comp.short
+      });
+    }
+    state.levelRivals = state.rivals.map((g) => g.short).join(", ");
+
+    resize();
+    updateHud();
+  }
+
+  function updateHud() {
+    hud.level.textContent = String(state.levelIndex + 1);
+    hud.subs.textContent = String(state.subscribers);
+    hud.dots.textContent = String(state.pellets);
+    hud.time.textContent = String(Math.max(0, Math.ceil(state.seconds)));
+    hud.stars.textContent = String(state.totalStars);
+    hud.mode.textContent = state.powerActive > 0 ? `Ally (${Math.ceil(state.powerActive)}s)` : "Compete";
+    hud.mode.style.color = state.powerActive > 0 ? "#8efb6f" : "#ffd54d";
+  }
+
+  function resize() {
+    const rows = state.map.length || MAPS[0].length;
+    const cols = state.map[0]?.length || MAPS[0][0].length;
+    const chrome = window.innerWidth <= 900 ? 230 : 190;
+    const availW = Math.max(300, window.innerWidth - 48);
+    const availH = Math.max(260, window.innerHeight - chrome);
+    const rawCell = Math.floor(Math.min(availW / cols, availH / rows));
+    const scale = window.innerWidth <= 900 ? 0.92 : 0.82;
+    const cell = Math.floor(rawCell * scale);
+
+    state.cell = Math.max(12, Math.min(32, cell));
+    canvas.width = cols * state.cell;
+    canvas.height = rows * state.cell;
+  }
+
+  function centered(entity) {
+    return Math.abs(entity.x - (Math.floor(entity.x) + 0.5)) < 0.12 &&
+      Math.abs(entity.y - (Math.floor(entity.y) + 0.5)) < 0.12;
+  }
+
+  function tryTurn(entity, dirName) {
+    const d = DIR[dirName];
+    const tx = Math.floor(entity.x + d.x * 0.52);
+    const ty = Math.floor(entity.y + d.y * 0.52);
+    if (passableTile(tx, ty)) {
+      entity.dir = dirName;
+      return true;
+    }
+    return false;
+  }
+
+  function moveEntity(entity, dt) {
+    const d = DIR[entity.dir];
+    let nx = entity.x + d.x * entity.speed * dt;
+    let ny = entity.y + d.y * entity.speed * dt;
+
+    if (ny < 0) ny = state.map.length - 0.01;
+    if (ny >= state.map.length) ny = 0.01;
+
+    const checkX = Math.floor(nx + (d.x * 0.45));
+    const checkY = Math.floor(ny + (d.y * 0.45));
+
+    if (passableTile(checkX, checkY)) {
+      entity.x = nx;
+      entity.y = ny;
+    } else {
+      entity.x = Math.floor(entity.x) + 0.5;
+      entity.y = Math.floor(entity.y) + 0.5;
+    }
+  }
+
+  function eatPellet() {
+    const tx = Math.floor(state.player.x);
+    const ty = Math.floor(state.player.y);
+    const c = tileAt(tx, ty);
+
+    if (c === ".") {
+      state.map[ty][tx] = " ";
+      state.subscribers += 1;
+      state.pellets--;
+      playCollectNode();
+    } else if (c === "o") {
+      state.map[ty][tx] = " ";
+      state.subscribers += 1;
+      state.pellets--;
+      state.powerActive = 10;
+      state.powerWasActive = true;
+      playPower();
+      setMessage("Ecosystem Deal active: rival ellipticals turned into ally bikes for 10 seconds.", 2.6);
+    }
+  }
+
+  function chooseRivalDir(g) {
+    const options = [];
+    const reverse = { left: "right", right: "left", up: "down", down: "up" }[g.dir];
+
+    for (const name of Object.keys(DIR)) {
+      if (name === reverse) continue;
+      const d = DIR[name];
+      const tx = Math.floor(g.x + d.x * 0.56);
+      const ty = Math.floor(g.y + d.y * 0.56);
+      if (passableTile(tx, ty)) options.push(name);
+    }
+
+    if (options.length === 0) options.push(reverse);
+
+    const chase = state.powerActive <= 0;
+    const chaseBias = state.levelIndex === 0 ? 0.55 : state.levelIndex === 1 ? 0.7 : 0.85;
+
+    if (Math.random() > chaseBias) {
+      g.dir = options[Math.floor(Math.random() * options.length)];
+      return;
+    }
+
+    let best = options[0];
+    let bestScore = chase ? Infinity : -Infinity;
+
+    for (const dirName of options) {
+      const d = DIR[dirName];
+      const px = Math.floor(g.x + d.x);
+      const py = Math.floor(g.y + d.y);
+      const dist = Math.abs(px - state.player.x) + Math.abs(py - state.player.y);
+
+      if (chase) {
+        if (dist < bestScore) {
+          bestScore = dist;
+          best = dirName;
+        }
+      } else if (dist > bestScore) {
+        bestScore = dist;
+        best = dirName;
+      }
+    }
+
+    g.dir = best;
+  }
+
+  function respawnPlayer() {
+    state.player.x = state.player.startX;
+    state.player.y = state.player.startY;
+    state.player.dir = "left";
+    state.player.nextDir = "left";
+    state.invuln = 1.8;
+  }
+
+  function startDeath(rival) {
+    if (state.deathTimer > 0) return;
+    state.deathTimer = state.deathDuration;
+    state.player.nextDir = state.player.dir;
+    playDeath();
+    setMessage(`${rival.short} stole 5 subscribers.`, 1.8);
+  }
+
+  function handleCollisions() {
+    if (state.invuln > 0 || state.deathTimer > 0) return;
+
+    for (const g of state.rivals) {
+      if (g.stunned > 0) continue;
+      const dx = g.x - state.player.x;
+      const dy = g.y - state.player.y;
+      const d2 = dx * dx + dy * dy;
+      if (d2 < 0.34) {
+        if (state.powerActive > 0) {
+          state.subscribers += 3;
+          g.x = g.homeX;
+          g.y = g.homeY;
+          g.stunned = 1.5;
+          playTagRival();
+          setMessage(`Alliance boost with ${g.short}: +3 subscribers.`, 1.4);
+        } else {
+          state.subscribers = Math.max(0, state.subscribers - 5);
+          startDeath(g);
+        }
+      }
+    }
+  }
+
+  // Embedded in The Disruptor: report the run so the game can apply rewards (same fields as the original pacman.html).
+  const embedded = (() => { try { return window.parent && window.parent !== window; } catch (e) { return false; } })();
+  function reportRun(won) {
+    if (!embedded) return;
+    try {
+      window.parent.postMessage({
+        type: 'pacmanComplete',
+        subscribers: state.subscribers,
+        totalStars: state.totalStars,
+        levelsCleared: won ? LEVELS.length : state.levelIndex,
+        partnered: [],
+        won: won
+      }, '*');
+    } catch (e) {}
+  }
+  function returnToGame() {
+    try { window.parent.postMessage({ type: 'pacmanClose' }, '*'); } catch (e) {}
+  }
+
+  function finishLevel(success) {
+    state.running = false;
+
+    if (!success) {
+      reportRun(false);
+      showOverlay("Run Over", "Time is up. Rival gyms held you off this round.", "Retry Level", () => {
+        setLevel(state.levelIndex);
+        startGame();
+      });
+      return;
+    }
+
+    state.totalStars += LEVELS[state.levelIndex].star;
+    if (state.levelIndex >= LEVELS.length - 1) reportRun(true);
+
+    if (state.levelIndex < LEVELS.length - 1) {
+      showOverlay(
+        "Level Complete",
+        `You cleared every node. Reward: +${LEVELS[state.levelIndex].star} star.`,
+        "Next Arena",
+        () => {
+          setLevel(state.levelIndex + 1);
+          startGame();
+        }
+      );
+      return;
+    }
+
+    showOverlay(
+      "You Win",
+      `All arenas cleared. Total stars earned: ${state.totalStars}.`,
+      "Play Again",
+      () => {
+        state.totalStars = 0;
+        setLevel(0);
+        startGame();
+      }
+    );
+  }
+
+  function showOverlay(title, message, buttonLabel, onClick) {
+    overlay.style.display = "grid";
+    document.getElementById("card").innerHTML = `
+      <h1>${title}</h1>
+      <p>${message}</p>
+      <p><strong>Legend:</strong> Rival ellipticals chase you. Green ally bikes give bonus if intercepted.</p>
+      <button id="startBtn">${buttonLabel}</button>
+      ${embedded ? '<button id="returnBtn">\u2190 Return to The Disruptor</button>' : ''}
+    `;
+    document.getElementById("startBtn").addEventListener("click", onClick, { once: true });
+    if (embedded) document.getElementById("returnBtn").addEventListener("click", returnToGame, { once: true });
+  }
+
+  function draw() {
+    const c = state.cell;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const floorGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    floorGrad.addColorStop(0, "#2a3138");
+    floorGrad.addColorStop(0.4, "#1d242c");
+    floorGrad.addColorStop(1, "#141a21");
+    ctx.fillStyle = floorGrad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.045)";
+    ctx.lineWidth = Math.max(1, c * 0.03);
+    for (let y = c * 0.25; y < canvas.height; y += c * 0.9) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvas.width, y);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = "rgba(255, 126, 61, 0.12)";
+    ctx.lineWidth = Math.max(1, c * 0.08);
+    for (let x = c * 0.65; x < canvas.width; x += c * 3.2) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
+      ctx.stroke();
+    }
+
+    for (let y = 0; y < state.map.length; y++) {
+      for (let x = 0; x < state.map[y].length; x++) {
+        const tile = state.map[y][x];
+        const px = x * c;
+        const py = y * c;
+
+        if (tile === "#") {
+          ctx.fillStyle = "#3d444c";
+          ctx.fillRect(px + 2, py + 2, c - 4, c - 4);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+          ctx.fillRect(px + 3, py + 3, c - 6, Math.max(2, c * 0.16));
+          ctx.strokeStyle = "#ff9d62";
+          ctx.lineWidth = Math.max(1, c * 0.08);
+          ctx.strokeRect(px + 4, py + 4, c - 8, c - 8);
+        } else if (tile === ".") {
+          const s = Math.max(2, c * 0.16);
+          ctx.fillStyle = "#b8f6ff";
+          ctx.fillRect(px + c * 0.5 - s * 0.5, py + c * 0.5 - s * 0.5, s, s);
+        } else if (tile === "o") {
+          ctx.fillStyle = "#ff70cf";
+          ctx.beginPath();
+          ctx.moveTo(px + c * 0.5, py + c * 0.2);
+          ctx.lineTo(px + c * 0.8, py + c * 0.5);
+          ctx.lineTo(px + c * 0.5, py + c * 0.8);
+          ctx.lineTo(px + c * 0.2, py + c * 0.5);
+          ctx.closePath();
+          ctx.fill();
+          ctx.strokeStyle = "#ffd6f2";
+          ctx.lineWidth = Math.max(1, c * 0.06);
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (const g of state.rivals) {
+      const gx = g.x * c;
+      const gy = g.y * c;
+      const r = c * 0.42;
+      const friendly = state.powerActive > 0;
+      const alpha = g.stunned > 0 ? 0.5 : 1;
+      const cadence = state.lastTs * 0.01 + g.x * 0.8 + g.y * 0.6;
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(gx, gy + Math.sin(cadence) * c * 0.02);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+
+      if (!friendly) {
+        const m = r * 1.9;
+        const baseY = m * 0.36;
+        const flyX = -m * 0.28;
+        const flyR = m * 0.3;
+        const mastX = m * 0.04;
+        const mastTopY = -m * 0.44;
+        const pedalX = flyX + Math.cos(cadence) * m * 0.2;
+        const pedalY = baseY - m * 0.14 + Math.sin(cadence) * m * 0.11;
+        const pedalX2 = flyX + Math.cos(cadence + Math.PI) * m * 0.2;
+        const pedalY2 = baseY - m * 0.14 + Math.sin(cadence + Math.PI) * m * 0.11;
+
+        ctx.fillStyle = "#12193d";
+        ctx.strokeStyle = g.color;
+        ctx.lineWidth = Math.max(1, c * 0.06);
+        ctx.beginPath();
+        ctx.arc(flyX, baseY - m * 0.08, flyR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        for (let i = 0; i < 3; i++) {
+          const a = cadence + i * (Math.PI / 3);
+          const dx = Math.cos(a) * flyR * 0.62;
+          const dy = Math.sin(a) * flyR * 0.62;
+          ctx.beginPath();
+          ctx.moveTo(flyX - dx, baseY - m * 0.08 - dy);
+          ctx.lineTo(flyX + dx, baseY - m * 0.08 + dy);
+          ctx.stroke();
+        }
+
+        ctx.strokeStyle = g.color;
+        ctx.lineWidth = Math.max(2, c * 0.09);
+        ctx.beginPath();
+        ctx.moveTo(-m * 0.58, baseY);
+        ctx.lineTo(m * 0.58, baseY);
+        ctx.moveTo(flyX, baseY);
+        ctx.lineTo(mastX, mastTopY);
+        ctx.lineTo(m * 0.28, mastTopY - m * 0.1);
+        ctx.moveTo(mastX + m * 0.02, mastTopY - m * 0.04);
+        ctx.lineTo(mastX + m * 0.2, mastTopY - m * 0.28);
+        ctx.stroke();
+
+        ctx.fillStyle = "#9ff8ff";
+        ctx.fillRect(mastX - m * 0.08, mastTopY - m * 0.14, m * 0.18, m * 0.1);
+
+        ctx.fillStyle = "#c8f8ff";
+        ctx.beginPath();
+        ctx.arc(pedalX, pedalY, Math.max(1.5, c * 0.06), 0, Math.PI * 2);
+        ctx.arc(pedalX2, pedalY2, Math.max(1.5, c * 0.06), 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        const bikeW = r * 2.05;
+        const wheelR = bikeW * 0.19;
+        const rearX = -bikeW * 0.29;
+        const frontX = bikeW * 0.29;
+        const axleY = bikeW * 0.18;
+        const topY = -bikeW * 0.1;
+        const crankX = -bikeW * 0.03;
+        const crankY = axleY - bikeW * 0.02;
+        const pedalArm = wheelR * 0.55;
+        const pedalTipX = crankX + Math.cos(cadence) * pedalArm;
+        const pedalTipY = crankY + Math.sin(cadence) * pedalArm;
+
+        ctx.strokeStyle = "#86ffd0";
+        ctx.lineWidth = Math.max(1, c * 0.055);
+        ctx.beginPath();
+        ctx.arc(rearX, axleY, wheelR, 0, Math.PI * 2);
+        ctx.arc(frontX, axleY, wheelR, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#3cff8f";
+        ctx.lineWidth = Math.max(2, c * 0.09);
+        ctx.beginPath();
+        ctx.moveTo(rearX, axleY);
+        ctx.lineTo(crankX, crankY);
+        ctx.lineTo(frontX, axleY);
+        ctx.moveTo(crankX, crankY);
+        ctx.lineTo(rearX + bikeW * 0.14, topY);
+        ctx.lineTo(frontX - bikeW * 0.1, topY - bikeW * 0.05);
+        ctx.moveTo(frontX - bikeW * 0.1, topY - bikeW * 0.05);
+        ctx.lineTo(frontX + bikeW * 0.04, topY - bikeW * 0.2);
+        ctx.moveTo(rearX + bikeW * 0.11, topY - bikeW * 0.02);
+        ctx.lineTo(rearX + bikeW * 0.03, topY - bikeW * 0.16);
+        ctx.stroke();
+
+        ctx.fillStyle = "#d9fff0";
+        ctx.beginPath();
+        ctx.arc(pedalTipX, pedalTipY, Math.max(1.5, c * 0.05), 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+
+      ctx.fillStyle = friendly ? "#8efb6f" : "#ffd4dd";
+      ctx.font = `${Math.max(8, Math.floor(c * 0.27))}px Verdana`;
+      ctx.textAlign = "center";
+      ctx.fillText(g.short, gx, gy - c * 0.78);
+    }
+
+    const p = state.player;
+    const px = p.x * c;
+    const py = p.y * c;
+    const deadProgress = state.deathTimer > 0 ? 1 - (state.deathTimer / state.deathDuration) : 0;
+    const angleMap = { right: 0, left: Math.PI, up: -Math.PI / 2, down: Math.PI / 2 };
+    const heading = angleMap[p.dir] ?? 0;
+    const bikeScale = state.deathTimer > 0 ? Math.max(0.12, 1 - deadProgress * 0.9) : 1;
+    const bikeW = c * 1.05 * bikeScale;
+    const wheelR = bikeW * 0.24;
+    const rearX = -bikeW * 0.33;
+    const frontX = bikeW * 0.33;
+    const axleY = bikeW * 0.18;
+    const frameTopY = -bikeW * 0.1;
+    const pedalX = -bikeW * 0.02;
+    const pedalY = axleY - bikeW * 0.02;
+    const cadence = p.mouth * 2.4;
+
+    ctx.save();
+    ctx.translate(px, py);
+    ctx.rotate(heading + deadProgress * 2.5);
+    ctx.globalAlpha = state.deathTimer > 0 ? Math.max(0.2, 1 - deadProgress) : 1;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    ctx.strokeStyle = "#5bf5ff";
+    ctx.lineWidth = Math.max(1, c * 0.07);
+    ctx.beginPath();
+    ctx.arc(rearX, axleY, wheelR, 0, Math.PI * 2);
+    ctx.arc(frontX, axleY, wheelR, 0, Math.PI * 2);
+    ctx.stroke();
+
+    for (const wheelX of [rearX, frontX]) {
+      for (let i = 0; i < 3; i++) {
+        const a = cadence + i * (Math.PI / 3);
+        const dx = Math.cos(a) * wheelR * 0.72;
+        const dy = Math.sin(a) * wheelR * 0.72;
+        ctx.beginPath();
+        ctx.moveTo(wheelX - dx, axleY - dy);
+        ctx.lineTo(wheelX + dx, axleY + dy);
+        ctx.stroke();
+      }
+    }
+
+    ctx.strokeStyle = state.invuln > 0 ? "#ffe78a" : "#ffcf48";
+    ctx.lineWidth = Math.max(2, c * 0.1);
+    ctx.beginPath();
+    ctx.moveTo(rearX, axleY);
+    ctx.lineTo(pedalX, pedalY);
+    ctx.lineTo(frontX, axleY);
+    ctx.moveTo(pedalX, pedalY);
+    ctx.lineTo(rearX + bikeW * 0.14, frameTopY);
+    ctx.lineTo(frontX - bikeW * 0.1, frameTopY - bikeW * 0.06);
+    ctx.moveTo(frontX - bikeW * 0.1, frameTopY - bikeW * 0.06);
+    ctx.lineTo(frontX + bikeW * 0.05, frameTopY - bikeW * 0.2);
+    ctx.moveTo(frontX - bikeW * 0.14, frameTopY - bikeW * 0.16);
+    ctx.lineTo(frontX + bikeW * 0.12, frameTopY - bikeW * 0.24);
+    ctx.moveTo(rearX + bikeW * 0.12, frameTopY - bikeW * 0.03);
+    ctx.lineTo(rearX + bikeW * 0.03, frameTopY - bikeW * 0.2);
+    ctx.moveTo(rearX - bikeW * 0.02, frameTopY - bikeW * 0.22);
+    ctx.lineTo(rearX + bikeW * 0.13, frameTopY - bikeW * 0.22);
+    ctx.stroke();
+
+    const pedalArm = wheelR * 0.45;
+    const pedalTipX = pedalX + Math.cos(cadence) * pedalArm;
+    const pedalTipY = pedalY + Math.sin(cadence) * pedalArm;
+
+    ctx.fillStyle = "#0d1a35";
+    ctx.beginPath();
+    ctx.arc(pedalX, pedalY, Math.max(2, c * 0.1), 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = "#7df3ff";
+    ctx.lineWidth = Math.max(1, c * 0.05);
+    ctx.beginPath();
+    ctx.moveTo(pedalX, pedalY);
+    ctx.lineTo(pedalTipX, pedalTipY);
+    ctx.stroke();
+
+    ctx.fillStyle = "#7df3ff";
+    ctx.beginPath();
+    ctx.arc(pedalTipX, pedalTipY, Math.max(1.5, c * 0.05), 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#b9f6ff";
+    ctx.beginPath();
+    ctx.arc(rearX + bikeW * 0.02, frameTopY - bikeW * 0.34, Math.max(2, c * 0.11), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#10234f";
+    ctx.lineWidth = Math.max(1, c * 0.04);
+    ctx.beginPath();
+    ctx.moveTo(rearX + bikeW * 0.02, frameTopY - bikeW * 0.24);
+    ctx.lineTo(pedalX + bikeW * 0.08, frameTopY - bikeW * 0.08);
+    ctx.lineTo(frontX - bikeW * 0.04, frameTopY - bikeW * 0.14);
+    ctx.stroke();
+
+    if (state.invuln > 0) {
+      ctx.strokeStyle = "rgba(255, 231, 138, 0.6)";
+      ctx.lineWidth = Math.max(1, c * 0.06);
+      ctx.beginPath();
+      ctx.arc(0, -bikeW * 0.06, bikeW * 0.72, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  function update(dt) {
+    if (!state.running) return;
+
+    state.seconds -= dt;
+    state.powerActive = Math.max(0, state.powerActive - dt);
+    state.invuln = Math.max(0, state.invuln - dt);
+    state.player.mouth += dt * 8;
+    state.messageTimer = Math.max(0, state.messageTimer - dt);
+
+    musicTickAccum += dt;
+    const beatInterval = state.powerActive > 0 ? 0.27 : 0.36;
+    if (musicTickAccum >= beatInterval) {
+      musicTickAccum = 0;
+      playMusicStep();
+    }
+
+    if (state.powerWasActive && state.powerActive <= 0) {
+      state.powerWasActive = false;
+      setMessage("Deal expired: ally bikes switched back to rival ellipticals.", 2.2);
+    }
+
+    if (state.messageTimer <= 0) {
+      storyBar.textContent = state.powerActive > 0
+        ? "ALLY MODE: rivals are bikes now. Intercept them for +3 subscribers."
+        : "COMPETE MODE: evade elliptical machines, clear nodes, and secure magenta Ecosystem Deals.";
+    }
+
+    if (state.deathTimer > 0) {
+      state.deathTimer -= dt;
+      if (state.deathTimer <= 0) {
+        state.deathTimer = 0;
+        respawnPlayer();
+      }
+      updateHud();
+      return;
+    }
+
+    if (centered(state.player)) tryTurn(state.player, state.player.nextDir);
+    moveEntity(state.player, dt);
+    eatPellet();
+
+    for (const g of state.rivals) {
+      g.stunned = Math.max(0, g.stunned - dt);
+      if (centered(g)) chooseRivalDir(g);
+      moveEntity(g, dt);
+    }
+
+    handleCollisions();
+
+    if (state.pellets <= 0) {
+      finishLevel(true);
+      return;
+    }
+
+    if (state.seconds <= 0) {
+      finishLevel(false);
+      return;
+    }
+
+    updateHud();
+  }
+
+  function loop(ts) {
+    if (!state.lastTs) state.lastTs = ts;
+    const dt = Math.min(0.035, (ts - state.lastTs) / 1000);
+    state.lastTs = ts;
+
+    update(dt);
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  function startGame() {
+    initAudio();
+    if (ac && ac.state === "suspended") ac.resume();
+    overlay.style.display = "none";
+    state.running = true;
+    state.lastTs = 0;
+    setMessage(`Rivals in this arena: ${state.levelRivals}. Grab magenta deals to flip ellipticals into ally bikes.`, 3.3);
+  }
+
+  window.addEventListener("keydown", (e) => {
+    initAudio();
+    if (ac && ac.state === "suspended") ac.resume();
+    if (e.key === "ArrowLeft") state.player.nextDir = "left";
+    else if (e.key === "ArrowRight") state.player.nextDir = "right";
+    else if (e.key === "ArrowUp") state.player.nextDir = "up";
+    else if (e.key === "ArrowDown") state.player.nextDir = "down";
+  });
+
+  document.querySelectorAll(".ctrl").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      initAudio();
+      if (ac && ac.state === "suspended") ac.resume();
+      state.player.nextDir = btn.dataset.dir;
+    });
+  });
+
+  document.getElementById("startBtn").addEventListener("click", () => {
+    setLevel(0);
+    state.totalStars = 0;
+    startGame();
+  });
+  if (embedded) {
+    const rb = document.createElement("button");
+    rb.id = "returnBtn";
+    rb.textContent = "\u2190 Return to The Disruptor";
+    rb.addEventListener("click", returnToGame, { once: true });
+    document.getElementById("card").appendChild(rb);
+  }
+
+  window.addEventListener("resize", resize);
+
+  setLevel(0);
+  draw();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
