@@ -1,0 +1,20 @@
+name: Keep the competitive play database awake
+
+# Calls the database's own daily housekeeping once a day, so the free Supabase project is not paused for inactivity.
+# The address and key below are the public ones the game itself uses (they are in disruptor-shim.js); nothing secret is here.
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Daily ping
+        run: |
+          curl -sS -f -X POST "https://wwihfojqrrizmwelamvf.supabase.co/rest/v1/rpc/dz_ping" \
+            -H "apikey: sb_publishable_8doMY-Me4JZ5OcBrjEgMgA_kHWEjXiu" \
+            -H "Content-Type: application/json" \
+            -d '{}'
