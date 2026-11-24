@@ -24,5 +24,5 @@ The Forge is the core game, played as a full three-year tenure or a one-year pro
 - [Licence](https://disruptorsim.org/licence.html): content CC BY-NC-SA 4.0, software PolyForm Noncommercial 1.0.0 — educational use is free; commercial use needs a separate licence.
 - [Source code](https://github.com/ammonsalter-del/thedisruptor-sim): the open-source repository.
 - [FAQ](https://disruptorsim.org/faq.html): 64 questions in five groups (players, educators, the game and its versions, technical and practical, licence and citing): the board, the money, AI, dismissal, the versions, the Incubator, saving, offline play, assessment and citation.
-- Citation for the current version: Salter, A. (2026). The Disruptor: A Corporate Entrepreneurship & Innovation Simulation (Version 2.0.0) [Software]. Warwick Business School, University of Warwick. https://disruptorsim.org
+- Citation for the current version: Salter, A. (2026). The Disruptor: A Corporate Entrepreneurship and Innovation Management Simulation (Version 2.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24504385
 - [Archived release of Version 1.0.2](https://doi.org/10.5281/zenodo.21127039): Salter, A. (2026). The Disruptor: An Innovation Management and Corporate Entrepreneurship Simulation (Version 1.0.2) [Software]. Zenodo.

@@ -83,16 +83,20 @@ The Vélox case study, teaching notes, slides, exam questions and discussion pro
 - Version 1.0, April 2026.
 - Version 1.0.2, September 2026: https://doi.org/10.5281/zenodo.21127039
 
+Version 2.0.0 is archived at https://doi.org/10.5281/zenodo.24504385
+
 ## How to cite
 
-Salter, A. (2026). *The Disruptor: A Corporate Entrepreneurship & Innovation Simulation* (Version 2.0.0) [Software]. Warwick Business School, University of Warwick. https://disruptorsim.org
+Salter, A. (2026). *The Disruptor: A Corporate Entrepreneurship and Innovation Management Simulation* (Version 2.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24504385
 
 ```bibtex
 @software{salter2026disruptor,
   author      = {Salter, Ammon},
-  title       = {The Disruptor: A Corporate Entrepreneurship \& Innovation Simulation},
+  title       = {The Disruptor: A Corporate Entrepreneurship and Innovation Management Simulation},
   year        = {2026},
   version     = {2.0.0},
+  publisher   = {Zenodo},
+  doi         = {10.5281/zenodo.24504385},
   url         = {https://disruptorsim.org},
   institution = {Warwick Business School, University of Warwick}
 }
