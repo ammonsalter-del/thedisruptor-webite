@@ -122,6 +122,7 @@
       color: var(--text-secondary);
       font-size: 15px;
       line-height: 1.7;
+      clear: both;   /* CHANGED 25 Nov: with the wider text the story is shorter than its pictures; the quote now starts below them */
     }
     .quote-card cite {
       display: block;
@@ -175,9 +176,7 @@ html body .lk-ent.allied > * { background: linear-gradient(180deg, #ffffff 0%, #
 
 /* the fun facts as entity cards (lines 1253 to 1257) */
 html body .lk-ent > .fun-fact { position: relative; }
-/* the rivals' logos as the logo panel of the rival cards (lines 1315 to 1316: white panel, the logo large, up to 140 by 104) */
-.lk-riv figure { background: #fff !important; border: 1px solid #e2e8f0 !important; border-radius: 12px; padding: 14px 10px !important; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 24px -16px rgba(15,23,42,0.35); display: flex; align-items: center; justify-content: center; min-height: 112px; }
-.lk-riv img { height: auto !important; max-height: 84px; max-width: 140px !important; margin: 0 auto !important; }
+/* CHANGED 25 Nov: the rivals' logo styling (.lk-riv) removed with the Ten Rivals section */
 /* the day-one cards in the Message Centre's severity colours (lines 673 to 677) */
 .lk-mc.sev4 > :nth-child(1) { --stripe: #059669; } .lk-mc.sev4 > :nth-child(2) { --stripe: #dc2626; }
 .flavour-grid.lk-mc { gap: 16px !important; }
@@ -189,33 +188,35 @@ html body .lk-ent > .fun-fact { position: relative; }
 <body>
 
   <!-- Navigation -->
-  <nav>
+  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="how-to-play.html">How to Play</a>
-        <a href="screenshots.html">Screenshots</a>
-        <a href="case-study.html" class="active">The Vélox World</a>
-        <a href="educators.html">For Educators</a>
-        <a href="classroom.html">Competitive Play</a>
-        <a href="faq.html">FAQ</a>
-        <a href="licence.html">Licence</a>
+        <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+        <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+        <a href="how-to-play.html"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+        <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+        <a href="case-study.html" class="active"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+        <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+        <a href="classroom.html"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+        <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+        <a href="licence.html"><img src="icons/h-scales.png" alt="">Licence</a>
       </div>
+      <a href="play/" class="nav-play">▶ Play</a>
       <button class="nav-toggle" onclick="document.querySelector('.mobile-menu').classList.toggle('active')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <div class="mobile-menu">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="how-to-play.html">How to Play</a>
-        <a href="screenshots.html">Screenshots</a>
-        <a href="case-study.html" class="active">The Vélox World</a>
-        <a href="educators.html">For Educators</a>
-        <a href="classroom.html">Competitive Play</a>
-        <a href="faq.html">FAQ</a>
-        <a href="licence.html">Licence</a>
+        <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+        <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+        <a href="how-to-play.html"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+        <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+        <a href="case-study.html" class="active"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+        <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+        <a href="classroom.html"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+        <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+        <a href="licence.html"><img src="icons/h-scales.png" alt="">Licence</a>
+        <a href="play/" class="nav-play">▶ Play</a>
       </div>
     </div>
   </nav>
@@ -257,20 +258,21 @@ html body .lk-ent > .fun-fact { position: relative; }
   <hr class="section-divider">
 
   <!-- A Short Story -->
+  <!-- CHANGED 25 Nov: on this page the running text at 17px (was 15px) and the 780px blocks at 1000px, for the wider frame -->
   <section>
     <h2>A Short Story</h2>
     <figure class="story-figure">
       <img src="velox-founder.png" alt="Liesbeth Van Marcke, founder">
       <figcaption>Liesbeth Van Marcke, founder of Vélox Dynamics</figcaption>
     </figure>
-    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8;">Vélox Dynamics began in a Vilvoorde garage in the mid-1980s. Liesbeth Van Marcke, a Belgian materials scientist recovering from a serious cycling accident, had grown frustrated with the clumsy rehabilitation equipment she was prescribed. She teamed up with a doctoral student, built a precision-engineered instrumented exercise bicycle, and, to her surprise, the Belgian Olympic cycling team wanted one. The company was incorporated in 1987.</p>
+    <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.8;">Vélox Dynamics began in a Vilvoorde garage in the mid-1980s. Liesbeth Van Marcke, a Belgian materials scientist recovering from a serious cycling accident, had grown frustrated with the clumsy rehabilitation equipment she was prescribed. She teamed up with a doctoral student, built a precision-engineered instrumented exercise bicycle, and, to her surprise, the Belgian Olympic cycling team wanted one. The company was incorporated in 1987.</p>
 
     <figure class="story-figure" style="margin-top: 22px;">
       <img src="prototype.png" alt="An early Vélox workshop prototype: gears, chain drive and a microcontroller on a workbench">
       <figcaption>An early workshop prototype, the kind of precision-engineered rig that started it all</figcaption>
     </figure>
 
-    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-top: 14px;">Forty years on, Vélox is a €420M business with 2,800 staff, a flagship campus at Cargovil in Vilvoorde, and a reputation for well-made fitness equipment that respects the biomechanics of the human body. Heritage engineering is the emotional core of the brand. The challenge (and yours, as the new CIO) is to carry that heritage into a very different digital and platform-driven industry without losing the soul of the company on the way.</p>
+    <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.8; margin-top: 14px;">Forty years on, Vélox is a €420M business with 2,800 staff, a flagship campus at Cargovil in Vilvoorde, and a reputation for well-made fitness equipment that respects the biomechanics of the human body. Heritage engineering is the emotional core of the brand. The challenge (and yours, as the new CIO) is to carry that heritage into a very different digital and platform-driven industry without losing the soul of the company on the way.</p>
 
     <div class="quote-card">
       "We make things that help people move better. Everything else is secondary, and everything else is also how we pay for it."
@@ -283,7 +285,7 @@ html body .lk-ent > .fun-fact { position: relative; }
   <!-- Products -->
   <section>
     <h2>What Vélox Makes</h2>
-    <p class="section-intro" style="max-width: 780px;">A portfolio stretched across heritage hardware, home fitness, wearables, and the digital platform. The equipment still pays most of the bills; the platform is the bet on the future.</p>
+    <p class="section-intro" style="max-width: 1000px;">A portfolio stretched across heritage hardware, home fitness, wearables, and the digital platform. The equipment still pays most of the bills; the platform is the bet on the future.</p>
 
     <div class="product-grid">
       <div class="product-card">
@@ -341,9 +343,9 @@ html body .lk-ent > .fun-fact { position: relative; }
 
   <!-- Foundation & Listing -->
   <section>
-    <h2>A Strange Kind of Owner</h2>
-    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8; max-width: 780px;">In 1991 Liesbeth transferred majority ownership to the <strong>Van Marcke Foundation for Health &amp; Movement</strong>, a self-governing enterprise foundation whose mission is to fund research and programmes in health, rehabilitation and sustainability. A dual-class share structure followed in 1998, and in 2001 Vélox listed its B-shares on Euronext Brussels. The voting A-shares are held by Vélox Holdings, which the Foundation owns, and the public holds the B-shares. The Foundation therefore retains durable control, while the company has access to public capital markets.</p>
-    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8; max-width: 780px; margin-top: 14px;">That arrangement (mission-driven steward on one side, public shareholders on the other) is the strategic knife-edge of the simulation. Every major decision in the game sits in the tension between the two.</p>
+    <h2>The Van Marcke Foundation</h2><!-- CHANGED 25 Nov: heading, was "A Strange Kind of Owner" -->
+    <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.8; max-width: 1000px;">In 1991 Liesbeth transferred majority ownership to the <strong>Van Marcke Foundation for Health &amp; Movement</strong>, a self-governing enterprise foundation whose mission is to fund research and programmes in health, rehabilitation and sustainability. A dual-class share structure followed in 1998, and in 2001 Vélox listed its B-shares on Euronext Brussels. The voting A-shares are held by Vélox Holdings, which the Foundation owns, and the public holds the B-shares. The Foundation therefore retains durable control, while the company has access to public capital markets.</p>
+    <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.8; max-width: 1000px; margin-top: 14px;">That arrangement (mission-driven steward on one side, public shareholders on the other) is the strategic knife-edge of the simulation. Every major decision in the game sits in the tension between the two.</p>
 
     <div class="quote-card">
       "The Foundation will back a bold strategy. What it will not back is drift. Remember that when you are choosing what not to do."
@@ -398,7 +400,7 @@ html body .lk-ent > .fun-fact { position: relative; }
   <!-- Fun Facts -->
   <section>
     <h2>Bits of Flavour</h2>
-    <p class="is-short section-intro" style="max-width: 780px;">A few details that don't change the strategy, but do change the feel of the firm.</p>
+    <p class="is-short section-intro" style="max-width: 1000px;">A few details that don't change the strategy, but do change the feel of the firm.</p>
     <div class="fun-facts lk-ent">
       <div class="fun-fact">
         <div class="ff-icon"><img class="h-ico" src="icons/h-factory.png" alt=""></div>
@@ -440,24 +442,7 @@ html body .lk-ent > .fun-fact { position: relative; }
     </div>
   </section>
 
-  <hr class="section-divider">
-
-  <!-- NEW 22 Nov, not his words: the heading only; the logos carry their own names (rivals at github-working/index.html lines ~4966 to 5200) -->
-  <section>
-    <h2>Ten Rivals</h2>
-    <div class="logo-strip lk-riv">
-      <figure><img src="img/logos/logo-ironcore.webp" alt="IronCore Athletics logo" loading="lazy"></figure>
-      <figure><img src="img/logos/logo-cyclestream.webp" alt="CycleStream Inc. logo" loading="lazy"></figure>
-      <figure><img src="img/logos/logo-peakmotion.webp" alt="PeakMotion Inc. logo" loading="lazy"></figure>
-      <figure><img src="img/logos/logo-iconfit.webp" alt="IconFit Corp. logo" loading="lazy"></figure>
-      <figure><img src="img/logos/logo-fitlogic.webp" alt="FitLogic GmbH logo" loading="lazy"></figure>
-      <figure><img src="img/logos/logo-vitapro.webp" alt="VitaPro S.p.A. logo" loading="lazy"></figure>
-      <figure><img src="img/logos/logo-fortezza.webp" alt="Fortezza Fitness S.r.l. logo" loading="lazy"></figure>
-      <figure><img src="img/logos/logo-pacificwave.webp" alt="PacificWave Fitness Corp. logo" loading="lazy"></figure>
-      <figure><img src="img/logos/logo-dragonforge.webp" alt="DragonForge Industrial Co. logo" loading="lazy"></figure>
-      <figure><img src="img/logos/logo-phoenix.webp" alt="Phoenix Athletics Co. logo" loading="lazy"></figure>
-    </div>
-  </section>
+  <!-- CHANGED 25 Nov: the "Ten Rivals" section (heading and the strip of ten logos) and its divider removed -->
 
   <hr class="section-divider">
 

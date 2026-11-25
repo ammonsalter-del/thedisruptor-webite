@@ -49,8 +49,9 @@
       color: #0D7377;
       margin-bottom: 12px;
     }
-    .licence-panel p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 12px; }
-    .licence-panel ul { margin: 8px 0 12px 22px; font-size: 14px; line-height: 1.8; color: var(--text-secondary); }
+    /* CHANGED 25 Nov: the text in the panels 16px (was 14px), as in the other cards */
+    .licence-panel p { font-size: 16px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 12px; }
+    .licence-panel ul { margin: 8px 0 12px 22px; font-size: 16px; line-height: 1.8; color: var(--text-secondary); }
     .permitted { color: #059669; font-weight: 600; }
     .not-permitted { color: #dc2626; font-weight: 600; }
     .share-adapt {
@@ -75,20 +76,21 @@
 </head>
 <body>
 
-  <nav>
+  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="how-to-play.html">How to Play</a>
-        <a href="screenshots.html">Screenshots</a>
-        <a href="case-study.html">The Vélox World</a>
-        <a href="educators.html">For Educators</a>
-        <a href="classroom.html">Competitive Play</a>
-        <a href="faq.html">FAQ</a>
-        <a href="licence.html" class="active">Licence</a>
+        <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+        <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+        <a href="how-to-play.html"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+        <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+        <a href="case-study.html"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+        <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+        <a href="classroom.html"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+        <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+        <a href="licence.html" class="active"><img src="icons/h-scales.png" alt="">Licence</a>
       </div>
+      <a href="play/" class="nav-play">▶ Play</a>
       <button class="nav-toggle" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -96,15 +98,16 @@
       </button>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="how-to-play.html">How to Play</a>
-      <a href="screenshots.html">Screenshots</a>
-      <a href="case-study.html">The Vélox World</a>
-      <a href="educators.html">For Educators</a>
-      <a href="classroom.html">Competitive Play</a>
-      <a href="faq.html">FAQ</a>
-      <a href="licence.html" class="active">Licence</a>
+      <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+      <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+      <a href="how-to-play.html"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+      <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+      <a href="case-study.html"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+      <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+      <a href="classroom.html"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+      <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+      <a href="licence.html" class="active"><img src="icons/h-scales.png" alt="">Licence</a>
+      <a href="play/" class="nav-play">▶ Play</a>
     </div>
   </nav>
 
@@ -122,7 +125,7 @@
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener"><img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="CC BY-NC-SA 4.0"></a>
         <strong>CC BY-NC-SA 4.0</strong>
       </div>
-      <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin: 0;">The educational content of this simulation and all associated materials (including the case study, teaching notes, master development document, website content, game content, character narratives, scenario text, and documentation) are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" style="color: var(--red-500); font-weight: 600;">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a>. The software is licensed under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener" style="color: var(--red-500); font-weight: 600;">PolyForm Noncommercial 1.0.0</a>.</p>
+      <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin: 0;">The educational content of this simulation and all associated materials (including the case study, teaching notes, master development document, website content, game content, character narratives, scenario text, and documentation) are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" style="color: var(--red-500); font-weight: 600;">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a>. The software is licensed under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener" style="color: var(--red-500); font-weight: 600;">PolyForm Noncommercial 1.0.0</a>.</p>
     </div>
 
     <div class="share-adapt">
@@ -185,7 +188,7 @@
   <section>
     <div class="licence-hero">
       <div style="margin-bottom: 8px;"><strong>PolyForm Noncommercial 1.0.0: the software</strong></div>
-      <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin: 0;">The game's software, its source code, is licensed under the <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener" style="color: var(--red-500); font-weight: 600;">PolyForm Noncommercial License 1.0.0</a>. The Creative Commons licence above covers the educational content.</p>
+      <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin: 0;">The game's software, its source code, is licensed under the <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener" style="color: var(--red-500); font-weight: 600;">PolyForm Noncommercial License 1.0.0</a>. The Creative Commons licence above covers the educational content.</p>
     </div>
 
     <!-- 22 Nov, his words: "Yes, put them on the licence page - perhaps we could be clearer about permitted and non permitted uses". Agreed text, set out as two lists. -->

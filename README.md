@@ -71,7 +71,7 @@ Version 2 also brings:
 - a board that watches layoffs: ten in one year ends the appointment;
 - an end-of-game report that can be made with no internet connection, with the game's own pictures and icons;
 - a grant won for a proposal asks the player first: start the project now, or hold the grant;
-- competitive play for the Forge: results compared with other players', and a page for lecturers to follow their class (https://disruptorsim.org/classroom.html);
+- competitive play for the Forge: results compared with other players', and a page for educators to follow their class (https://disruptorsim.org/classroom.html);
 - a plain statement of what the licences permit and do not permit, the use of the game to train commercial AI models included.
 
 ## Teaching materials
@@ -126,6 +126,7 @@ The PDF library `jspdf.umd.min.js` is a separate work under its own MIT licence,
 
 **Contributors:**
 
+- Stefano Baruffaldi, Politecnico di Milano
 - Susanne Beck, Warwick Business School
 - Federico Bignone, Warwick Business School
 - Paola Criscuolo, Imperial College London
@@ -135,7 +136,9 @@ The PDF library `jspdf.umd.min.js` is a separate work under its own MIT licence,
 - Christos Kolympiris, Warwick Business School
 - Keld Laursen, Copenhagen Business School
 - Orietta Marsili, University of Bristol
+- Rossella Salandra, University of Bath
 - Dmitry Sharapov, Imperial College London
+- Christoph Stockstrom, NORDAKADEMIE
 
 **Beta testers:** Students of the Corporate Entrepreneurship course, Masters in Management programme, Warwick Business School 2025–26.
 

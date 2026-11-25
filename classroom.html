@@ -26,7 +26,7 @@
   <style>
     /* The page's own parts, in the site's look (styles.css gives the navigation, footer and colours). */
     body { font-family: 'Inter', -apple-system, sans-serif; background: #f7f7f7; color: #1a1a1a; line-height: 1.6; margin: 0; }
-    .cr-wrap { max-width: 960px; margin: 0 auto; padding: 32px 16px 48px; }
+    .cr-wrap { max-width: 1240px; margin: 0 auto; padding: 32px 16px 48px; }   /* CHANGED 25 Nov: was 960px, the wider frame */
     .cr-wrap h1 { font-size: 30px; font-weight: 800; margin: 0 0 4px; }
     .cr-sub { color: #555; margin: 0 0 24px; }
     .cr-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
@@ -100,7 +100,7 @@ html body .cr-panel { border-radius: 12px; border: 1px solid #e2e8f0; background
 #panel-view { background: #fff; }
 #vw-msg:empty, #vw-action-msg:empty { min-height: 0; margin: 0; }
 /* the results need the end screen's width: the page widens while the results are shown */
-.cr-wrap:has(#panel-view:not([hidden])) { max-width: 1200px; }
+.cr-wrap:has(#panel-view:not([hidden])) { max-width: 1240px; }   /* CHANGED 25 Nov: was 1200px, the same frame as the page */
 .cr-wrap:has(#panel-view:not([hidden])) > section { max-width: none; }
 #vw-body .cr-banner { position: relative; margin: -20px -20px 6px; min-height: 210px; border-radius: 12px 12px 0 0; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; padding: 0 28px 24px; box-sizing: border-box;
   background: linear-gradient(180deg, rgba(28,25,23,0.10) 0%, rgba(28,25,23,0.66) 45%, rgba(28,25,23,0.93) 100%), url("img/end-boardroom.webp") center 35% / cover no-repeat, #292524; }
@@ -309,34 +309,36 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
 </style>
 </head>
 <body>
-  <nav>
+  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="how-to-play.html">How to Play</a>
-        <a href="screenshots.html">Screenshots</a>
-        <a href="case-study.html">The Vélox World</a>
-        <a href="educators.html">For Educators</a>
-        <a href="classroom.html" class="active" aria-current="page">Competitive Play</a>
-        <a href="faq.html">FAQ</a>
-        <a href="licence.html">Licence</a>
+        <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+        <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+        <a href="how-to-play.html"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+        <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+        <a href="case-study.html"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+        <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+        <a href="classroom.html" class="active" aria-current="page"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+        <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+        <a href="licence.html"><img src="icons/h-scales.png" alt="">Licence</a>
       </div>
+      <a href="play/" class="nav-play">▶ Play</a>
       <button class="nav-toggle" id="menuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="how-to-play.html">How to Play</a>
-      <a href="screenshots.html">Screenshots</a>
-      <a href="case-study.html">The Vélox World</a>
-      <a href="educators.html">For Educators</a>
-      <a href="classroom.html" class="active" aria-current="page">Competitive Play</a>
-      <a href="faq.html">FAQ</a>
-      <a href="licence.html">Licence</a>
+      <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+      <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+      <a href="how-to-play.html"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+      <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+      <a href="case-study.html"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+      <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+      <a href="classroom.html" class="active" aria-current="page"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+      <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+      <a href="licence.html"><img src="icons/h-scales.png" alt="">Licence</a>
+      <a href="play/" class="nav-play">▶ Play</a>
     </div>
   </nav>
 
@@ -351,7 +353,7 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
         <li>The game plays the same either way. Results are sent at the end of each year.</li>
         <li>At the end, the student sees where each year stands. You see the class here.</li>
       </ol>
-      <h3>For lecturers</h3>
+      <h3>For educators</h3><!-- CHANGED 25 Nov: was "For lecturers" -->
       <p class="cr-note" style="margin:0">Make a class below and give your students the code. No account, name, e-mail or password. Forge only.</p>
     </div>
 

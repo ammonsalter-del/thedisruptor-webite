@@ -32,7 +32,7 @@
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(204,41,54,0.35); }
     .btn-secondary { display: inline-block; background: white; color: var(--neutral-900); border: 1px solid var(--neutral-200); padding: 14px 36px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-right: 12px; }
     .btn-secondary:hover { border-color: var(--neutral-400); }
-    .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; justify-content: center; }   /* CHANGED 25 Nov: centred under the centred heading */
     h1 { font-size: 36px; font-weight: 800; color: var(--neutral-900); margin-bottom: 8px; letter-spacing: -0.5px; }
     .requirements-list { font-size: 14px; color: var(--text-secondary); margin-left: 0; }
     .requirements-list li { margin-bottom: 8px; }
@@ -142,20 +142,21 @@ html body .lk-scene::before { background: #f59e0b !important; }
 </head>
 <body>
 
-  <nav>
+  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="how-to-play.html" class="active">How to Play</a>
-        <a href="screenshots.html">Screenshots</a>
-        <a href="case-study.html">The Vélox World</a>
-        <a href="educators.html">For Educators</a>
-        <a href="classroom.html">Competitive Play</a>
-        <a href="faq.html">FAQ</a>
-        <a href="licence.html">Licence</a>
+        <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+        <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+        <a href="how-to-play.html" class="active"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+        <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+        <a href="case-study.html"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+        <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+        <a href="classroom.html"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+        <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+        <a href="licence.html"><img src="icons/h-scales.png" alt="">Licence</a>
       </div>
+      <a href="play/" class="nav-play">▶ Play</a>
       <button class="nav-toggle" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -163,21 +164,33 @@ html body .lk-scene::before { background: #f59e0b !important; }
       </button>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="how-to-play.html" class="active">How to Play</a>
-      <a href="screenshots.html">Screenshots</a>
-      <a href="case-study.html">The Vélox World</a>
-      <a href="educators.html">For Educators</a>
-      <a href="classroom.html">Competitive Play</a>
-      <a href="faq.html">FAQ</a>
-      <a href="licence.html">Licence</a>
+      <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+      <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+      <a href="how-to-play.html" class="active"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+      <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+      <a href="case-study.html"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+      <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+      <a href="classroom.html"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+      <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+      <a href="licence.html"><img src="icons/h-scales.png" alt="">Licence</a>
+      <a href="play/" class="nav-play">▶ Play</a>
     </div>
   </nav>
 
   <section>
     <h1>How to Play The Disruptor</h1>
     <p class="page-intro">The Disruptor puts you in the cockpit of Chief Innovation Officer at Vélox Dynamics, a €420M Belgian fitness-equipment manufacturer, and challenges you to navigate the tension between heritage engineering and digital disruption over 3 simulated years. The game flows continuously, events arrive dynamically, and a connected set of managerial practices and systems competes for your attention and resources.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- CHANGED 25 Nov: added, the explainer film, embedded as on the home page -->
+  <section>
+    <h2>The Explainer Film: The Game in Under Five Minutes</h2>
+    <p class="is-short section-intro">A four-and-a-half-minute film that explains the game. Watch it before you play.</p>
+    <div class="film-video">
+      <iframe src="https://drive.google.com/file/d/1s6og_KvEcRnOwau6KiGnGEUU-XBmRJK2/preview" allow="autoplay" allowfullscreen title="The Explainer Film: The Game in Under Five Minutes"></iframe>
+    </div>
   </section>
 
   <hr class="section-divider">
@@ -205,7 +218,7 @@ html body .lk-scene::before { background: #f59e0b !important; }
 
     <div class="highlight-box lk-mc1 s-blue" style="margin-top: 24px;">
       <h3><img class="h-ico-head" src="icons/h-book.png" alt="">Built-In Tutorials</h3>
-      <p>Two tutorial modes are built in. A <strong>Quick Guide</strong> covers eight short topics (among them your dashboard, the R&amp;D pipeline, strategy, and tips for success) and gets you playing within minutes. A <strong>Full Guide</strong> walks through every managerial practice and system in depth, with explanations of every panel, every decision type, and every metric. Experienced gamers skip straight to playing; cautious players read everything first. Both approaches work.</p>
+      <p>Two tutorial modes are built in. A <strong>Quick Guide</strong> covers eight short topics (among them your dashboard, the R&amp;D pipeline, strategy, and tips for success) and gets you playing within minutes. A <strong>Full Guide</strong> walks through every managerial practice and system in depth, with explanations of every panel, every decision type, and every metric. Experienced gamers skip straight to playing; cautious players read everything first. Both approaches work. <!-- CHANGED 25 Nov: added, with the link to the Player's AI Assistant -->There is also a free <a href="https://notebooklm.google.com/notebook/1576a3ca-932a-4b2e-a6b2-f4908680b1cd" target="_blank" rel="noopener" style="color: var(--red-500);">Player's AI Assistant</a> that answers questions about the game in plain language, without spoilers.</p>
     </div>
   </section>
 
@@ -295,9 +308,10 @@ html body .lk-scene::before { background: #f59e0b !important; }
 
     <div class="highlight-box lk-scene">
       <h3><img class="h-ico-head" src="icons/h-speech.png" alt="">The End-of-Year Appraisal</h3>
-      <p style="margin-bottom: 12px; font-size: 14px;">At the end of the first and second years you go before the board. Its members question you about the year (what you funded, what you launched, what you left undone) and you answer. Katrien closes the meeting with a score: exceeds expectations, meets expectations, or needs development.</p>
-      <p style="margin-bottom: 12px; font-size: 14px;">Behind the meeting the board weighs your innovation income against the year’s goal and the objectives you met. The outcome moves the next year’s budget up or down, and a poor enough record can end your appointment early. There is no appraisal after the third year: the tenure ends instead, and you are judged on the whole of it.</p>
-      <p style="margin-bottom: 0; font-size: 14px;">On Probation, the first year’s appraisal leads to a Probation Review: the board gives its view of your year, and you choose whether to carry on into the full term or end there.</p>
+      <!-- CHANGED 25 Nov: the text in this box at 16px (was 14px), as in the other cards -->
+      <p style="margin-bottom: 12px; font-size: 16px;">At the end of the first and second years you go before the board. Its members question you about the year (what you funded, what you launched, what you left undone) and you answer. Katrien closes the meeting with a score: exceeds expectations, meets expectations, or needs development.</p>
+      <p style="margin-bottom: 12px; font-size: 16px;">Behind the meeting the board weighs your innovation income against the year’s goal and the objectives you met. The outcome moves the next year’s budget up or down, and a poor enough record can end your appointment early. There is no appraisal after the third year: the tenure ends instead, and you are judged on the whole of it.</p>
+      <p style="margin-bottom: 0; font-size: 16px;">On Probation, the first year’s appraisal leads to a Probation Review: the board gives its view of your year, and you choose whether to carry on into the full term or end there.</p>
     </div>
 
     <div class="highlight-box lk-year">
@@ -371,7 +385,8 @@ html body .lk-scene::before { background: #f59e0b !important; }
 
   <section>
     <h2>Ready to Play?</h2>
-    <p class="section-intro">You've learned the systems, understood the flow, and grasped the challenge. Now step into the cockpit of Chief Innovation Officer at Vélox Dynamics.</p>
+    <!-- CHANGED 25 Nov: the paragraph centred (is-short) and the buttons centred, as on the Educators page -->
+    <p class="is-short section-intro">You've learned the systems, understood the flow, and grasped the challenge. Now step into the cockpit of Chief Innovation Officer at Vélox Dynamics.</p>
 
     <div class="cta-buttons">
       <a href="play/" class="btn-primary">Play The Disruptor →</a>

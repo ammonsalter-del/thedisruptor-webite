@@ -40,9 +40,10 @@
       color: #0D7377;
       margin-bottom: 12px;
     }
-    .sec-panel p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 12px; }
+    /* CHANGED 25 Nov: the text in the panels 16px (was 14px), as in the other cards */
+    .sec-panel p { font-size: 16px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 12px; }
     .sec-panel p:last-child { margin-bottom: 0; }
-    .sec-panel ul { margin: 8px 0 12px 22px; font-size: 14px; line-height: 1.8; color: var(--text-secondary); }
+    .sec-panel ul { margin: 8px 0 12px 22px; font-size: 16px; line-height: 1.8; color: var(--text-secondary); }
     .sec-hero {
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
@@ -51,24 +52,26 @@
       margin-bottom: 24px;
     }
     .sec-hero strong { font-size: 16px; color: #166534; }
-    .sec-hero p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin: 8px 0 0; }
+    .sec-hero p { font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin: 8px 0 0; }
   </style>
 </head>
 <body>
 
-  <nav>
+  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="how-to-play.html">How to Play</a>
-        <a href="screenshots.html">Screenshots</a>
-        <a href="case-study.html">The Vélox World</a>
-        <a href="educators.html">For Educators</a>
-        <a href="faq.html">FAQ</a>
-        <a href="licence.html">Licence</a>
+        <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+        <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+        <a href="how-to-play.html"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+        <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+        <a href="case-study.html"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+        <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+        <a href="classroom.html"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+        <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+        <a href="licence.html"><img src="icons/h-scales.png" alt="">Licence</a>
       </div>
+      <a href="play/" class="nav-play">▶ Play</a>
       <button class="nav-toggle" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -76,14 +79,16 @@
       </button>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="how-to-play.html">How to Play</a>
-      <a href="screenshots.html">Screenshots</a>
-      <a href="case-study.html">The Vélox World</a>
-      <a href="educators.html">For Educators</a>
-      <a href="faq.html">FAQ</a>
-      <a href="licence.html">Licence</a>
+      <a href="index.html"><img src="icons/h-compass.png" alt="">Home</a>
+      <a href="about.html"><img src="icons/h-book.png" alt="">About</a>
+      <a href="how-to-play.html"><img src="icons/h-gamepad.png" alt="">How to Play</a>
+      <a href="screenshots.html"><img src="icons/h-film.png" alt="">Screenshots</a>
+      <a href="case-study.html"><img src="icons/h-bicycle.png" alt="">The Vélox World</a>
+      <a href="educators.html"><img src="icons/h-school.png" alt="">For Educators</a>
+      <a href="classroom.html"><img src="icons/h-trophy.png" alt="">Competitive Play</a>
+      <a href="faq.html"><img src="icons/h-speech.png" alt="">FAQ</a>
+      <a href="licence.html"><img src="icons/h-scales.png" alt="">Licence</a>
+      <a href="play/" class="nav-play">▶ Play</a>
     </div>
   </nav>
 
