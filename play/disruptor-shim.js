@@ -478,7 +478,7 @@
     levelPick: 'Choose your level',
     levelHelp: 'You are compared with players at the same level.',
     codeLabel: 'Class code (optional)',
-    codeHelp: 'If your lecturer gave you one.',
+    codeHelp: 'If your educator gave you one.',
     yes: 'Compare my game',
     skip: 'Skip, just play',
     checking: 'Checking the code…',
@@ -494,7 +494,7 @@
       'Recorded in a Forge game: each year’s results (income, objectives, the board’s appraisal, what you used) and the time played.',
       'Never recorded: your name or anything you type. The database keeps no IP address. Nothing is kept on your device.',
       'Compare adds a made-up nickname, your level and a class code if you have one. Skip adds nothing.',
-      'Used for: your comparison and your lecturer’s class page; the data is used to improve the game (its benchmarks and difficulty) and monitor use.',
+      'Used for: your comparison and your educator’s class page; the data is used to improve the game (its benchmarks and difficulty) and monitor use.',
       'Kept in the EU. Nicknames and class codes are removed after 12 months.'
     ],
     moreFull: 'The full notice',
