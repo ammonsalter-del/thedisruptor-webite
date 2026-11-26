@@ -122,7 +122,7 @@
       color: var(--text-secondary);
       font-size: 15px;
       line-height: 1.7;
-      clear: both;   /* CHANGED 25 Nov: with the wider text the story is shorter than its pictures; the quote now starts below them */
+      clear: both;
     }
     .quote-card cite {
       display: block;
@@ -152,7 +152,6 @@
     .fun-fact .ff-icon .h-ico { margin: 0 auto; width: 36px; height: 36px; }
     .fun-fact .ff-head { font-size: 12px; font-weight: 700; color: var(--neutral-900); margin-bottom: 3px; }
     .fun-fact .ff-note { font-size: 11px; color: var(--text-muted); line-height: 1.45; }
-  /* ==== 22 Nov CARDS FROM THE GAME: each look below is copied from the game (github-working/index.html), lines named in each comment ==== */
 
 /* LOOK mc: the Message Centre card (game index.html lines 658 to 677: white, radius 12, a 5px bar in the
    severity colour red #dc2626, amber #f59e0b, blue #3b82f6, grey #cbd5e1, green #059669), with depth. */
@@ -176,19 +175,17 @@ html body .lk-ent.allied > * { background: linear-gradient(180deg, #ffffff 0%, #
 
 /* the fun facts as entity cards (lines 1253 to 1257) */
 html body .lk-ent > .fun-fact { position: relative; }
-/* CHANGED 25 Nov: the rivals' logo styling (.lk-riv) removed with the Ten Rivals section */
 /* the day-one cards in the Message Centre's severity colours (lines 673 to 677) */
 .lk-mc.sev4 > :nth-child(1) { --stripe: #059669; } .lk-mc.sev4 > :nth-child(2) { --stripe: #dc2626; }
 .flavour-grid.lk-mc { gap: 16px !important; }
 .lk-mc.sev4 > :nth-child(3) { --stripe: #3b82f6; } .lk-mc.sev4 > :nth-child(4) { --stripe: #f59e0b; }
 
-/* ==== end of 22 Nov CARDS ==== */
 </style>
 </head>
 <body>
 
   <!-- Navigation -->
-  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
+  <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
@@ -258,7 +255,6 @@ html body .lk-ent > .fun-fact { position: relative; }
   <hr class="section-divider">
 
   <!-- A Short Story -->
-  <!-- CHANGED 25 Nov: on this page the running text at 17px (was 15px) and the 780px blocks at 1000px, for the wider frame -->
   <section>
     <h2>A Short Story</h2>
     <figure class="story-figure">
@@ -343,7 +339,7 @@ html body .lk-ent > .fun-fact { position: relative; }
 
   <!-- Foundation & Listing -->
   <section>
-    <h2>The Van Marcke Foundation</h2><!-- CHANGED 25 Nov: heading, was "A Strange Kind of Owner" -->
+    <h2>The Van Marcke Foundation</h2>
     <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.8; max-width: 1000px;">In 1991 Liesbeth transferred majority ownership to the <strong>Van Marcke Foundation for Health &amp; Movement</strong>, a self-governing enterprise foundation whose mission is to fund research and programmes in health, rehabilitation and sustainability. A dual-class share structure followed in 1998, and in 2001 Vélox listed its B-shares on Euronext Brussels. The voting A-shares are held by Vélox Holdings, which the Foundation owns, and the public holds the B-shares. The Foundation therefore retains durable control, while the company has access to public capital markets.</p>
     <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.8; max-width: 1000px; margin-top: 14px;">That arrangement (mission-driven steward on one side, public shareholders on the other) is the strategic knife-edge of the simulation. Every major decision in the game sits in the tension between the two.</p>
 
@@ -427,8 +423,6 @@ html body .lk-ent > .fun-fact { position: relative; }
 
   <hr class="section-divider">
 
-  <!-- 22 Nov LOOK: added. The board's faces and the rivals' logos, the game's own pictures (board: game line ~6610, headshot files; rivals: names and headquarters, game lines ~4966 to 5200; logos shown in the Competitors & Markets window, 55652), resized copies -->
-  <!-- NEW 22 Nov, not his words: the heading; under each picture a plain name and post (as in github-working/index.html lines 4961 to 4964, 5290, 5306, 5330) -->
   <section>
     <h2>The People of Vélox</h2>
     <div class="faces">
@@ -442,7 +436,6 @@ html body .lk-ent > .fun-fact { position: relative; }
     </div>
   </section>
 
-  <!-- CHANGED 25 Nov: the "Ten Rivals" section (heading and the strip of ten logos) and its divider removed -->
 
   <hr class="section-divider">
 
@@ -493,7 +486,7 @@ html body .lk-ent > .fun-fact { position: relative; }
         <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. <!-- CHANGED 20 Nov: both licences, as the game states them -->Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
   </footer>
 
 </body>

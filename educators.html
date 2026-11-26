@@ -47,7 +47,7 @@
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(204,41,54,0.35); }
     .btn-secondary { display: inline-block; background: white; color: var(--neutral-900); border: 1px solid var(--neutral-200); padding: 14px 36px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-right: 12px; }
     .btn-secondary:hover { border-color: var(--neutral-400); }
-    .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; justify-content: center; }   /* CHANGED 25 Nov: centred under the centred heading */
+    .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; justify-content: center; }
     h1 { font-size: 36px; font-weight: 800; color: var(--neutral-900); margin-bottom: 8px; letter-spacing: -0.5px; }
 
     .deploy-card { background: var(--bg-card); border: 1px solid var(--neutral-200); border-radius: 12px; padding: 24px; }
@@ -77,7 +77,6 @@
     .modal-sub { font-size: 13px; color: var(--text-secondary); }
     .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--neutral-400); padding: 0; line-height: 1; }
     .modal-body { font-size: 14px; line-height: 1.7; color: var(--text-secondary); }
-  /* ==== 22 Nov CARDS FROM THE GAME: each look below is copied from the game (github-working/index.html), lines named in each comment ==== */
 
 /* LOOK mc: the Message Centre card (game index.html lines 658 to 677: white, radius 12, a 5px bar in the
    severity colour red #dc2626, amber #f59e0b, blue #3b82f6, grey #cbd5e1, green #059669), with depth. */
@@ -160,7 +159,6 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
 .lk-cock.cg-comp > * { --ct: #e2ecf8; --cb: #b8cce2; --cs: rgba(30,58,138,0.25); }
 .lk-cock.cg-ip > * { --ct: #fdf1f1; --cb: #eecece; }
 .lk-cock.cg-org > * { --ct: #f8dede; --cb: #e4b0b0; }
-/* the seven ways (25 Nov; were six) as R&D project cards, the edge in the health colour of their preparation, the badge as the column head (lines 1777 to 1798) */
 .lk-rd > :has(.badge-quick) { --hc: #16a34a; } .lk-rd > :has(.badge-moderate) { --hc: #f59e0b; } .lk-rd > :has(.badge-deep) { --hc: #3b82f6; }
 .lk-rd .deploy-badge { font-size: 10px; border-radius: 8px; padding: 4px 10px; }
 /* long texts in the Incubator's entity cards read better left-aligned */
@@ -171,13 +169,12 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
 .lk-scene-row h2 { text-align: left !important; }
 @media (max-width: 520px) { .lk-scene-row { padding: 18px 16px 14px 30px; } .lk-scene-row::before { left: 11px; } }
 
-/* ==== end of 22 Nov CARDS ==== */
 </style>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
+  <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
@@ -214,15 +211,12 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
 
   <section>
     <h1>For Educators</h1>
-    <!-- CHANGED 25 Nov: the first sentence his new one, and his added second sentence; the rest unchanged -->
     <p class="page-intro">The Disruptor is built to complement your teaching and to create a richer educational experience for students in corporate entrepreneurship and innovation management. It runs alongside your course, giving students an experiential context for the concepts they meet there, and gives you a way to explore the challenges of the field with them and engage them in it. Students take the CIO role themselves, make consequential decisions under uncertainty, and live with the knock-on effects quarter by quarter. The field is presented as an integrated system (portfolio, strategy, people, IP, platform, partnerships, investing) rather than a string of isolated frameworks. The game works from zero prep to full semester integration, with flexible modes and the Incubator's progressive unlock so you can match it to your course rather than the other way around.</p>
-    <!-- CHANGED 25 Nov: added, his words -->
     <p class="page-intro">We understand that using a new simulation can be challenging for your teaching preparation. We have tried to make this easier for you, with lots of materials in the Educator's Pack, guides within the game and the Player's AI Assistant. The Educator's AI Assistant is really useful: it can help you refine your approach to integrating the game.</p>
   </section>
 
   <hr class="section-divider">
 
-  <!-- CHANGED 25 Nov: added, the explainer film, embedded as on the home page -->
   <section>
     <h2>The Explainer Film: The Game in Under Five Minutes</h2>
     <p class="is-short section-intro">A four-and-a-half-minute film that explains the game to students. Show it in class before they play, or send it with the link to the game.</p>
@@ -235,7 +229,6 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
 
   <section>
     <h2>Why It Works for Teaching</h2>
-    <!-- CHANGED 25 Nov: the line under the heading; the card "AI as a Management Decision" removed and "Fun, Humour and Engagement" added as the first card -->
     <p class="is-short section-intro">The game is built to engage students and to work alongside what you teach.</p>
 
     <div class="card-grid card-grid-2 lk-uni mix">
@@ -245,14 +238,12 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
       </div>
       <div class="card">
         <h3>Learning Objectives Built In</h3>
-        <!-- CHANGED 20 Nov: the game's page is "What You'll Learn", reached from the start screen: six themes, seven learning objectives (game lines 116309, 117645 to 117690); no per-system mapping or QAA level is in the game -->
         <p>The game includes a “What You’ll Learn” page, reached from the start screen, which sets out seven learning objectives under six themes: managing the innovation engine, corporate entrepreneurship and renewal, deciding under uncertainty, systemic thinking, AI in innovation, and leading and reflecting. You can point students (and external examiners) directly to it.</p>
       </div>
       <div class="card">
         <h3>Learn by Playing, Not by Listening</h3>
         <p>Students experience consequential decisions under uncertainty, the central teaching goal. Running an alliance negotiation yourself teaches the trade-offs better than any lecture. Portfolio trade-offs become visceral when you watch your best project fail because you launched too early. Theory is embedded in systems, not delivered as text.</p>
       </div>
-      <!-- CHANGED 20 Nov: added. Version 2's board meeting and year-end appraisal (game lines 117939, 109151 to 109160) -->
       <div class="card">
         <h3>Accountability, Spoken</h3>
         <p>The management board meets on screen. Students watch its members argue over the year’s direction and the CEO decide, and at the end of each of the first two years they are questioned about what they actually did. Accountability is put to them by people, about their own decisions.</p>
@@ -274,7 +265,6 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
     <h2>Innovation Concepts in the Game</h2>
     <p class="section-intro">Innovation management and corporate entrepreneurship are the overarching frame: leading the innovation function of an established firm. Within that frame, around twenty-five concepts from the innovation-management literature are wired directly into game systems. The scholars behind each idea live in the Pantheon, available to players in context. Below is a taste of the concepts themselves, and where students meet them in play.</p>
 
-    <!-- CHANGED 25 Nov: the five group introductions below at 17px and 1040px wide (were 14px and 820px), for the wider frame -->
     <h3 style="font-size: 15px; font-weight: 700; text-transform: uppercase; color: #0D7377; letter-spacing: 1px; margin-top: 28px; margin-bottom: 14px;">Knowledge flows, networks and absorptive capacity</h3>
     <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.7; max-width: 1040px; margin-bottom: 16px;">How the firm connects to outside knowledge (universities, standards bodies, scouts, alliance partners, crowdsourced ideas) and what it takes to convert that connection into actual learning inside the firm.</p>
     <div class="card-grid card-grid-2 lk-cock cg-uni">
@@ -301,7 +291,7 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
     </div>
 
     <h3 style="font-size: 15px; font-weight: 700; text-transform: uppercase; color: #0D7377; letter-spacing: 1px; margin-top: 36px; margin-bottom: 14px;">Capabilities: what the firm can actually do</h3>
-    <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.7; max-width: 1040px; margin-bottom: 16px;">The Capabilities map is the firm's operating muscle: <!-- CHANGED 20 Nov: the game's ten capabilities (CAP_LABELS, game line 17364); Open Innovation is not one the player builds -->ten domains (biomechanics, electronics, software, materials, design, manufacturing, data analytics, connectivity, sustainability, VR/AR) that must be built, balanced and sustained.</p>
+    <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.7; max-width: 1040px; margin-bottom: 16px;">The Capabilities map is the firm's operating muscle: ten domains (biomechanics, electronics, software, materials, design, manufacturing, data analytics, connectivity, sustainability, VR/AR) that must be built, balanced and sustained.</p>
     <div class="card-grid card-grid-2 lk-cock cg-staff">
       <div class="card">
         <h3 style="font-size: 15px;">Resource-Based View &amp; VRIN</h3>
@@ -415,7 +405,6 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
   <hr class="section-divider">
 
   <section>
-    <!-- CHANGED 25 Nov: seven ways (was six): the line under the heading, card A rewritten, a new card B, the later cards re-lettered C to G -->
     <h2>Seven Ways to Use The Disruptor</h2>
     <p class="is-short section-intro">From zero prep to full course integration, each way fits around the teaching you already do. Start with Quick Play or Homework: you can always scale up.</p>
 
@@ -443,17 +432,17 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
       <div class="deploy-card">
         <span class="deploy-badge badge-moderate">Moderate Prep</span>
         <h3>E. Workshop: Half-Day Deep Dive</h3>
-        <p class="deploy-detail">Assign the Vélox case study as pre-reading. <strong>Phase 1 (30 min):</strong> Case discussion: students discuss strategic position and what they would do as CIO. <strong>Phase 2 (60 min):</strong> Play the Forge (all systems available). <strong>Phase 3 (30 to 45 min):</strong> <!-- CHANGED 20 Nov: the scorecard is now the end-of-game report -->Debrief using the students’ end screens and reports. The case gives students context before they play; they arrive with opinions, then test them.</p>
+        <p class="deploy-detail">Assign the Vélox case study as pre-reading. <strong>Phase 1 (30 min):</strong> Case discussion: students discuss strategic position and what they would do as CIO. <strong>Phase 2 (60 min):</strong> Play the Forge (all systems available). <strong>Phase 3 (30 to 45 min):</strong> Debrief using the students’ end screens and reports. The case gives students context before they play; they arrive with opinions, then test them.</p>
       </div>
       <div class="deploy-card">
         <span class="deploy-badge badge-moderate">Moderate Prep</span>
         <h3>F. Team Challenge: Competitive Comparison</h3>
-        <p class="deploy-detail">Pair gamers with non-gamers in teams of 2 to 3. All teams play the same mode for fair comparison. <strong>60 to 90 min play + 30 min competitive debrief.</strong> <!-- CHANGED 20 Nov: the innovation maturity score is no longer in the game (game line 111040); what the end screen and report show now (111037 to 111200) -->Teams compare their end screens and reports: how each year was judged, income against the goals, The Disruptor’s score, and the choices behind them. Gamers navigate the interface quickly; non-gamers bring strategic thinking. The combination is powerful.</p>
+        <p class="deploy-detail">Pair gamers with non-gamers in teams of 2 to 3. All teams play the same mode for fair comparison. <strong>60 to 90 min play + 30 min competitive debrief.</strong> Teams compare their end screens and reports: how each year was judged, income against the goals, The Disruptor’s score, and the choices behind them. Gamers navigate the interface quickly; non-gamers bring strategic thinking. The combination is powerful.</p>
       </div>
       <div class="deploy-card">
         <span class="deploy-badge badge-deep">Full Integration</span>
         <h3>G. Full Semester</h3>
-        <p class="deploy-detail">Design a multi-mode progression: case study in Week 1, Incubator for weeks 2 to 8, switch to Forge or Pivot for weeks 9 to 12. <strong>Assessment:</strong> <!-- CHANGED 20 Nov: the ISO 56001 maturity score is no longer in the game (game line 111040); the FAQ's own advice on assessment, through reflection -->a reflective essay, with the end-of-game report as evidence of play. Outcomes carry a large element of chance, so mark the reasoning rather than the score. <!-- CHANGED 25 Nov: added -->Because every run is different and the report records what each student actually did, work built on it has to match the student's own decisions, which makes it harder to hand to a chatbot than a general essay. Students build expertise over time, just like real managers.</p>
+        <p class="deploy-detail">Design a multi-mode progression: case study in Week 1, Incubator for weeks 2 to 8, switch to Forge or Pivot for weeks 9 to 12. <strong>Assessment:</strong> a reflective essay, with the end-of-game report as evidence of play. Outcomes carry a large element of chance, so mark the reasoning rather than the score. Because every run is different and the report records what each student actually did, work built on it has to match the student's own decisions, which makes it harder to hand to a chatbot than a general essay. Students build expertise over time, just like real managers.</p>
       </div>
     </div>
 
@@ -462,13 +451,11 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
   <hr class="section-divider">
 
   <section>
-    <!-- CHANGED 25 Nov: the heading and the opening paragraph -->
     <h2>The Incubator: A Staged Start</h2>
     <p class="section-intro">The game is built to be played with all sixteen systems. The Incubator is there for classes that want a staged start: it opens the systems a few at a time, so that play can follow a syllabus.</p>
 
     <div class="incubator-box">
       <h3>What it is</h3>
-      <!-- CHANGED 20 Nov: the game has no educator setting; the player opens each system, paying from the innovation budget (game lines 40147 to 40175); names as the cockpit shows them -->
       <p>The Incubator is a variant of the Forge that stages which managerial practices and systems your students meet. Students begin with two playable systems open (the R&amp;D Portfolio and the Innovation Launchpad), along with informational views of a handful of others. Everything else is locked behind a gate. As the term goes on, students open further systems themselves, one at a time, each paid for from the innovation budget; you can tell them which to open and when. Each unlock adds a new layer of complexity (alliances, platform, IP strategy, corporate venturing, standards, and so on) and a new set of decisions that connect back to the choices they have already made.</p>
       <p>This lets you match the game to the week's topic. Teaching alliances this week? Unlock Alliances, then debrief on what actually happened. Covering IP strategy next? Unlock IP Management. Want to focus on portfolio and people first, and skip standards entirely? You can. The Incubator keeps the full richness of the simulation available, but stages it so students are never drinking from a fire hose.</p>
     </div>
@@ -506,7 +493,7 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
       <img src="katrien.jpg" alt="Katrien De Wolf, CEO of Vélox Dynamics" style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid var(--border); flex-shrink: 0;">
       <div style="flex: 1; min-width: 260px;">
         <h2>The Executive Debrief: Meet Katrien De Wolf</h2>
-        <p class="section-intro" style="margin-bottom: 20px;">At the end of their tenure, students sit down with Katrien De Wolf, CEO of Vélox Dynamics, for an exit interview about their run. <!-- CHANGED 20 Nov: the game's end screen now asks the player to bring the report "Your tenure at Vélox" (game line 111194); whether the debrief tool itself has been updated to read it was not checked -->She reads the end-of-game report, <strong>Your tenure at Vélox</strong> (downloaded from the end screen), before she says a word: no report, no debrief. To try her yourself, use the sample review in the Educator's Pack.</p>
+        <p class="section-intro" style="margin-bottom: 20px;">At the end of their tenure, students sit down with Katrien De Wolf, CEO of Vélox Dynamics, for an exit interview about their run. She reads the end-of-game report, <strong>Your tenure at Vélox</strong> (downloaded from the end screen), before she says a word: no report, no debrief. To try her yourself, use the sample review in the Educator's Pack.</p>
       </div>
     </div>
 
@@ -522,7 +509,6 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
 
   <section>
     <h2>Educator's Pack</h2>
-    <!-- CHANGED 25 Nov: the line under the heading, and the pack as it now is (from the pack's own READ ME), eleven entries in this order -->
     <p class="is-short section-intro">A purpose-built Educator's Pack is available to educators on request. It is there to make your preparation easier and to help you fit the game to your own course.</p>
 
     <div class="card-grid card-grid-2 lk-year-all" style="margin-bottom: 24px;">
@@ -608,7 +594,7 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
       <div class="step">
         <div class="step-num">4</div>
         <h4>Debrief (30 to 45 min)</h4>
-        <p><!-- CHANGED 20 Nov: the scorecard is now the end-of-game report -->Structured reflection using the end-of-game reports as evidence. What surprised you? How did Foundation governance constrain your choices? What trade-offs did you face? What would you do differently? Three good questions are better than ten generic ones: pick the ones that match your course. The teaching guide includes ready-made debrief questions organised by topic.</p>
+        <p> Structured reflection using the end-of-game reports as evidence. What surprised you? How did Foundation governance constrain your choices? What trade-offs did you face? What would you do differently? Three good questions are better than ten generic ones: pick the ones that match your course. The teaching guide includes ready-made debrief questions organised by topic.</p>
       </div>
     </div>
   </section>
@@ -633,7 +619,7 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
       </div>
       <div class="card">
         <h3>Offline & Portable</h3>
-        <p><!-- CHANGED 20 Nov: Version 2's board meetings are pages of their own beside the game file (game line 117962) -->The whole simulation is an HTML file with its pictures and a few companion pages, among them the board’s meetings and the mini-games. Save the whole folder once and it plays on any machine: drop it on a laptop, open in a browser, play. <!-- CHANGED 22 Nov: the end-of-game PDF is now made without a connection (item 311; loadJsPDF uses the copy beside the game, github-working/index.html line 112853 to 112862) -->Without a connection the simulation runs and the end-of-game PDF can still be made, but the opening video and the case study do not load. The game does not save by itself: players save their game to a file and load it later. Refreshing the page starts a new game.</p>
+        <p> The whole simulation is an HTML file with its pictures and a few companion pages, among them the board’s meetings and the mini-games. Save the whole folder once and it plays on any machine: drop it on a laptop, open in a browser, play. Without a connection the simulation runs and the end-of-game PDF can still be made, but the opening video and the case study do not load. The game does not save by itself: players save their game to a file and load it later. Refreshing the page starts a new game.</p>
       </div>
       <div class="card">
         <h3>Duration</h3>
@@ -641,7 +627,7 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
       </div>
       <div class="card">
         <h3>Cost</h3>
-        <p>Free. No licence fees, no per-student charges, no registration required. <!-- CHANGED 20 Nov: both licences, as the game states them -->Open source: content under CC BY-NC-SA 4.0, software under PolyForm Noncommercial 1.0.0. Students open a link and play.</p>
+        <p>Free. No licence fees, no per-student charges, no registration required. Open source: content under CC BY-NC-SA 4.0, software under PolyForm Noncommercial 1.0.0. Students open a link and play.</p>
       </div>
     </div>
   </section>
@@ -650,7 +636,7 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
 
   <section>
     <h2>Licence &amp; Citation</h2>
-    <p class="section-intro"><!-- CHANGED 20 Nov: both licences, as the game states them (game lines 6 to 8, 118020) -->The Disruptor’s content is released under <strong>CC BY-NC-SA 4.0</strong> and its software under <strong>PolyForm Noncommercial 1.0.0</strong>. Educational use is free; commercial use (executive education with fees, corporate training, paid consulting, bundling into paid products, etc.) requires a separate commercial licence.</p>
+    <p class="section-intro"> The Disruptor’s content is released under <strong>CC BY-NC-SA 4.0</strong> and its software under <strong>PolyForm Noncommercial 1.0.0</strong>. Educational use is free; commercial use (executive education with fees, corporate training, paid consulting, bundling into paid products, etc.) requires a separate commercial licence.</p>
 
     <div class="highlight-box lk-mc1 s-grey">
       <p><strong>Educational use: free.</strong> Undergraduate, postgraduate, MBA, EMBA, and doctoral programmes (including fee-paying programmes), short courses and summer schools at accredited institutions, MOOCs offered free or as part of accredited programmes, in-class or flipped-classroom use, embedding in Moodle/Canvas/Blackboard, student competitions and hackathons, academic research, faculty development, and self-directed learning by individuals.</p>
@@ -660,7 +646,7 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
 
     <div class="highlight-box lk-mc1 s-grey">
       <p class="is-short"><strong>Suggested citation:</strong></p>
-      <p>Salter, A. (2026). <em>The Disruptor: A Corporate Entrepreneurship and Innovation Management Simulation</em> (Version 2.0.0) [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24504385" style="color: var(--red-500); font-weight: 600;">https://doi.org/10.5281/zenodo.24504385</a>. Content licensed under CC BY-NC-SA 4.0; software under PolyForm Noncommercial 1.0.0.</p><!-- 24 Nov: the Zenodo DOI of Version 2.0.0 -->
+      <p>Salter, A. (2026). <em>The Disruptor: A Corporate Entrepreneurship and Innovation Management Simulation</em> (Version 2.0.0) [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24504385" style="color: var(--red-500); font-weight: 600;">https://doi.org/10.5281/zenodo.24504385</a>. Content licensed under CC BY-NC-SA 4.0; software under PolyForm Noncommercial 1.0.0.</p>
     </div>
   </section>
 
@@ -670,7 +656,7 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
     <h2>Ready to Teach?</h2>
     <p class="is-short section-intro">Start with Quick Play: share the link, walk the room, debrief. You can always scale up from there.</p>
 
-    <div class="cta-buttons"><!-- CHANGED 25 Nov: the buttons centred (style block) -->
+    <div class="cta-buttons">
       <a href="play/" class="btn-primary">Play The Disruptor →</a>
       <a href="case-study.html" class="btn-secondary">Read the Case Study</a>
     </div>
@@ -704,7 +690,7 @@ html body .lk-year::before, html body .lk-year-all > *::before { display: none; 
         <iframe src="https://ieplaybook.substack.com/embed" width="100%" height="150" style="max-width:480px; border:1px solid #eee; background:white; border-radius:6px;" frameborder="0" scrolling="no" title="Subscribe to the Innovation and Entrepreneurship Playbook"></iframe>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. <!-- CHANGED 20 Nov: both licences, as the game states them -->Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
   </footer>
 
   <script>

@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- CHANGED 20 Nov: page descriptions follow the page (the board's year, the end of the tenure) -->
   <meta name="description" content="How to play The Disruptor, a free innovation management simulation. Getting started, key systems, the board's year, the end of your tenure and strategic tips.">
   <meta name="author" content="Ammon Salter">
   <meta name="keywords" content="The Disruptor, how to play, tutorial, gameplay, board review, strategy">
@@ -32,11 +31,10 @@
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(204,41,54,0.35); }
     .btn-secondary { display: inline-block; background: white; color: var(--neutral-900); border: 1px solid var(--neutral-200); padding: 14px 36px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-right: 12px; }
     .btn-secondary:hover { border-color: var(--neutral-400); }
-    .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; justify-content: center; }   /* CHANGED 25 Nov: centred under the centred heading */
+    .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; justify-content: center; }
     h1 { font-size: 36px; font-weight: 800; color: var(--neutral-900); margin-bottom: 8px; letter-spacing: -0.5px; }
     .requirements-list { font-size: 14px; color: var(--text-secondary); margin-left: 0; }
     .requirements-list li { margin-bottom: 8px; }
-  /* ==== 22 Nov CARDS FROM THE GAME: each look below is copied from the game (github-working/index.html), lines named in each comment ==== */
 
 /* LOOK mc: the Message Centre card (game index.html lines 658 to 677: white, radius 12, a 5px bar in the
    severity colour red #dc2626, amber #f59e0b, blue #3b82f6, grey #cbd5e1, green #059669), with depth. */
@@ -137,12 +135,11 @@ html body .lk-scene::before { background: #f59e0b !important; }
 .lk-ent .card-icon-box { width: 56px !important; height: 56px !important; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #ffffff 0%, #eef2ff 100%) !important; display: flex; align-items: center; box-shadow: inset 0 0 0 1px #e0e7ff; }
 .lk-ent .card-icon-box img { width: 36px; height: 36px; margin: 0 auto; }
 
-/* ==== end of 22 Nov CARDS ==== */
 </style>
 </head>
 <body>
 
-  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
+  <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
@@ -184,7 +181,6 @@ html body .lk-scene::before { background: #f59e0b !important; }
 
   <hr class="section-divider">
 
-  <!-- CHANGED 25 Nov: added, the explainer film, embedded as on the home page -->
   <section>
     <h2>The Explainer Film: The Game in Under Five Minutes</h2>
     <p class="is-short section-intro">A four-and-a-half-minute film that explains the game. Watch it before you play.</p>
@@ -207,7 +203,7 @@ html body .lk-scene::before { background: #f59e0b !important; }
       <div class="card s-grey">
         <div class="card-icon-box"><img src="icons/h-save.svg" alt="" width="40" height="40"></div>
         <h3>Keep a Copy Offline</h3>
-        <p><!-- CHANGED 20 Nov: Version 2's board meetings are pages of their own beside the game file (game line 117962) -->The game is an HTML file with its pictures and a few companion pages, among them the board’s meetings and the mini-games. Keep a copy of the whole folder and the simulation plays without a connection, on any modern browser. Handy for classrooms with patchy wifi. <!-- CHANGED 22 Nov: "and the end-of-game PDF" dropped; the report is now made without a connection (item 311; loadJsPDF uses the copy of the PDF library beside the game first, github-working/index.html line 112853 to 112865) -->Offline, the opening video and the case study do not load.</p>
+        <p> The game is an HTML file with its pictures and a few companion pages, among them the board’s meetings and the mini-games. Keep a copy of the whole folder and the simulation plays without a connection, on any modern browser. Handy for classrooms with patchy wifi. Offline, the opening video and the case study do not load.</p>
       </div>
       <div class="card s-green">
         <div class="card-icon-box"><img src="icons/h-book.png" alt="" width="40" height="40"></div>
@@ -218,7 +214,7 @@ html body .lk-scene::before { background: #f59e0b !important; }
 
     <div class="highlight-box lk-mc1 s-blue" style="margin-top: 24px;">
       <h3><img class="h-ico-head" src="icons/h-book.png" alt="">Built-In Tutorials</h3>
-      <p>Two tutorial modes are built in. A <strong>Quick Guide</strong> covers eight short topics (among them your dashboard, the R&amp;D pipeline, strategy, and tips for success) and gets you playing within minutes. A <strong>Full Guide</strong> walks through every managerial practice and system in depth, with explanations of every panel, every decision type, and every metric. Experienced gamers skip straight to playing; cautious players read everything first. Both approaches work. <!-- CHANGED 25 Nov: added, with the link to the Player's AI Assistant -->There is also a free <a href="https://notebooklm.google.com/notebook/1576a3ca-932a-4b2e-a6b2-f4908680b1cd" target="_blank" rel="noopener" style="color: var(--red-500);">Player's AI Assistant</a> that answers questions about the game in plain language, without spoilers.</p>
+      <p>Two tutorial modes are built in. A <strong>Quick Guide</strong> covers eight short topics (among them your dashboard, the R&amp;D pipeline, strategy, and tips for success) and gets you playing within minutes. A <strong>Full Guide</strong> walks through every managerial practice and system in depth, with explanations of every panel, every decision type, and every metric. Experienced gamers skip straight to playing; cautious players read everything first. Both approaches work. There is also a free <a href="https://notebooklm.google.com/notebook/1576a3ca-932a-4b2e-a6b2-f4908680b1cd" target="_blank" rel="noopener" style="color: var(--red-500);">Player's AI Assistant</a> that answers questions about the game in plain language, without spoilers.</p>
     </div>
   </section>
 
@@ -246,7 +242,7 @@ html body .lk-scene::before { background: #f59e0b !important; }
 
     <div class="highlight-box lk-lp" style="margin-top: 0;">
       <h3><img class="h-ico-head" src="icons/h-clock.png" alt="">Continuous Flow, Not Turns</h3>
-      <p>Unlike turn-based games, The Disruptor runs as a continuous simulation. Weeks tick by, events fire, staff work on projects, and the market evolves while you make decisions across the firm's managerial systems. You can intervene at any time (hire staff, launch projects, form alliances, respond to events) without waiting for a "next turn" button. <!-- CHANGED 20 Nov: the quarterly board check-in is gone (the R&D Director reports each quarter), and the clock now stops while a decision is open or when decisions pile up (game lines 40452, 40796, 113727) -->Each quarter the R&amp;D Director sends you a brief, and each year turns on the board’s meetings. The clock stops by itself while a decision window is open, or when unanswered decisions pile up; otherwise it keeps running.</p>
+      <p>Unlike turn-based games, The Disruptor runs as a continuous simulation. Weeks tick by, events fire, staff work on projects, and the market evolves while you make decisions across the firm's managerial systems. You can intervene at any time (hire staff, launch projects, form alliances, respond to events) without waiting for a "next turn" button. Each quarter the R&amp;D Director sends you a brief, and each year turns on the board’s meetings. The clock stops by itself while a decision window is open, or when unanswered decisions pile up; otherwise it keeps running.</p>
     </div>
 
     <div class="card-grid card-grid-3 lk-mc" style="margin-top: 24px;">
@@ -262,7 +258,6 @@ html body .lk-scene::before { background: #f59e0b !important; }
       </div>
       <div class="card s-red">
         <div class="card-icon-box"><img src="icons/h-bars.png" alt="" width="40" height="40"></div>
-        <!-- CHANGED 20 Nov: the Annual Board Review was replaced by the board's meeting and the end-of-year appraisal (game line 109151) -->
         <h3>The Board’s Year</h3>
         <p>The management board meets at the start of each year to settle the firm’s direction, and questions you at the end of the first and second years. These are the key milestones. Everything else flows continuously.</p>
       </div>
@@ -284,7 +279,7 @@ html body .lk-scene::before { background: #f59e0b !important; }
       <div class="card s-amber">
         <div class="card-icon-box"><img src="icons/sys-staff.png" alt="" width="40" height="40"></div>
         <h3>People &amp; Culture</h3>
-        <p><!-- CHANGED 20 Nov: ten disciplines (game line 17364) -->Hire across ten disciplines, set salaries, shape culture through more than twenty organisational policies, <!-- CHANGED 20 Nov: added, Version 2's AI & Innovation tab of the Organisation window (game lines 88661 to 88690, 88895) -->and decide on the AI &amp; Innovation tab how far AI goes in R&amp;D. Staff capacity is the hardest constraint: every system draws from the same pool.</p>
+        <p> Hire across ten disciplines, set salaries, shape culture through more than twenty organisational policies, and decide on the AI &amp; Innovation tab how far AI goes in R&amp;D. Staff capacity is the hardest constraint: every system draws from the same pool.</p>
       </div>
       <div class="card s-indigo">
         <div class="card-icon-box"><img src="icons/sys-alliances.png" alt="" width="40" height="40"></div>
@@ -302,13 +297,11 @@ html body .lk-scene::before { background: #f59e0b !important; }
   <hr class="section-divider">
 
   <section>
-    <!-- CHANGED 20 Nov: the Annual Board Review and its tier table (with conditions and budget percentages that are no longer the game's: the game moves the budget far less, set per version, game lines 6601 to 6672) replaced by the Version 2 year, in concepts, without thresholds (game lines 109151 to 109160, 110220 to 110226, 117939) -->
     <h2>The Board’s Year</h2>
     <p class="section-intro">Each year has the same shape. It opens with the management board meeting on the firm’s direction: members argue for where Vélox should go, and the CEO, Katrien De Wolf, decides whether to stay the course, shift the emphasis or change strategy. A pack on your desk then sets out the year’s goal for innovation income and the objectives that go with it.</p>
 
     <div class="highlight-box lk-scene">
       <h3><img class="h-ico-head" src="icons/h-speech.png" alt="">The End-of-Year Appraisal</h3>
-      <!-- CHANGED 25 Nov: the text in this box at 16px (was 14px), as in the other cards -->
       <p style="margin-bottom: 12px; font-size: 16px;">At the end of the first and second years you go before the board. Its members question you about the year (what you funded, what you launched, what you left undone) and you answer. Katrien closes the meeting with a score: exceeds expectations, meets expectations, or needs development.</p>
       <p style="margin-bottom: 12px; font-size: 16px;">Behind the meeting the board weighs your innovation income against the year’s goal and the objectives you met. The outcome moves the next year’s budget up or down, and a poor enough record can end your appointment early. There is no appraisal after the third year: the tenure ends instead, and you are judged on the whole of it.</p>
       <p style="margin-bottom: 0; font-size: 16px;">On Probation, the first year’s appraisal leads to a Probation Review: the board gives its view of your year, and you choose whether to carry on into the full term or end there.</p>
@@ -317,7 +310,6 @@ html body .lk-scene::before { background: #f59e0b !important; }
     <div class="highlight-box lk-year">
       <h3><img class="h-ico-head" src="icons/h-chart-up.png" alt="">Headline Income Targets</h3>
       <p style="margin-bottom: 16px;">Your targets for innovation income are cumulative and rise each year. These are the Forge's; the other modes and the Incubator set their own. The board expects measurable innovation outcomes alongside commercial results.</p>
-      <!-- NEW 22 Nov, not his words: his three figures drawn as rising bars (bar heights in proportion, 22, 45, 90), in place of the three number boxes; figures confirmed in the game, HEADLINE_TARGETS, github-working/index.html lines 6720 to 6727, the Forge's default in getHeadlineTargets, line 6897 -->
       <div class="rise">
         <div class="rise-col"><div class="rise-num">€22M</div><div class="rise-bar"></div><div class="rise-label">Year 1</div></div>
         <div class="rise-col"><div class="rise-num">€45M</div><div class="rise-bar"></div><div class="rise-label">Year 2</div></div>
@@ -351,7 +343,7 @@ html body .lk-scene::before { background: #f59e0b !important; }
       <div class="card s-amber">
         <div class="card-icon-box"><img src="icons/sys-staff.png" alt="" width="40" height="40"></div>
         <h3>Manage Your People</h3>
-        <p><!-- CHANGED 20 Nov: the game starts with 67 R&D staff (EMPLOYEE_POOL, game line 61044; HR's opening message, 41290), as in his video script -->Your 67-person R&amp;D organisation is your greatest asset and your greatest vulnerability. High morale enables ambitious projects. Low morale causes key staff to leave. Invest in culture, engagement, and career development.</p>
+        <p> Your 67-person R&amp;D organisation is your greatest asset and your greatest vulnerability. High morale enables ambitious projects. Low morale causes key staff to leave. Invest in culture, engagement, and career development.</p>
       </div>
       <div class="card s-red">
         <div class="card-icon-box"><img src="icons/sys-launchpad.png" alt="" width="40" height="40"></div>
@@ -369,7 +361,6 @@ html body .lk-scene::before { background: #f59e0b !important; }
   <hr class="section-divider">
 
   <section>
-    <!-- CHANGED 20 Nov: the ISO 56001 mapping, the Innovation Maturity score and the Legacy Score are no longer in the game (game line 111040: "The ISO maturity and legacy blocks ... are no longer shown"); the end as it is now (111037 to 111200; the report's title, 112110) -->
     <h2>The End of Your Tenure</h2>
     <p class="is-short section-intro">When your mandate ends, or if the board ends it early, you are judged twice: by Vélox, and by the game.</p>
 
@@ -378,14 +369,12 @@ html body .lk-scene::before { background: #f59e0b !important; }
       <p>The end screen sets out each year with the board: your innovation income against the goal, and the objectives you met. Then comes the board’s view of your tenure, and beside it <strong>The Disruptor’s score</strong>, the game’s own view, with a short word on what you did well and what to try next time. You can download your report, <em>Your tenure at Vélox</em>: what you chose each year, what the board said, and the game’s assessment, area by area and in words, of how you used the tools of corporate entrepreneurship and innovation management. It gives concrete evidence for reflective essays and class discussion. A postcard of your tenure comes with it.</p>
     </div>
 
-    <!-- 22 Nov: the drawn end screen with made-up figures removed on his word "avoid AI text" -->
   </section>
 
   <hr class="section-divider">
 
   <section>
     <h2>Ready to Play?</h2>
-    <!-- CHANGED 25 Nov: the paragraph centred (is-short) and the buttons centred, as on the Educators page -->
     <p class="is-short section-intro">You've learned the systems, understood the flow, and grasped the challenge. Now step into the cockpit of Chief Innovation Officer at Vélox Dynamics.</p>
 
     <div class="cta-buttons">
@@ -416,7 +405,7 @@ html body .lk-scene::before { background: #f59e0b !important; }
         <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. <!-- CHANGED 20 Nov: both licences, as the game states them -->Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
   </footer>
 
   <script>

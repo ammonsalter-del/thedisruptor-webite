@@ -20,8 +20,6 @@
   <meta property="og:image" content="https://disruptorsim.org/infographic.png">
   <meta name="twitter:image" content="https://disruptorsim.org/infographic.png">
 
-  <!-- CHANGED 22 Nov: the data below carries every question and answer shown on the page, word for word, in the page's order (built from the page and parsed to check it loads) -->
-  <!-- CHANGED 25 Nov: rebuilt from the page in the same way, with the new and rewritten questions (53) -->
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -472,12 +470,10 @@
       border-bottom: 2px solid var(--red-100);
     }
     .faq-section-label:first-of-type { margin-top: 0; }
-    /* 22 Nov LOOK: each group in a game card */
     .faq-group { margin-bottom: 20px; padding: 22px 26px 26px 34px; }
     .faq-group .faq-section-label { margin-top: 0; display: flex; align-items: center; }
     .faq-group .faq-q:first-of-type { margin-top: 8px; }
     @media (max-width: 520px) { .faq-group { padding: 18px 16px 20px 28px; } }
-    /* 22 Nov: links to the groups */
     .faq-jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 32px; }
     .faq-jump a { font-size: 13px; font-weight: 600; color: var(--neutral-900); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; text-decoration: none; }
     .faq-jump a:hover { border-color: var(--red-500); color: var(--red-500); }
@@ -494,7 +490,6 @@
       line-height: 1.7;
       margin: 0;
     }
-  /* ==== 22 Nov CARDS FROM THE GAME: each look below is copied from the game (github-working/index.html), lines named in each comment ==== */
 
 /* faq: the two groups in the cockpit's tints (game lines 486 to 545; tints at 3521 and 3604: R&D Portfolio #fef5f5 / #f0d4d4,
    Tech Scouting #f6f8fe / #d8e0ee), lightest of each family so long text stays easy to read; no stripe, as the cockpit cards have none */
@@ -505,12 +500,11 @@ html body .g-card.faq-group.s-blue { background: linear-gradient(180deg, #ffffff
 html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffffff 0%, #ffffff 40%, #eff4fc 100%); border-color: #cdd9ea; }
 @media (max-width: 520px) { html body .g-card.faq-group { padding-left: 18px; } }
 
-/* ==== end of 22 Nov CARDS ==== */
 </style>
 </head>
 <body>
 
-  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
+  <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
@@ -549,25 +543,23 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
 
     <div class="faq-jump">
       <a href="#students">For students<span class="g-count">32</span></a>
-      <a href="#educators">For educators<span class="g-count">21</span></a><!-- CHANGED 25 Nov: recounted, were 26 and 17 -->
+      <a href="#educators">For educators<span class="g-count">21</span></a>
     </div>
 
-    <div style="max-width: 1040px; margin-left: auto; margin-right: auto;"><!-- CHANGED 25 Nov: was 820px, the wider frame; centred here, as the rule in styles.css that centred it looks for 820px -->
+    <div style="max-width: 1040px; margin-left: auto; margin-right: auto;">
 
       <div class="g-card faq-group s-red">
-      <h2 class="faq-section-label" id="students"><img class="h-ico-inline" src="icons/h-gamepad.png" alt="">For students<span class="g-count">32</span></h2><!-- CHANGED 25 Nov: recounted, was 26 -->
+      <h2 class="faq-section-label" id="students"><img class="h-ico-inline" src="icons/h-gamepad.png" alt="">For students<span class="g-count">32</span></h2>
 
       <h3 class="faq-q">What is The Disruptor?</h3>
       <p class="faq-a">A free, single-player business simulation where you take the role of Chief Innovation Officer at Vélox Dynamics, a Belgian fitness equipment company. You manage R&D projects, alliances, intellectual property, a digital platform, corporate ventures, hiring, standards and more across a three-year tenure. It runs in the browser with no installation and no account.</p>
 
-      <!-- CHANGED 20 Nov: added. His list of what is new (VIDEO-SCRIPT-V2.txt), checked against the game's About window (game lines 117937 to 117940) -->
       <h3 class="faq-q">What is new in Version 2?</h3>
-      <p class="faq-a">The board meets in front of you each year, argues, and the CEO decides where the firm will go. At the end of your first and second years you are appraised: you answer the board’s questions and learn to read the room. You choose how far to bring generative AI into the firm’s innovation work, and live with what it brings. And at the end you are judged twice, by Vélox and by the game, which assesses how you used the tools of corporate entrepreneurship and innovation management.<!-- CHANGED 22 Nov: the last sentence, "A way to compare your results with other players’ is planned for the Forge version.", taken out: competitive play is not in the game and is not to be mentioned (brief of 22 Nov; the game has no such feature) --></p>
+      <p class="faq-a">The board meets in front of you each year, argues, and the CEO decides where the firm will go. At the end of your first and second years you are appraised: you answer the board’s questions and learn to read the room. You choose how far to bring generative AI into the firm’s innovation work, and live with what it brings. And at the end you are judged twice, by Vélox and by the game, which assesses how you used the tools of corporate entrepreneurship and innovation management. </p>
 
       <h3 class="faq-q">Is it free?</h3>
-      <p class="faq-a">Yes. No premium tier, no adverts, no registration. It is an open educational project, <!-- CHANGED 20 Nov: both licences, as the game states them -->its content licensed CC BY-NC-SA 4.0 and its software PolyForm Noncommercial 1.0.0, with no fees of any kind. Commercial use requires a separate licence.</p>
+      <p class="faq-a">Yes. No premium tier, no adverts, no registration. It is an open educational project, its content licensed CC BY-NC-SA 4.0 and its software PolyForm Noncommercial 1.0.0, with no fees of any kind. Commercial use requires a separate licence.</p>
 
-      <!-- CHANGED 25 Nov: "What will I be doing?" rewritten, and four new questions after it (his second draft, player-faq-draft.html) -->
       <h3 class="faq-q">What will I be doing?</h3>
       <p class="faq-a">Running innovation at Vélox Dynamics for three years. Your managers bring you proposals and problems across sixteen systems, and you decide. Each year the board sets a goal and three objectives, and at the end of the year it asks you to explain yourself.</p>
 
@@ -593,18 +585,17 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
       <p class="faq-a">It is challenging. Sixteen systems compete for your attention and budget, events change your plans, and outcomes are uncertain. Most players will not get a top score on their first run. Probation gives a gentler start, the Forge is the standard game, and Gauntlet is deliberately punishing. You get better at reading the systems as you play. The game rewards experience and strategic thinking, not memorising a walkthrough.</p>
 
       <h3 class="faq-q">What systems can I manage?</h3>
-      <p class="faq-a">Sixteen, and they interact. The R&D Portfolio and Innovation Launchpad handle your pipeline from early research through development to market. Innovation Strategy sets the direction. Alliances and University partnerships connect you to external knowledge. Standards let you shape industry rules. The Platform manages your digital ecosystem. IP Management covers patents and trade secrets. Scouting and Crowdsourcing bring in ideas from outside. Venturing and Grant Funding provide alternative routes to innovation. Staff &amp; Hiring builds your team, Organisation shapes how it works <!-- CHANGED 20 Nov: Version 2's AI & Innovation tab (game line 88895) -->(including, on its AI &amp; Innovation tab, how far AI goes in R&amp;D), and Corporate covers the company's heritage and governance, including the Foundation that controls it. Competitors &amp; Markets round out the picture. Each system has its own logic, and decisions in one affect the others. The game does not tell you which to prioritise. That is the job.</p>
+      <p class="faq-a">Sixteen, and they interact. The R&D Portfolio and Innovation Launchpad handle your pipeline from early research through development to market. Innovation Strategy sets the direction. Alliances and University partnerships connect you to external knowledge. Standards let you shape industry rules. The Platform manages your digital ecosystem. IP Management covers patents and trade secrets. Scouting and Crowdsourcing bring in ideas from outside. Venturing and Grant Funding provide alternative routes to innovation. Staff &amp; Hiring builds your team, Organisation shapes how it works (including, on its AI &amp; Innovation tab, how far AI goes in R&amp;D), and Corporate covers the company's heritage and governance, including the Foundation that controls it. Competitors &amp; Markets round out the picture. Each system has its own logic, and decisions in one affect the others. The game does not tell you which to prioritise. That is the job.</p>
 
       <h3 class="faq-q">Do I need to master all sixteen systems?</h3>
       <p class="faq-a">No, you do not. The game gives you staff and managers who can handle the detail of individual systems on your behalf. You do not need to negotiate every alliance yourself, review every patent, or manage every collaboration. Your job is to ensure that the different systems are contributing to your goals and objectives, and to decide where to direct your attention when they are not. The players who do well are the ones who focus on the bigger strategic challenges rather than getting lost in the mechanics of each engagement. Trying to control everything yourself is one of the fastest ways to fall behind.</p>
 
       <h3 class="faq-q">What are the game modes?</h3>
-      <p class="faq-a"><!-- CHANGED 20 Nov: the versions as the start screen names them today; the three harder ones are marked experimental (game lines 116185 to 116285, 117934) -->The Forge, and three harder versions that the start screen lists as advanced modes and still marks as experimental. The Forge is the standard three-year game with all systems open. Pivot moves Vélox into a new sector (wellness, medical devices, defence or gaming), where it has to build new capabilities and partners. Jugaad halves the budget and makes you innovate with fewer resources. Gauntlet sets punishing targets while core markets erode and competitors close in. Within the Forge, Probation gives you one year to prove yourself, with gentler expectations, and the Incubator unlocks systems one at a time as you go, so you learn each one before the next arrives. Each choice changes what you are up against.</p>
+      <p class="faq-a"> The Forge, and three harder versions that the start screen lists as advanced modes and still marks as experimental. The Forge is the standard three-year game with all systems open. Pivot moves Vélox into a new sector (wellness, medical devices, defence or gaming), where it has to build new capabilities and partners. Jugaad halves the budget and makes you innovate with fewer resources. Gauntlet sets punishing targets while core markets erode and competitors close in. Within the Forge, Probation gives you one year to prove yourself, with gentler expectations, and the Incubator unlocks systems one at a time as you go, so you learn each one before the next arrives. Each choice changes what you are up against.</p>
 
       <h3 class="faq-q">What is Probation?</h3>
-      <p class="faq-a">A one-year variant of the Forge. The board gives you a single year to prove yourself, with gentler targets. <!-- CHANGED 20 Nov: the Probation Review and its choice (game lines 110220 to 110470) -->At its end comes a Probation Review, and you choose whether to carry on into the full term. The year takes around 30 minutes and covers the core systems without the full three-year commitment. It is a good way to learn the game before taking on a full tenure.</p>
+      <p class="faq-a">A one-year variant of the Forge. The board gives you a single year to prove yourself, with gentler targets. At its end comes a Probation Review, and you choose whether to carry on into the full term. The year takes around 30 minutes and covers the core systems without the full three-year commitment. It is a good way to learn the game before taking on a full tenure.</p>
 
-      <!-- CHANGED 25 Nov: rewritten (his second draft) -->
       <h3 class="faq-q">What are the mini-games?</h3>
       <p class="faq-a">Three arcade games that turn up during a run: Lead User Patrol, Design Thinking Pinball and Wellness Orbit Run. They are fun diversions that reward you with capability boosts, budget and strategic intelligence. You can skip any of them.</p>
 
@@ -615,17 +606,14 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
       <p class="faq-a">Not spending the resources the board gives them. Being unable to kill innovations that are not working, because they have already sunk time and money into them. Being unwilling to take risk on uncertain projects, chasing safe incremental bets instead. Not using the full range of systems available: alliances, grants, scouting, standards all extend what the firm can do, but players ignore them. Chasing short-term income rather than building capabilities and taking long-term bets on new products, categories and services. These are the same patterns you see in real firms, and they show up clearly in your end-of-game report.</p>
 
       <h3 class="faq-q">What happens if I get fired?</h3>
-      <p class="faq-a"><!-- CHANGED 20 Nov: it was never the case study; a dismissed player gets the same ending as everyone else, end screen, report and postcard (game line 33599) -->You still get the same ending as a completed tenure: the end screen, your report and the postcard. It records what you did, what went wrong, and where the board lost confidence. Read it, then start again. A dismissal is not wasted time. You made decisions under uncertainty, they had consequences, and the report sets both out clearly enough to learn from. The simulation is a safe place to take risks that would be unthinkable in a real firm, and some of the most useful lessons come from playthroughs that ended early.</p>
+      <p class="faq-a"> You still get the same ending as a completed tenure: the end screen, your report and the postcard. It records what you did, what went wrong, and where the board lost confidence. Read it, then start again. A dismissal is not wasted time. You made decisions under uncertainty, they had consequences, and the report sets both out clearly enough to learn from. The simulation is a safe place to take risks that would be unthinkable in a real firm, and some of the most useful lessons come from playthroughs that ended early.</p>
 
       <h3 class="faq-q">Why is every run different?</h3>
-      <p class="faq-a">The game draws from a large pool of events, and a single playthrough only sees a fraction of them. <!-- CHANGED 20 Nov: the board now meets and the CEO decides each year; the versions as the game names them -->The board’s meeting at the start of each year can set the firm on a different course, and the objectives follow it. The four versions create different strategic problems. Competitors behave differently each time. Two students can play the same mode and have quite different experiences.</p>
+      <p class="faq-a">The game draws from a large pool of events, and a single playthrough only sees a fraction of them. The board’s meeting at the start of each year can set the firm on a different course, and the objectives follow it. The four versions create different strategic problems. Competitors behave differently each time. Two students can play the same mode and have quite different experiences.</p>
 
-      <!-- CHANGED 25 Nov: rewritten (his second draft) -->
       <h3 class="faq-q">Is it worth playing more than once?</h3>
       <p class="faq-a">Yes, and the second game is the better one. The first goes on working out what the systems do; in the second you have a plan. Each game deals different events and a board that may choose another direction, and there are harder versions when you want them. Keep your report and try to beat your own score.</p>
 
-      <!-- CHANGED 20 Nov: the Legacy Score is no longer in the game (game line 111040); the end as it is now (111037 to 111200, 112110) -->
-      <!-- CHANGED 25 Nov: rewritten (his second draft), and two new questions after it -->
       <h3 class="faq-q">How does the game end?</h3>
       <p class="faq-a">With your last day, and then two verdicts: the board's view of your tenure, and The Disruptor's score out of 100, with a level somewhere between Innovation Youngling and Innovation Jedi Master. You keep a report, <em>Your tenure at Vélox</em>, and a postcard.</p>
 
@@ -636,10 +624,10 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
       <p class="faq-a">Yes, in the Forge, and you do not need a class code. Choose Compare at the start and you will see how your years stand against other Forge players. The game gives you a made-up nickname, and nothing about you is recorded. If your educator gave you a class code, enter it and your results join your class's.</p>
 
       <h3 class="faq-q">Where should I start?</h3>
-      <p class="faq-a"><!-- CHANGED 25 Nov: the first sentence added -->Watch the explainer film first; it takes under five minutes. Then start with Probation in the Forge to learn the systems without the full three-year commitment. If you have time, read the <a href="case-study.html" style="color: var(--red-500);">Vélox Dynamics case study</a> first. It sets the context and helps you treat the game as a strategic simulation rather than a resource puzzle. Once you have found your feet, play a full three-year Forge run. The built-in tutorials cover the dashboard and every system.</p>
+      <p class="faq-a"> Watch the explainer film first; it takes under five minutes. Then start with Probation in the Forge to learn the systems without the full three-year commitment. If you have time, read the <a href="case-study.html" style="color: var(--red-500);">Vélox Dynamics case study</a> first. It sets the context and helps you treat the game as a strategic simulation rather than a resource puzzle. Once you have found your feet, play a full three-year Forge run. The built-in tutorials cover the dashboard and every system.</p>
 
       <h3 class="faq-q">Can I get help while playing?</h3>
-      <p class="faq-a">Yes. The game has two built-in tutorial modes: a Quick Guide covering eight topics to get you playing in minutes, and a Full Guide walking through every system. There is also a free <!-- CHANGED 25 Nov: the link added --><a href="https://notebooklm.google.com/notebook/1576a3ca-932a-4b2e-a6b2-f4908680b1cd" target="_blank" rel="noopener" style="color: var(--red-500);">Player's AI Assistant</a>, hosted on Google's NotebookLM, that answers questions about the game in plain language. It is spoiler-free and will not reveal scoring thresholds or end-of-tenure mechanics.</p>
+      <p class="faq-a">Yes. The game has two built-in tutorial modes: a Quick Guide covering eight topics to get you playing in minutes, and a Full Guide walking through every system. There is also a free <a href="https://notebooklm.google.com/notebook/1576a3ca-932a-4b2e-a6b2-f4908680b1cd" target="_blank" rel="noopener" style="color: var(--red-500);">Player's AI Assistant</a>, hosted on Google's NotebookLM, that answers questions about the game in plain language. It is spoiler-free and will not reveal scoring thresholds or end-of-tenure mechanics.</p>
 
       <h3 class="faq-q">Why Belgium?</h3>
       <p class="faq-a">Because it puts you somewhere specific rather than somewhere generic. Vélox Dynamics sits in a real institutional world: European research universities, enterprise-foundation ownership, EU funding instruments and standards bodies. That setting shapes the decisions you face in ways that a placeless company would not.</p>
@@ -672,7 +660,7 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
       </div>
 
       <div class="g-card faq-group s-blue">
-      <h2 class="faq-section-label" id="educators"><img class="h-ico-inline" src="icons/h-book.png" alt="">For educators<span class="g-count">21</span></h2><!-- CHANGED 25 Nov: recounted, was 17 -->
+      <h2 class="faq-section-label" id="educators"><img class="h-ico-inline" src="icons/h-book.png" alt="">For educators<span class="g-count">21</span></h2>
 
       <h3 class="faq-q">What do students need?</h3>
       <p class="faq-a">A modern web browser. The game sets no cookies, holds no student data, and runs entirely client-side. Students open a link and play.</p>
@@ -680,12 +668,11 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
       <h3 class="faq-q">What does it teach?</h3>
       <p class="faq-a">Innovation management and corporate entrepreneurship together, through running the innovation function of an established firm. Around twenty-five concepts from the research literature are built into its systems, among them absorptive capacity, organisational ambidexterity, appropriability and value capture, dynamic capabilities, open innovation, path dependence, platform strategy and disruptive innovation. Students meet the ideas in context as they play. The in-game Pantheon of Innovation introduces the relevant scholar at each decision point, connecting the simulation directly to the field. The Educator's Companion maps each system to the underlying theory.</p>
 
-      <!-- CHANGED 25 Nov: new question -->
       <h3 class="faq-q">Does it replace my teaching?</h3>
       <p class="faq-a">No. It complements it. The simulation runs alongside your teaching, giving students an experiential context for the concepts they encounter in your course. Your role is to orchestrate: choosing the mode, framing the start, and leading the debrief.</p>
 
       <h3 class="faq-q">What courses and levels does it suit?</h3>
-      <p class="faq-a">Innovation management, corporate entrepreneurship, technology strategy, R&D management and related subjects, at undergraduate, postgraduate, MBA, executive-education and doctoral level. <!-- CHANGED 20 Nov: the game speaks of versions -->The versions let you match difficulty to the cohort: Probation or Incubator for first-timers, Forge for the standard experience, Pivot or Jugaad for specialist topics, Gauntlet for a serious challenge.</p>
+      <p class="faq-a">Innovation management, corporate entrepreneurship, technology strategy, R&D management and related subjects, at undergraduate, postgraduate, MBA, executive-education and doctoral level. The versions let you match difficulty to the cohort: Probation or Incubator for first-timers, Forge for the standard experience, Pivot or Jugaad for specialist topics, Gauntlet for a serious challenge.</p>
 
       <h3 class="faq-q">Do I need to train my students to play?</h3>
       <p class="faq-a">No. You post a link. The game has built-in tutorials, help throughout, and the Player's AI Assistant for anyone who wants more. Students can replay as often as they like. Some play once, others go back several times chasing a better score. How much further you go is up to you: the Educator's Pack is there if you want to tie it into your course with session plans, debrief questions and assessment ideas.</p>
@@ -694,15 +681,14 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
       <p class="faq-a">No. Many colleagues have used the game with their students without ever playing it as a game themselves. The game teaches concepts and ideas that most educators in this field understand well already. The Educator's Pack was created to lower the challenges of adoption, and the Educator's AI Assistant can answer questions before class and in real time as they come up. Some of your students will end up knowing the game far better than you. Gamers will look for hacks to gain advantage, just as entrepreneurs do. That is part of the learning.</p>
 
       <h3 class="faq-q">What is the Incubator?</h3>
-      <p class="faq-a">A teaching variant of the Forge designed to control how students encounter the game's sixteen systems. <!-- CHANGED 20 Nov: the systems' names as the cockpit shows them; the game has no educator setting, the player opens each system (game lines 40147 to 40175, 116414) -->Students begin with two playable systems (the R&amp;D Portfolio and the Innovation Launchpad) and open others progressively. Students open the systems themselves, so it works whether you set the pace by telling them which to open or let them explore on their own. The board does not end the appointment over a poor record, so students can experiment with little risk of an early game over. It maps directly to a syllabus: if you are teaching alliances this week, unlock alliances; next week, unlock IP strategy. Students play between sessions and bring their experience to class, and each unlock introduces a new layer of complexity. By the end of a module, students are managing all sixteen systems and can see how the decisions connect.</p>
+      <p class="faq-a">A teaching variant of the Forge designed to control how students encounter the game's sixteen systems. Students begin with two playable systems (the R&amp;D Portfolio and the Innovation Launchpad) and open others progressively. Students open the systems themselves, so it works whether you set the pace by telling them which to open or let them explore on their own. The board does not end the appointment over a poor record, so students can experiment with little risk of an early game over. It maps directly to a syllabus: if you are teaching alliances this week, unlock alliances; next week, unlock IP strategy. Students play between sessions and bring their experience to class, and each unlock introduces a new layer of complexity. By the end of a module, students are managing all sixteen systems and can see how the decisions connect.</p>
 
       <h3 class="faq-q">How do I use the Incubator in a course?</h3>
-      <p class="faq-a"><!-- CHANGED 25 Nov: his word; the claims about what educators do are gone -->The Incubator opens the game’s systems a few at a time, so that play can follow your syllabus. Each week you tell students which system to open, they play outside class, and the session opens with what happened: what they tried in alliances, how their IP choices changed things, what trade-offs they met. The teaching guide in the Educator’s Pack has an example sequence.</p>
+      <p class="faq-a"> The Incubator opens the game’s systems a few at a time, so that play can follow your syllabus. Each week you tell students which system to open, they play outside class, and the session opens with what happened: what they tried in alliances, how their IP choices changed things, what trade-offs they met. The teaching guide in the Educator’s Pack has an example sequence.</p>
 
       <h3 class="faq-q">Can I use it for assessment?</h3>
-      <p class="faq-a">Through reflection rather than the score. The game scores each player at the end, but that is feedback, not a grade: outcomes carry a large element of chance, so the score alone is a poor measure of learning. What works well is a reflective essay. Every run produces a PDF report the student keeps, and they write about the decisions they made, why, and what they would do differently. The Educator's Pack includes assignment ideas built around this approach. <!-- CHANGED 25 Nov: added -->Because every run is different and the report records what each student actually did, work built on it (a reflective essay, a journal kept while playing, a short presentation of the portfolio's post-mortem) has to match the student's own decisions. That makes it harder to hand to a chatbot than a general essay.</p>
+      <p class="faq-a">Through reflection rather than the score. The game scores each player at the end, but that is feedback, not a grade: outcomes carry a large element of chance, so the score alone is a poor measure of learning. What works well is a reflective essay. Every run produces a PDF report the student keeps, and they write about the decisions they made, why, and what they would do differently. The Educator's Pack includes assignment ideas built around this approach. Because every run is different and the report records what each student actually did, work built on it (a reflective essay, a journal kept while playing, a short presentation of the portfolio's post-mortem) has to match the student's own decisions. That makes it harder to hand to a chatbot than a general essay.</p>
 
-      <!-- CHANGED 25 Nov: three new questions -->
       <h3 class="faq-q">How do class competitions work?</h3>
       <p class="faq-a">You make a class on the <a href="classroom.html" style="color: var(--red-500);">Competitive Play page</a> and give your students the code. When a student starts a Forge game they choose Compare and enter the code, or Skip. The game plays the same either way. Results are sent at the end of each year. At the end the student sees where each year stands, and you see the whole class on the page, with a download if you want it. Students without a class code can still compare themselves with other Forge players.</p>
 
@@ -716,13 +702,13 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
       <p class="faq-a">The game's systems are designed around concepts from the innovation management and corporate entrepreneurship research literature. The in-game Pantheon of Innovation is a gallery of forty scholars from the field, including Freeman, Schumpeter, Pavitt, Nelson, Teece, Chesbrough, von Hippel, Christensen, Penrose, Tushman, Cohen, Levinthal, Henderson, Eisenhardt, and many others. Each has a biography, key works, and contextual advice that appears during play. The Educator's Companion maps each of the sixteen systems to the relevant research, so you can connect what happened in the simulation to the concepts in your syllabus.</p>
 
       <h3 class="faq-q">Is it flexible?</h3>
-      <p class="faq-a">Very. It runs from a thirty-minute Probation session to a full-semester module, and from first-year undergraduates to executives, <!-- CHANGED 20 Nov: the game speaks of versions -->with four versions, Probation and the Incubator's progressive unlock. With no install and no account, it drops into a lecture, a workshop, homework or an online class without setup.</p>
+      <p class="faq-a">Very. It runs from a thirty-minute Probation session to a full-semester module, and from first-year undergraduates to executives, with four versions, Probation and the Incubator's progressive unlock. With no install and no account, it drops into a lecture, a workshop, homework or an online class without setup.</p>
 
       <h3 class="faq-q">Is there an educator pack?</h3>
-      <p class="faq-a">Yes, and it is free on request from <a href="mailto:ammon.salter@wbs.ac.uk" style="color: var(--red-500);">ammon.salter@wbs.ac.uk</a>. <!-- CHANGED 25 Nov: the pack as it now is, and the last sentence added -->It includes the Vélox case study, the Educator's Companion, a teaching guide, a fact sheet, two slide decks, a student onboarding sheet, the Player's Companion, a players' manual, learning objectives, an exam question bank, an assignment bank with rubrics, and two AI assistants (one for educators, one for students). The <a href="educators.html" style="color: var(--red-500);">educators page</a> lists everything in the pack. The Educator's Companion is for educators only: please do not share it with students, or post it on the web or on a learning management system.</p>
+      <p class="faq-a">Yes, and it is free on request from <a href="mailto:ammon.salter@wbs.ac.uk" style="color: var(--red-500);">ammon.salter@wbs.ac.uk</a>. It includes the Vélox case study, the Educator's Companion, a teaching guide, a fact sheet, two slide decks, a student onboarding sheet, the Player's Companion, a players' manual, learning objectives, an exam question bank, an assignment bank with rubrics, and two AI assistants (one for educators, one for students). The <a href="educators.html" style="color: var(--red-500);">educators page</a> lists everything in the pack. The Educator's Companion is for educators only: please do not share it with students, or post it on the web or on a learning management system.</p>
 
       <h3 class="faq-q">Is the game still being developed?</h3>
-      <p class="faq-a"><!-- CHANGED 20 Nov: Version 2, and his figures of 19 Nov (VIDEO-SCRIPT-V2.txt, scene 1); competitive play said only as planned -->Yes. The current version is Version 2, which adds the board in person, the year-end appraisal, generative AI and a new ending. Since its launch on 26 April 2026, the game has been accessed by almost two thousand people in seventy-seven countries and at more than fifty universities. Development is continuous, with bug fixes, balance adjustments and new features driven by playtesting feedback. <!-- CHANGED 22 Nov: the sentence "A way to compare your results with other players’ is planned for the Forge version." taken out: competitive play is not in the game and is not to be mentioned (brief of 22 Nov) -->The game is open source on GitHub, and contributions are welcome.</p>
+      <p class="faq-a"> Yes. The current version is Version 2, which adds the board in person, the year-end appraisal, generative AI and a new ending. Since its launch on 26 April 2026, the game has been accessed by almost two thousand people in seventy-seven countries and at more than fifty universities. Development is continuous, with bug fixes, balance adjustments and new features driven by playtesting feedback. The game is open source on GitHub, and contributions are welcome.</p>
 
       <h3 class="faq-q">If it is so good, why is it free?</h3>
       <p class="faq-a">Because it was built by an academic, not a company, and giving it away is part of the point. Credit comes through citations rather than sales. The game is free for education and research; commercial users pay for a licence, which helps keep it that way. There is no premium version behind the free one. What you play is the whole game.</p>
@@ -731,10 +717,9 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
       <p class="faq-a">Commercial simulations are typically licensed per student, need accounts and setup, and often cover a narrower range of topics. The Disruptor is free and open source, runs in the browser with no setup and no student accounts, covers sixteen interconnected systems across the full breadth of innovation management and corporate entrepreneurship, and comes with a free Educator's Pack. Because the licence is open, you can adapt the game to your course rather than fitting your course around the game.</p>
 
       <h3 class="faq-q">Who built it?</h3>
-      <p class="faq-a">The Disruptor was created by Ammon Salter, Professor of Technology and Innovation Management at Warwick Business School, University of Warwick. His research covers open and distributed models of innovation, R&D decision-making, innovation and social networks, AI and new ventures, university-industry collaboration, and innovation policy. He is co-author of <em>The Management of Technological Innovation</em> (Oxford University Press, with Mark Dodgson and David Gann) and former co-editor of <em>Research Policy</em>. He has worked with companies, governments, and other organisations on the management of innovation, and teaches the subject at all levels. The game is his attempt to translate research findings into play, so that students can experience the challenges of managing innovation at an established firm rather than just reading about them. He built it himself, with help from colleagues and students, through AI-assisted development, because he is also a lifelong gamer who wanted to bring the feel of commercial games into an educational setting. The Disruptor sits alongside <a href="https://buildbinboost.org/" style="color: var(--red-500);">Build, Bin, Boost</a> and <a href="https://slingshotsim.org" style="color: var(--red-500);">the Slingshot</a> as complementary tools for teaching innovation management and corporate entrepreneurship. <!-- CHANGED 20 Nov: both licences, as the game states them -->It is an open, not-for-profit educational project: its content is licensed CC BY-NC-SA 4.0 and its software PolyForm Noncommercial 1.0.0.</p>
+      <p class="faq-a">The Disruptor was created by Ammon Salter, Professor of Technology and Innovation Management at Warwick Business School, University of Warwick. His research covers open and distributed models of innovation, R&D decision-making, innovation and social networks, AI and new ventures, university-industry collaboration, and innovation policy. He is co-author of <em>The Management of Technological Innovation</em> (Oxford University Press, with Mark Dodgson and David Gann) and former co-editor of <em>Research Policy</em>. He has worked with companies, governments, and other organisations on the management of innovation, and teaches the subject at all levels. The game is his attempt to translate research findings into play, so that students can experience the challenges of managing innovation at an established firm rather than just reading about them. He built it himself, with help from colleagues and students, through AI-assisted development, because he is also a lifelong gamer who wanted to bring the feel of commercial games into an educational setting. The Disruptor sits alongside <a href="https://buildbinboost.org/" style="color: var(--red-500);">Build, Bin, Boost</a> and <a href="https://slingshotsim.org" style="color: var(--red-500);">the Slingshot</a> as complementary tools for teaching innovation management and corporate entrepreneurship. It is an open, not-for-profit educational project: its content is licensed CC BY-NC-SA 4.0 and its software PolyForm Noncommercial 1.0.0.</p>
 
       <h3 class="faq-q">How do I cite it?</h3>
-      <!-- 24 Nov: the Zenodo DOI of Version 2.0.0 -->
       <p class="faq-a">Salter, A. (2026). <em>The Disruptor: A Corporate Entrepreneurship and Innovation Management Simulation</em> (Version 2.0.0) [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24504385" style="color: var(--red-500);">https://doi.org/10.5281/zenodo.24504385</a></p>
 
       <h3 class="faq-q">How do I get the Educator's Pack?</h3>
@@ -771,7 +756,7 @@ html body .g-card.faq-group.s-indigo { background: linear-gradient(180deg, #ffff
         <a href="mailto:ammon.salter@wbs.ac.uk">ammon.salter@wbs.ac.uk</a>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. <!-- CHANGED 20 Nov: both licences, as the game states them -->Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
   </footer>
 
   <script>

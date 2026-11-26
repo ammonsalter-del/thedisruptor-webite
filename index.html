@@ -81,8 +81,6 @@
     .hero { text-align: center; padding: 48px 24px 32px; max-width: 900px; margin: 0 auto; }
     .hero img { width: 380px; max-width: 85%; height: auto; margin-bottom: 10px; }
     .hero-tagline { font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--red-500); margin-bottom: 28px; }
-    /* CHANGED 25 Nov: the wider frame. The film 1040px (was 820px) and drawn at 16:9 (was a padding of 56.25% of the column, which left bands above and below);
-       the quick cards, tools and links 1240px (were 960px), the figures 1192px (were 912px), the systems panel 1040px (was 760px) */
     .hero-video {
       position: relative;
       max-width: 1040px;
@@ -100,7 +98,6 @@
       font-size: 16px; line-height: 1.7; color: var(--text-secondary);
       max-width: 680px; margin: 0 auto 24px;
     }
-    /* 22 Nov, tight home */
     .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .quick-grid { max-width: 1240px; margin: 0 auto 26px; padding: 0 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
     @media (max-width: 860px) { .quick-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -114,7 +111,7 @@
     .num b { display: block; font-size: 46px; line-height: 1; font-weight: 800; letter-spacing: -1.5px; color: #fff; }
     .num b::after { content: ""; display: block; width: 34px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.85); margin: 12px auto 10px; }
     .num span { font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(255,255,255,0.92); }
-    @media (max-width: 1240px) { .num-band { margin-left: 24px; margin-right: 24px; } }   /* CHANGED 25 Nov: was 960px, with the wider band */
+    @media (max-width: 1240px) { .num-band { margin-left: 24px; margin-right: 24px; } }
     @media (max-width: 560px) { .num-band { gap: 8px; } .num b { font-size: 28px; letter-spacing: -0.8px; } .num span { font-size: 9px; letter-spacing: 0.8px; } .num { padding: 18px 4px 16px; border-radius: 12px; } }
     .sys-band .sys-band-inner { background: linear-gradient(180deg, #ffffff 0%, #f6f7f9 100%); border: 1px solid var(--g-border); border-radius: 18px; padding: 18px 16px 10px; box-shadow: 0 12px 26px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.04), inset 0 1px 0 #fff; }
     .sys-band figure { border: 0; background: none; box-shadow: none; }
@@ -128,7 +125,7 @@
     .link-row { max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     @media (max-width: 520px) { .tool-tile { flex-direction: column; text-align: center; } .tool-tile h2 { text-align: center; } }
     .hero-meta { margin-top: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.5px; }
-    .explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }   /* 22 Nov: six cards, was four */
+    .explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     @media (max-width: 900px) { .explore-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 520px) { .explore-grid { grid-template-columns: 1fr; } }
     .explore-card {
@@ -138,10 +135,7 @@
     .explore-card:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(204,41,54,0.15); transform: translateY(-1px); }
     .explore-card h3 { font-size: 14px; font-weight: 700; margin: 10px 0 4px; color: var(--neutral-900); }
     .explore-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 0; }
-  /* ==== 22 Nov CARDS FROM THE GAME: each look below is copied from the game (github-working/index.html), lines named in each comment ==== */
 
-/* index: the four quick cards, each in a look of the game (structure and words as approved) */
-/* 22 Nov, his words: "The pictures in the two boxes are odd with none in the first two". All four quick cards share one build, the start screen's version card (game lines 117279 to 117290): a picture from the game under a dark fall, the icon in a white round over its lower edge, a pale body. */
 .quick-grid > * { position: relative; overflow: hidden; padding-top: 86px; border: 2px solid #e2e8f0; box-shadow: 0 14px 26px -16px rgba(15,23,42,0.45); }
 .quick-grid > *::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 84px; background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.5) 100%), var(--pic) center var(--pos, 40%) / cover no-repeat; }
 .quick-grid > * img { position: relative; margin-top: -58px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
@@ -188,13 +182,12 @@
 @media (max-width: 420px) { .sys-band-inner { grid-template-columns: repeat(3, minmax(0, 1fr)); } .sys-band figcaption { font-size: 10px; } }
 
 
-/* ==== end of 22 Nov CARDS ==== */
 </style>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
+  <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
@@ -227,7 +220,6 @@
     </div>
   </nav>
 
-  <!-- ═══ HOME, REBUILT TIGHT 22 Nov 2026 on the pattern of the Slingshot's home page (his brief: the front door, visually rich, things from the game, his voice, no technical detail; "Keep the first index page tight"). His own words are used wherever they exist: the pitch and the Challenge are from the live site, the Katrien text from the live educators page. The earlier draft is _not-for-upload/index.PRE-tight-home-2211.html. ═══ -->
   <div class="hero">
     <img src="Logocropped.png" alt="The Disruptor">
     <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;">The Disruptor: Free Corporate Entrepreneurship and Innovation Simulation</h1>
@@ -240,17 +232,16 @@
     <div class="hero-meta">Free · Open Source · No Installation · Works Offline</div>
   </div>
 
-  <!-- ═══ THE CHALLENGE: his passage, then the video ═══ -->
   <section style="margin: 8px auto 24px;">
     <h2 style="text-align:center;">The Challenge</h2>
     <div class="intro-box">
       <p style="margin: 0 0 14px;">Schumpeter called it the <em>"perennial gale of creative destruction"</em>: the force that builds new industries on the ruins of old ones. Innovation drives that gale. But managing it means making difficult choices under uncertainty.</p>
-      <p style="margin: 0 0 14px;"><strong>What to fund and what to kill.</strong> When to explore and when to exploit. How to build a pipeline of new products, services, and AI-driven solutions while protecting your intellectual property. How to forge alliances, build platforms, tap into crowdsourced ideas, and meet industry standards, all while shaping the organisation and watching competitors who are doing the same. <!-- CHANGED 20 Nov: the game's own front page has this sentence on generative AI since Version 2 (game line 3147) -->How far to bring generative AI into the firm’s own work, and what that asks of your people and your budget.</p>
+      <p style="margin: 0 0 14px;"><strong>What to fund and what to kill.</strong> When to explore and when to exploit. How to build a pipeline of new products, services, and AI-driven solutions while protecting your intellectual property. How to forge alliances, build platforms, tap into crowdsourced ideas, and meet industry standards, all while shaping the organisation and watching competitors who are doing the same. How far to bring generative AI into the firm’s own work, and what that asks of your people and your budget.</p>
       <p style="margin: 0 0 14px;"><strong>Knowing when to give people autonomy to imagine new futures, and when to rein them in.</strong> Nurturing concepts, validating them, and driving them through to commercial sales or operational change. Enlisting employees, exciting customers, building capabilities that competitors cannot easily imitate, under a board that sets ambitious goals.</p>
       <p style="margin: 0 0 14px;"><strong>This simulation will challenge you.</strong> You will need to create and capture value using every tool you have, making trade-offs between competing goals where discipline matters just as much as creativity.</p>
       <p class="is-short" style="margin: 0;">Get it right and you reshape an industry. Get it wrong and the gale sweeps you away. <em>Can you shape the future?</em></p>
     </div>
-    <p class="is-short" style="text-align:center; margin: 22px 0 10px; font-weight: 600;">New here? Watch the explainer: the game in under five minutes.</p><!-- CHANGED 25 Nov: was "New here? Watch the short intro." -->
+    <p class="is-short" style="text-align:center; margin: 22px 0 10px; font-weight: 600;">New here? Watch the explainer: the game in under five minutes.</p>
     <div class="hero-video">
       <iframe src="https://drive.google.com/file/d/1s6og_KvEcRnOwau6KiGnGEUU-XBmRJK2/preview" allow="autoplay" allowfullscreen></iframe>
     </div>
@@ -264,7 +255,6 @@
     <div class="quick-card s-green"><img src="icons/h-page.png" alt="" width="40" height="40"><h3>A report to take away</h3><p class="is-short">Your tenure at Vélox, as a PDF, with a postcard to keep</p></div>
   </div>
 
-  <!-- 22 Nov, his words: "The boxes are pretty ugly on the first page ... especially for the ones with numbers". The three figures are now one band, no boxes. Figures are his of 19 Nov (VIDEO-SCRIPT-V2.txt, scene 1); "50+" stands for "more than 50". -->
   <div class="num-band">
     <div class="num"><b>c.&nbsp;2,000</b><span>people since April 2026</span></div>
     <div class="num"><b>77</b><span>countries</span></div>
@@ -305,7 +295,7 @@
       <img src="img/boardroom.webp" alt="The boardroom at Vélox Dynamics">
       <div>
         <h2>Teaching with it</h2>
-        <p>A complement to your teaching: the Educator's Pack and ways to use the game in your course.</p><!-- CHANGED 25 Nov: was "The Educator's Pack, the Incubator, and ways to use the game in your course." -->
+        <p>A complement to your teaching: the Educator's Pack and ways to use the game in your course.</p>
         <a href="educators.html" class="tool-link">For Educators →</a>
       </div>
     </div>
@@ -348,7 +338,7 @@
         <iframe src="https://ieplaybook.substack.com/embed" width="100%" height="150" style="max-width:480px; border:1px solid #eee; background:white; border-radius:6px;" frameborder="0" scrolling="no" title="Subscribe to the Innovation and Entrepreneurship Playbook"></iframe>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. <!-- CHANGED 20 Nov: both licences, as the game states them -->Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
+    <div class="footer-bottom">&copy; 2026 Ammon Salter, Warwick Business School. Content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>; software under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank">PolyForm Noncommercial 1.0.0</a>.</div>
   </footer>
 
   <script>

@@ -13,7 +13,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- PROJECTREF: the Disruptor's own Supabase project (BIG CHOICE 1 = A), filled in at STEPS step 7, here and in CONFIG below -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src https://wwihfojqrrizmwelamvf.supabase.co; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex">
@@ -26,7 +25,7 @@
   <style>
     /* The page's own parts, in the site's look (styles.css gives the navigation, footer and colours). */
     body { font-family: 'Inter', -apple-system, sans-serif; background: #f7f7f7; color: #1a1a1a; line-height: 1.6; margin: 0; }
-    .cr-wrap { max-width: 1240px; margin: 0 auto; padding: 32px 16px 48px; }   /* CHANGED 25 Nov: was 960px, the wider frame */
+    .cr-wrap { max-width: 1240px; margin: 0 auto; padding: 32px 16px 48px; }
     .cr-wrap h1 { font-size: 30px; font-weight: 800; margin: 0 0 4px; }
     .cr-sub { color: #555; margin: 0 0 24px; }
     .cr-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
@@ -68,9 +67,7 @@
     .cr-kept p { margin: 0 0 6px; font-size: 14px; }
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     @media (max-width: 640px) { .cr-wrap h1 { font-size: 24px; } .cr-code { font-size: 32px; } .cr-card { padding: 16px; } }
-  /* ==== 22 Nov CARDS FROM THE GAME: each look below is copied from the game (github-working/index.html), lines named in each comment ==== */
 
-/* classroom: CSS only; no element a script reads or writes is changed, only styled */
 /* "How it works": a Message Centre card with a blue bar (game lines 658 to 677) */
 html body .cr-wrap > div.cr-card { position: relative; padding-left: 34px; background: linear-gradient(180deg, #ffffff 55%, #f3f7ff 100%); border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 24px -16px rgba(15,23,42,0.35); }
 html body .cr-wrap > div.cr-card::before { content: ''; position: absolute; left: 14px; top: 16px; bottom: 16px; width: 5px; border-radius: 3px; background: #3b82f6; }
@@ -87,7 +84,6 @@ html body .cr-panel { border-radius: 12px; border: 1px solid #e2e8f0; background
 .cr-btn { box-shadow: 0 2px 6px rgba(185,28,28,0.25); }
 .cr-btn.alt { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; box-shadow: none; }
 .cr-btn.alt:hover { background: #e2e8f0; }
-/* the new class code: Katrien's amber scene card (line 110217), the thing a lecturer takes away */
 #mk-result { position: relative; margin-top: 16px; padding: 4px 20px 16px 36px; border: 1px solid #fde68a; border-radius: 12px; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 24px -16px rgba(180,83,9,0.45); }
 #mk-result::before { content: ''; position: absolute; left: 14px; top: 16px; bottom: 16px; width: 5px; border-radius: 3px; background: #f59e0b; }
 #mk-result .cr-code { color: #92400e; }
@@ -100,7 +96,7 @@ html body .cr-panel { border-radius: 12px; border: 1px solid #e2e8f0; background
 #panel-view { background: #fff; }
 #vw-msg:empty, #vw-action-msg:empty { min-height: 0; margin: 0; }
 /* the results need the end screen's width: the page widens while the results are shown */
-.cr-wrap:has(#panel-view:not([hidden])) { max-width: 1240px; }   /* CHANGED 25 Nov: was 1200px, the same frame as the page */
+.cr-wrap:has(#panel-view:not([hidden])) { max-width: 1240px; }
 .cr-wrap:has(#panel-view:not([hidden])) > section { max-width: none; }
 #vw-body .cr-banner { position: relative; margin: -20px -20px 6px; min-height: 210px; border-radius: 12px 12px 0 0; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; padding: 0 28px 24px; box-sizing: border-box;
   background: linear-gradient(180deg, rgba(28,25,23,0.10) 0%, rgba(28,25,23,0.66) 45%, rgba(28,25,23,0.93) 100%), url("img/end-boardroom.webp") center 35% / cover no-repeat, #292524; }
@@ -191,7 +187,6 @@ html body .cr-panel { border-radius: 12px; border: 1px solid #e2e8f0; background
   #vw-body .cr-lnk { white-space: normal; text-align: right; }
 }
 
-/* ===== 22 Nov, declutter: fewer things at once, more air (same end-screen look) ===== */
 #vw-body > h3 { margin: 40px 0 18px; padding-top: 28px; }
 #vw-body .cr-figs { gap: 14px; margin: 26px 0 6px; }
 #vw-body .cr-fig { box-shadow: 0 1px 2px rgba(28,25,23,0.05); padding: 16px 16px 14px; }
@@ -225,7 +220,6 @@ html body .cr-panel { border-radius: 12px; border: 1px solid #e2e8f0; background
 #vw-body .cr-bar-l { font-size: 12px; font-weight: 700; color: #57534e; margin-bottom: 5px; }
 #vw-body .cr-bar { height: 12px; border-radius: 6px; }
 #vw-rank { margin-top: 8px; }
-/* 22 Nov, the comparison redrawn: year cards in the end screen's manner (stone face, soft depth, the year large), income first */
 #vw-cmp { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 #vw-cmp > .cr-note { grid-column: 1 / -1; }
 #vw-body .cr-ycard { position: relative; padding: 20px 20px 18px; background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%); border: 1px solid #e7e5e4; border-radius: 14px;
@@ -273,8 +267,6 @@ html body .cr-panel { border-radius: 12px; border: 1px solid #e2e8f0; background
 /* the game's assessment: a key and two bars */
 #vw-game .cr-key { margin-bottom: 6px; }
 #vw-body .cr-gabars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; max-width: 760px; }
-/* 22 Nov, scores, redrawn as the year cards: two cards across the full width, each a ring gauge with the median in its centre,
-   then a 0 to 100 bar, the middle half in the group's colour (red for the class, stone for all Forge), the median a dark marker */
 #vw-body .cr-scores { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
 #vw-body .cr-scard { display: flex; flex-direction: column; align-items: center; }
 #vw-body .cr-scard .cr-ycard-h { align-self: stretch; }
@@ -305,11 +297,10 @@ html body .cr-kept { border: 0 solid #0f5f5a; border-left-width: 11px; border-ri
 .cr-kept h2 { color: #0f5f5a; text-align: left !important; }
 html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; }
 
-/* ==== end of 22 Nov CARDS ==== */
 </style>
 </head>
 <body>
-  <nav><!-- CHANGED 25 Nov: the tabs, version C with a red Play button (drawn icons, styles.css) -->
+  <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><img src="Logocropped.png" alt="The Disruptor"></a>
       <div class="nav-links">
@@ -353,7 +344,7 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
         <li>The game plays the same either way. Results are sent at the end of each year.</li>
         <li>At the end, the student sees where each year stands. You see the class here.</li>
       </ol>
-      <h3>For educators</h3><!-- CHANGED 25 Nov: was "For lecturers" -->
+      <h3>For educators</h3>
       <p class="cr-note" style="margin:0">Make a class below and give your students the code. No account, name, e-mail or password. Forge only.</p>
     </div>
 
@@ -446,9 +437,7 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
 <script>
 (function () {
   'use strict';
-  // ================================================================ BIG CHOICE 1 = A: the Disruptor's own Supabase project
   var CONFIG = { url: 'https://wwihfojqrrizmwelamvf.supabase.co', key: 'sb_publishable_8doMY-Me4JZ5OcBrjEgMgA_kHWEjXiu', page: location.origin + location.pathname, wait: 8000,
-    // rebase 17 Nov. HIS CHOICE, the same as the shim's CONFIG.compareScore: show The Disruptor's score (a column, and the class median
     // against all Forge players). The score is stored either way.
     showScore: false };
 
@@ -458,7 +447,6 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
   var ENDS = { pinnacle: 'The Pinnacle', outstanding: 'Outstanding Tenure', mixed: 'Mixed Record', underperformance: 'Underperformance', critical: 'A Difficult Tenure', ended_early: 'Ended early by the board' };
   var GA = ['Innovation Jedi Master', 'Innovation Jedi', 'Innovation Padawan', 'Innovation Youngling'];
   var FAIL = 'The class results could not be fetched just now. Please try again in a minute.';
-  // 22 Nov, declutter: the first ten students, then "Show all N"; one click anywhere else closes an open "Options" menu
   var FIRST = 10, SHOW_ALL = false, MORE = null;
   document.addEventListener('click', function (e) {
     Array.prototype.forEach.call(document.querySelectorAll('#vw-table .cr-menu'), function (m) {
@@ -470,7 +458,7 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
   function say(id, text, bad) { var m = $(id); m.textContent = text || ''; m.classList.toggle('bad', !!bad); }
 
   function rpc(name, body) {
-    if (/PROJECTREF/.test(CONFIG.url) || /^sb_secret_/.test(CONFIG.key) || /service_role/.test((function () { try { return atob(String(CONFIG.key).split('.')[1].replace(/-/g, '+').replace(/_/g, '/')); } catch (e) { return ''; } })())) return Promise.resolve({ ok: false });   // rebase 17 Nov: never with a secret key
+    if (/PROJECTREF/.test(CONFIG.url) || /^sb_secret_/.test(CONFIG.key) || /service_role/.test((function () { try { return atob(String(CONFIG.key).split('.')[1].replace(/-/g, '+').replace(/_/g, '/')); } catch (e) { return ''; } })())) return Promise.resolve({ ok: false });
     var ctl = new AbortController(), t = setTimeout(function () { ctl.abort(); }, CONFIG.wait);
     return fetch(CONFIG.url + '/rest/v1/rpc/' + name, { method: 'POST', signal: ctl.signal, credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer',
       headers: { 'apikey': CONFIG.key, 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) })
@@ -556,10 +544,9 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
     return s;
   }
 
-  // 22 Nov: one year in a student's row, drawn as the end screen draws a year (game, showEndOfGameScorecard): the income "of" the goal,
   // a bar for the share of the goal reached (green once reached), the board's word in its colour. The same words as yearCell; text only.
   function yearTd(y, label) {
-    var td = el('td', null, { 'class': 'cr-yc', 'data-label': label, 'title': yearCell(y) });   // 22 Nov, declutter: the board's score only in the tooltip (and the CSV)
+    var td = el('td', null, { 'class': 'cr-yc', 'data-label': label, 'title': yearCell(y) });
     if (!y || y.ended_early) { td.appendChild(el('span', yearCell(y), { 'class': 'cr-yc-none' })); return td; }
     var top = el('div', null, { 'class': 'cr-yc-top' }); top.appendChild(el('b', eur(y.income))); top.appendChild(el('span', ' of ' + eur(y.goal))); td.appendChild(top);
     var share = Number(y.goal) > 0 ? Math.max(0, Math.min(1, Number(y.income) / Number(y.goal))) : 0;
@@ -578,7 +565,6 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
                 ['Ended early', runs.filter(function (r) { return r.ended_how === 'early'; }).length],
                 ['Median time played', v.median_minutes == null ? '–' : (v.median_minutes >= 60 ? Math.floor(v.median_minutes / 60) + ' h ' + (v.median_minutes % 60) + ' min' : v.median_minutes + ' min')]];
     var fb = $('vw-figs'); fb.textContent = '';
-    // 22 Nov, the end screen's year cards: a year's figure also as a bar, its share of those who joined (the figure is in the text already)
     figs.forEach(function (f, i) {
       var d = el('div', null, { 'class': 'cr-fig' + (i >= 1 && i <= 3 ? ' yr' : '') }); d.appendChild(el('b', f[1])); d.appendChild(el('span', f[0]));
       if (i >= 1 && i <= 3) { var fbar = el('div', null, { 'class': 'cr-fbar', 'aria-hidden': 'true' }), fi = el('i'); fi.style.width = (runs.length ? Math.round(100 * f[1] / runs.length) : 0) + '%'; fbar.appendChild(fi); d.appendChild(fbar); }
@@ -588,27 +574,26 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
     // students
     var t = $('vw-table'); t.textContent = '';
     var cap = el('caption', 'One row per student’s game, in the order they started', { 'class': 'sr-only' }); t.appendChild(cap);
-    // 22 Nov, scores: The Disruptor's score sits under "How it ended", in the same cell, in place of the level name
     var head = ['Nickname', 'Level', 'Year 1', 'Year 2', 'Year 3', 'How it ended', ''];
     var tr = el('tr'); head.forEach(function (h, i) { var th = el('th', h, { scope: 'col' }); if (!h) th.appendChild(el('span', 'Actions', { 'class': 'sr-only' })); tr.appendChild(th); });
     var thead = el('thead'); thead.appendChild(tr); t.appendChild(thead);
     var tb = el('tbody');
     runs.forEach(function (r, n) {
       var row = el('tr'); if (r.hidden) row.className = 'out';
-      if (n >= FIRST && !SHOW_ALL) row.hidden = true;   // 22 Nov, declutter: the first ten, then "Show all N"
+      if (n >= FIRST && !SHOW_ALL) row.hidden = true;
       var nick = r.nickname || (r.nickname_hidden ? 'hidden' : '–');
       var byYear = {}; (r.years || []).forEach(function (y) { byYear[y.year] = y; });
       var th = el('th', nick + (r.hidden ? ' (left out)' : ''), { scope: 'row' }); th.style.fontWeight = '600'; row.appendChild(th);
       row.appendChild(el('td', LEVELS[r.level] || '–', { 'data-label': 'Level', 'class': 'cr-lv' }));
-      [1, 2, 3].forEach(function (yr) { row.appendChild(yearTd(byYear[yr], 'Year ' + yr)); });   // 22 Nov: the end screen's year card in small
+      [1, 2, 3].forEach(function (yr) { row.appendChild(yearTd(byYear[yr], 'Year ' + yr)); });
       var endTd = el('td', null, { 'data-label': 'How it ended', 'class': 'cr-end' + (r.outcome || r.ended_how ? '' : ' on') });
       endTd.appendChild(el('div', r.outcome ? ENDS[r.outcome] : (r.ended_how ? '–' : 'Still playing')));
-      var sc = scoreOf(r); if (sc !== null) endTd.appendChild(el('div', 'Score ' + sc, { 'class': 'cr-ga' }));   // 22 Nov, scores: none, nothing shown
+      var sc = scoreOf(r); if (sc !== null) endTd.appendChild(el('div', 'Score ' + sc, { 'class': 'cr-ga' }));
       row.appendChild(endTd);
       var act = el('td', null, { 'class': 'cr-act' }), items = [];
       if (!r.nickname_hidden && r.nickname) items.push(btn('Hide nickname', 'Hide the nickname ' + nick, function () { hide(r.id, 'nickname'); }));
       if (!r.hidden) items.push(btn('Leave out of comparisons', 'Leave ' + nick + ' out of comparisons', function () { hide(r.id, 'run'); }));
-      if (items.length) act.appendChild(menu(nick, items));   // 22 Nov, declutter: one quiet "Options" control holding the row's actions
+      if (items.length) act.appendChild(menu(nick, items));
       row.appendChild(act);
       tb.appendChild(row);
     });
@@ -625,7 +610,6 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
     var cb = $('vw-cmp'); cb.textContent = '';
     var cmp = v.compare || [];
     if (!cmp.length) cb.appendChild(el('p', 'Shown once a student has finished Year 1.', { 'class': 'cr-note' }));
-    // 22 Nov, comparison redrawn: each year card leads with income (the end screen's year card: two bars on one scale, the goal a line
     // across both), then the share rated Adequate or better as a ring, then the board's five appraisals as two slim stacked bars with their key.
     // The sentence of medians stays for screen readers only.
     cmp.forEach(function (c) {
@@ -643,7 +627,6 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
       rk.appendChild(el('p', 'By median income in Year ' + c.year + ', your class is ' + ordinal(c.rank) + ' of ' + c.rank_of + ' Forge classes.'));
     });
 
-    // the game's view. 22 Nov, scores (his words: "class scores would be better than the terms of mastery"): The Disruptor's score for the
     // class and for all Forge players, each as its median out of 100 over a bar from 0 to 100, the middle half shaded, the median marked,
     // and the number of games under it. Fewer than 3 games: the figures without a bar. No level names.
     var gb = $('vw-game'); gb.textContent = '';
@@ -656,9 +639,7 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
       gb.appendChild(gw);
     }
   }
-  // 22 Nov, scores: a game's score as the database gives it (after PATCH 3 "score", before it "ds_score"); null when there is none
   function scoreOf(r) { var s = typeof r.score === 'number' ? r.score : r.ds_score; return (typeof s === 'number' && isFinite(s)) ? Math.round(s) : null; }
-  // 22 Nov, scores, redrawn as the year cards: one card per group (header: who, and the number of games), the median as a ring gauge
   // with its figure in the centre, then a 0 to 100 bar (3 games or more): the middle half in the group's colour, the median marked.
   function scoreRow(who, s) {
     var n = Number(s.n) || 0, med = Number(s.median), q1 = Number(s.q1), q3 = Number(s.q3), pc = function (x) { return Math.max(0, Math.min(100, x)) + '%'; };
@@ -678,8 +659,7 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
     return card;
   }
   function ordinal(n) { var s = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
-  function btn(text, label, fn) { var b = el('button', text, { type: 'button', 'class': 'cr-lnk', 'aria-label': label }); b.addEventListener('click', fn); return b; }   // 22 Nov: a quiet text button (class cr-lnk)
-  // 22 Nov, comparison redrawn. The year's goal as the class's own games carry it (the same for every Forge game); null if none.
+  function btn(text, label, fn) { var b = el('button', text, { type: 'button', 'class': 'cr-lnk', 'aria-label': label }); b.addEventListener('click', fn); return b; }
   function goalOf(runs, yr) { for (var i = 0; i < runs.length; i++) { var ys = runs[i].years || []; for (var j = 0; j < ys.length; j++) if (ys[j].year === yr && Number(ys[j].goal) > 0) return Number(ys[j].goal); } return null; }
   // Income: "Your class" in red and "All Forge players" in stone, on one scale, each ending in its median; the goal a thin line across both.
   function incomeBars(c, goal) {
@@ -735,13 +715,11 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
     });
     return wrap;
   }
-  // 22 Nov, declutter: a colour key; entries are [name, colour], names are the game's own (appraisals, levels)
   function keyOf(list) {
     var k = el('div', null, { 'class': 'cr-key', 'aria-hidden': 'true' });
     list.forEach(function (e) { var s = el('span'), sw = el('i'); sw.style.background = e[1]; s.appendChild(sw); s.appendChild(document.createTextNode(e[0])); k.appendChild(s); });
     return k;
   }
-  // 22 Nov, declutter: one small "Options" control per row; it opens a little menu with the row's actions (Escape or a click elsewhere closes it)
   function menu(nick, items) {
     var wrap = el('div', null, { 'class': 'cr-menu' });
     var b = el('button', 'Options', { type: 'button', 'class': 'cr-opt', 'aria-expanded': 'false', 'aria-label': 'Options for ' + nick });
@@ -768,7 +746,7 @@ html body .cr-kept > p { max-width: none !important; margin-left: 0 !important; 
   // CSV, built in the browser from what the page already has. No minutes per student.
   $('vw-csv').addEventListener('click', function () {
     if (!VIEW) return;
-    var cols = ['nickname', 'level', 'started', 'how it ended', 'game assessment', 'score'];   // 22 Nov: The Disruptor's score, 0 to 100
+    var cols = ['nickname', 'level', 'started', 'how it ended', 'game assessment', 'score'];
     [1, 2, 3].forEach(function (y) { ['goal', 'income', 'objectives met', 'objectives set', 'appraisal', 'board score', 'launches', 'launches disappointed'].forEach(function (c) { cols.push('Y' + y + ' ' + c); }); });
     var q = function (s) { s = s == null ? '' : String(s); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     var rows = [cols.map(q).join(',')];
