@@ -81,7 +81,8 @@ The Vélox case study, teaching notes, slides, exam questions and discussion pro
 ## Earlier versions
 
 - Version 1.0, April 2026.
-- Version 1.0.2, September 2026: https://doi.org/10.5281/zenodo.21127039
+- Version 1.0.1, July 2026: https://doi.org/10.5281/zenodo.21127039
+- Version 1.0.2, September 2026.
 
 Version 2.0.0 is archived at https://doi.org/10.5281/zenodo.24504385
 
