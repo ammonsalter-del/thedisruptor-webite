@@ -3,33 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vélox end of game scene mock-up, 15 November 2026</title>
-<!--
-  MOCK-UP ONLY. Not part of the game. Built 15 November 2026 for Ammon to watch: the end of game scene ("Your last day").
-  Built from a copy of the strategy meeting's template (the same boardroom, table, windows, door, sideboard, camera, people and bubbles);
-  the comment below is the strategy template's own, kept as it was. Ideas from The Slingshot's farewell (one-bubble queue, lines drawn
-  once from pools, the debris, the nod, the pause key, the stall guard and watchdog) are re-made here. All lines are in end-scene-lines.js.
-  Built by _src/build-end.py into ../end-scene-mock.html.
+<title>The Disruptor: the end of game scene</title>
 
-  --- the strategy template's own header follows ---
-  MOCK-UP ONLY. Not part of the game. Built 11 November 2026 for Ammon to judge the look. Third version.
-  The opening strategy meeting. The board have coffee at the side, the CEO calls the meeting to order, they walk to the table,
-  each direction's champion makes the case, she asks for a vote, and then she decides for herself.
 
-  Ammon, 11 Nov, on the second version: "the chairs have the people facing towards the viewer not each other. The CEO is too
-  far from the table. It would be good if there was walking around - perhaps to call the meeting to order. They could be having
-  a coffee on the side first and then go to the table. I wonder if we can make the heads of the avatars align with our pictures
-  a bit better. The room feels rather flat and two dimensional. Perhaps we lower the angle a bit and make the table with legs
-  and more like a scene in Succession."
 
-  From The Slingshot (RELEASE 2.2 UPLOAD/slingshot-2.2.html): the avatar faces are its portrait drawing (portraitSVG, ~19475)
-  with each feature set by hand; the bodies and the walk are its figure (FIGURE_BODY, ~83824, and its step and swing).
-  The Disruptor's own words (github-working/index.html): the three directions, their descriptions, each champion's quote and who
-  backs each (BOARD_STRATEGIC_DIRECTIONS, ~5858); names, titles and colours (BOARDROOM_PANEL, BOARDROOM_ROTATING, ~5801).
-  DRAFT wording by Claude, for Ammon to replace: the three cases and the three descriptions (the game's own are kept beside them in the code as gameQuote and gameDescription), and Katrien's lines. Her line on the headline target and her remarks on the three objectives are the game's own (HEADLINE_TARGETS, CEO_OBJECTIVES_POOL). The votes of Els, Wouter, Ines and Annelies Bogaert are
-  Claude's reading of how the game describes them; the game has no data for those four.
-  Built from _src/strategy-template.html by _src/build-strategy.py.
--->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');   /* the game's own typeface, loaded as the game loads it */
   :root { --navy:#003060; --navy2:#0b2545; --orange:#ee5f12; --ink:#1d2733; }
@@ -129,7 +129,7 @@
   .p.wait.offer .xarm.l .xfore { transform:rotate(58deg) !important; }   /* a hand held out low to the person greeting them */   /* the arm away from the table rests out of sight, so no stray hand shows */
   .p.behind .fig { clip-path:inset(-20px -40px 30px -40px); }                 /* at the head of the table: the table hides them below the waist */
   .p.talk .head { animation:bob .34s 4 alternate; }
-  .p.talk .xarm.r .xup { animation:gesture 1.3s ease-in-out 1; }   /* one gesture as they start to speak, then the arm rests (Ammon, 11 Nov: 'The CEO keeps waving her hand which is odd') */
+  .p.talk .xarm.r .xup { animation:gesture 1.3s ease-in-out 1; }
   .p.vote .xarm.r .xup { transform:rotate(-22deg); transition:transform .3s; } .p.vote .xarm.r .xfore { transform:rotate(-128deg); transition:transform .3s; }   /* a hand lifted from the table, elbow bent: never a straight raised arm */
   .p.shake .xarm.r .xup { transform:rotate(-12deg); transition:transform .3s; } .p.shake .xarm.r .xfore { transform:rotate(-56deg); animation:shk .4s ease-in-out 3; }   /* a hand held out low, at waist height */
   .p.shake.still .xarm.r .xfore { animation:none; }
@@ -203,8 +203,8 @@
   #note { position:absolute; z-index:40000; left:38px; bottom:9px; font-size:10px; color:rgba(219,230,242,.7); letter-spacing:.04em; }
   @media (prefers-reduced-motion: reduce) { .p .head, .p.talk .xarm.r .xup { animation:none; } }
 
-  /* 12 Nov: THE GAME'S LOOK FOR ALL TEXT, as in the boardroom scene. Ammon: "the text on the page of the mock looks very different from the game"; "All the text"; then "Yes, both".
-     Inter throughout; white cards with rounded corners and a thin grey border. Things in the room (the poster, the bottle, Katrien's handwriting) are left as they are. */
+
+
   html, body, #say, .wd, #cap, #cap h3, #dec, #dec h3, #brief, #brief h3, .btn, button { font-family:'Inter', -apple-system, "Helvetica Neue", Arial, sans-serif !important; }
   #say { font-size:16px; line-height:1.38; font-weight:500; color:#1a1a1a; border-radius:12px; }
   .wd { font-size:14px; line-height:1.36; font-weight:500; color:#1a1a1a; }
@@ -215,10 +215,10 @@
   #cap small, #dec small, #brief small, #brief h4 { color:#888888; }
   #cap p, #dec p { color:#333; }
   .wd.long { width:300px; max-width:300px; }
-  body.ingame #pickme, body.ingame #faces, body.ingame #note, body.ingame #again, body.ingame #play { display:none !important; }   /* the mock-up's own buttons are not part of the game */
+  body.ingame #pickme, body.ingame #faces, body.ingame #note, body.ingame #again, body.ingame #play { display:none !important; }
 
-  /* ======================== 15 Nov: THE END SCENE (added to the copy) ======================== */
-  /* the mock-up's control bar: which room, which version, the name, the draw */
+
+
   #title { top:20px; }
   #ctl { position:absolute; z-index:60000; left:36px; top:44px; display:flex; flex-direction:column; gap:5px; font:500 12px 'Inter', -apple-system, Arial, sans-serif; }
   #ctl .row { display:flex; gap:5px; align-items:center; flex-wrap:wrap; background:rgba(255,255,255,.92); border-radius:999px; padding:4px 7px; box-shadow:0 2px 10px rgba(0,0,0,.45); width:max-content; }
@@ -242,18 +242,18 @@
   #endcard em { display:block; margin-top:16px; font:italic 400 12px 'Inter', Arial, sans-serif; color:#64748b; }
   #still { position:absolute; z-index:40500; left:50%; bottom:80px; transform:translateX(-50%); max-width:760px; background:rgba(255,255,255,.96); border-radius:12px; padding:14px 20px; font:500 16px/1.45 'Inter', Arial, sans-serif; color:#1a1a1a; box-shadow:0 10px 30px rgba(0,0,0,.5); display:none; }
   .srOnly { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
-  /* what people hold and how they stand at the party. RAISED HANDS RULE (Ammon, 15 Nov): both hands up or a bent elbow; never one straight arm held out and up */
-  /* 16 Nov (his comment 8): what is held stays upright. The glass and the bottle are turned back by the arm's own angle, about the hand, so a raised glass is never upside down. */
+
+
   .p .xitem.flute, .p .xitem.bot { display:none; transform-origin:42px 46px; transition:transform 1.4s ease-in-out; }
   .p.glass .xitem.flute { display:block; transform:rotate(108deg); } .p.bottle .xitem.bot { display:block; transform:rotate(108deg); }
   .p.glass .xarm.r .xup, .p.bottle .xarm.r .xup { transform:rotate(-12deg); transition:transform 1.4s ease-in-out; } .p.glass .xarm.r .xfore, .p.bottle .xarm.r .xfore { transform:rotate(-96deg); transition:transform 1.4s ease-in-out; }
   .p .fl { opacity:0; transition:opacity .7s; } .p.poured .fl { opacity:1; }
-  /* fourth version (his comment 5): pouring. The bottle is held out over the glass, tipped neck-down towards it, the elbow bent; the player holds the glass out to be filled */
+
   .p.bottle.pour .xarm.r .xup { transform:rotate(-80deg); transition:transform .5s ease-in-out; } .p.bottle.pour .xarm.r .xfore { transform:rotate(-70deg); transition:transform .5s ease-in-out; }
   .p.bottle.pour .xitem.bot { transform:rotate(245deg); transition:transform .5s ease-in-out; }
   .p.mir .fig { transform:scaleX(-1); }
-  .p.bottle .xitem.flute { display:none !important; }   /* whoever holds the bottle holds no glass in that hand (his comment 5 on the third mock-up) */
-  .p.bottle.openup .xarm.r .xup { transform:rotate(-30deg); transition:transform .4s; } .p.bottle.openup .xarm.r .xfore { transform:rotate(-110deg); transition:transform .4s; } .p.bottle.openup .xitem.bot { transform:rotate(140deg); }   /* fifth version (his comment 3): the bottle held up in front, upright, for the cork; elbow bent */
+  .p.bottle .xitem.flute { display:none !important; }
+  .p.bottle.openup .xarm.r .xup { transform:rotate(-30deg); transition:transform .4s; } .p.bottle.openup .xarm.r .xfore { transform:rotate(-110deg); transition:transform .4s; } .p.bottle.openup .xitem.bot { transform:rotate(140deg); }
   .p.bottle.pour .xarm.r .xup { transform:rotate(-95deg) !important; } .p.bottle.pour .xarm.r .xfore { transform:rotate(-60deg) !important; } .p.bottle.pour .xitem.bot { transform:rotate(250deg) !important; }   /* the pourer turned to face the glass, so the hand with the bottle is the one nearer it */
   .p.holdout .xarm.r .xup { transform:rotate(-40deg); transition:transform .5s; } .p.holdout .xarm.r .xfore { transform:rotate(-75deg); transition:transform .5s; } .p.holdout .xitem.flute { transform:rotate(115deg); }
   #stream { position:absolute; z-index:51998; height:3px; border-radius:2px; transform-origin:0 50%; background:linear-gradient(90deg, rgba(243,227,161,.95), rgba(255,246,210,.85)); display:none; pointer-events:none; }
@@ -261,9 +261,9 @@
   .p.cheer .xarm.l .xup { transform:rotate(138deg); transition:transform .3s; } .p.cheer .xarm.l .xfore { transform:rotate(50deg); }
   .p.cheer .xarm.r .xup { transform:rotate(-138deg); transition:transform .3s; } .p.cheer .xarm.r .xfore { transform:rotate(-50deg); }   /* both hands up, elbows bent in towards the head */
   .p.cheer .xitem { display:none !important; }
-  /* 16 Nov (his comment 6, "keep it, redraw it"): the clap. Both forearms across the chest; the upper arms swing in and out at the shoulder, slowly, so the hands visibly meet in front of the chest. The same clap in every room. */
+
   .p.clap .xarm.l .xfore { transform:rotate(-90deg); } .p.clap .xarm.r .xfore { transform:rotate(90deg); }
-  .p.clap .xarm.l .xup { animation:clapL .2s ease-in-out infinite alternate; } .p.clap .xarm.r .xup { animation:clapR .2s ease-in-out infinite alternate; }   /* third version (his comment 3): brisker, like real applause */
+  .p.clap .xarm.l .xup { animation:clapL .2s ease-in-out infinite alternate; } .p.clap .xarm.r .xup { animation:clapR .2s ease-in-out infinite alternate; }
   .p.clap .xitem { display:none !important; }
   @keyframes clapL { from { transform:rotate(20deg); } to { transform:rotate(-10deg); } } @keyframes clapR { from { transform:rotate(-20deg); } to { transform:rotate(10deg); } }
   .p.lift .xarm.l .xup { transform:rotate(164deg); transition:transform .4s; } .p.lift .xarm.l .xfore { transform:rotate(30deg); }
@@ -283,10 +283,10 @@
   .cork { position:absolute; z-index:52000; width:7px; height:9px; border-radius:2px 2px 3px 3px; background:#c8a165; box-shadow:0 0 0 1px #7a5a2c; }
   .foam { position:absolute; z-index:51999; width:5px; height:5px; border-radius:50%; background:#fffdf2; box-shadow:0 0 3px #fff; opacity:.95; }
   .wd { max-width:200px; }
-  /* 16 Nov (his comment 1): in the close shot Katrien's words sit beside her, towards the player, with a pointer to her */
+
   #say.toD::before { content:""; position:absolute; left:var(--tx, 50%); bottom:-10px; margin-left:-9px; width:0; height:0; border-left:9px solid transparent; border-right:9px solid transparent; border-top:10px solid #fff; }   /* the pointer down to her */
   #say.toL::before { content:""; position:absolute; left:-15px; top:var(--ty, 30px); width:0; height:0; border-top:9px solid transparent; border-bottom:9px solid transparent; border-right:10px solid var(--c, #cc2936); }
-  /* 16 Nov (his comments 2 and 9): the appraisal card, as in the appraisal meeting (BOARDROOM MOCK 10-11, #q.plan.appr): white, rounded, the score in a coloured disc */
+
   #appr { position:absolute; z-index:41000; left:20px; bottom:56px; width:420px; box-sizing:border-box; padding:12px 20px 12px; font-size:13px; background:#ffffff; border:1px solid #e0e0e0; border-radius:12px; box-shadow:0 24px 50px rgba(0,0,0,.55); font-family:'Inter', -apple-system, Arial, sans-serif; color:#1a1a1a; opacity:0; transform:translateY(10px); transition:opacity .5s, transform .5s; pointer-events:none; }
   #appr.on { opacity:1; transform:none; }
   #appr .who { display:flex; align-items:center; gap:12px; font-size:12px; color:#888; letter-spacing:.06em; text-transform:uppercase; font-weight:700; }
@@ -307,9 +307,9 @@
   @keyframes gestureE { 0%,100% { transform:rotate(-5deg); } 50% { transform:rotate(-30deg); } } @keyframes gestureF { 0%,100% { transform:rotate(8deg); } 50% { transform:rotate(-74deg); } }
   #say { max-width:380px; }
   @media (prefers-reduced-motion: reduce) { .p .head, .p *, .s.thing { animation:none !important; transition:none !important; } #card, #endcard, #say, .wd { transition:none !important; animation:none !important; } }
-  /* ---------------- ROOM KIT: the table (fifth version, his comment 8). The same elements as before (#ttop, #eNear, #eLeft, #eRight, .leg), restyled:
-     a walnut top with a restrained grain and sheen, a crisp bevelled edge, edges with a light line along the top, and pedestal legs on dark plinths.
-     Apply by putting class "newroom" on #stage. Sizes and places are unchanged. ---------------- */
+
+
+
   #stage.newroom #ttop { border-radius:10px;
     background:linear-gradient(100deg, rgba(255,255,255,0) 28%, rgba(255,240,220,.10) 44%, rgba(255,240,220,.03) 56%, rgba(255,255,255,0) 68%),
                repeating-linear-gradient(91deg, rgba(255,225,190,.035) 0 2px, rgba(0,0,0,0) 2px 7px, rgba(0,0,0,.05) 7px 8px, rgba(0,0,0,0) 8px 15px),
@@ -425,39 +425,39 @@
   <div id="appr"></div>
   <div id="stream"></div>
   <div id="title">Your last day</div>
-  <!-- V2 (16 Nov 2026), THE GAME'S COPY: the mock-up's control bar, avatar picker, Faces and Play again buttons are taken out; Skip stays -->
+
   <button class="btn" id="skip">Skip</button>
   <div id="pausedTag">Paused · press P to carry on</div>
   <div id="card"><div><b id="cardT">Your last day</b><span id="cardS"></span></div></div>
   <div id="endcard"><div><b>Your report is ready</b><span id="endS"></span><button id="cont">Continue</button><em id="endNote"></em></div></div>
   <div id="still"></div>
   <div id="sr" aria-live="polite" class="srOnly"></div>
-  <!-- V2 (16 Nov 2026), THE GAME'S COPY: the mock-up's note at the foot of the page is taken out -->
+
 </div></div>
 
 <script>
-// =====================================================================================================================
-// THE END OF GAME SCENE: THE SCRIPT. SECOND VERSION, 16 November 2026 (first version 15 Nov, kept in v1/). Drafts by Claude for Ammon to review, except where marked as his. Mock-up only.
-// Every line the scene can say is here, by slot, so lines can be read, cut or changed without touching the scene's code.
-// The page (end-scene-mock.html) is rebuilt from this file by _src/build-end.py.
-//
-// HOW LINES ARE DRAWN. Each slot is a pool; one line is drawn at random and never repeated within a playing.
-// Placeholders, filled by the scene:
-//   [name]  the player's first name          [y1] [y2] [y3] [last]  the yearly appraisal words (Outstanding ... Critical)
-//   [next]  the next version up (Forge -> "Pivot, Jugaad or Gauntlet"; Pivot -> Jugaad; Jugaad -> Gauntlet; Incubator -> Forge)
-//   [year]  a year (from the fact, or the year the scene is in)
-//   a fact's own fields: [product] [project] [person] [role] [partner] [standard] [until]
-//   [n:noun] a number and its noun ("four patents", "one patent"); [N:noun] the same with a capital
-// A section head's remark marked { need:'kind' } is used only when the game sends that kind of fact about that head's area;
-// plain strings are the fallbacks, used when there is no fact or the fact has no remark left.
-//
-// RULES KEPT (from the brief and his standing rulings): plain British English; Belgian register, direct, never rude, no sugar-coating,
-// dry humour that does not explain itself; no American business phrases; no exclamation marks from Katrien; "management board", never
-// "the board", in her mouth; the founder is not mentioned; no named AI products; nothing that reveals a hidden mechanic, a figure the
-// player has not seen, or which choice would have been best (the "I told you so" remarks are each head's own opinion in their own area);
-// nobody mocks a player who has done badly. None of Ammon's own lines from the existing scenes (marked AMMON there) is used here.
-// Lines in his own words FOR THIS SCENE (dictated 15 Nov) are marked // HIS WORDS.
-// =====================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var END_LINES = {
 
   // ---------------------------------------------------------------- the two cards ----------------------------------------------------------------
@@ -469,11 +469,11 @@ var END_LINES = {
       dismissed: "The firm's record of your time here, and The Disruptor's report on how you managed it. After it, on the last page: the Exit Debrief with Katrien.",
       probation: "The firm's record of your first year, and The Disruptor's report on how you managed it. After it, on the last page: the Exit Debrief with Katrien." } },
 
-  // ---------------------------------------------------------------- THE APPRAISAL CARD: the statement on it ----------------------------------------------------------------
-  // FOURTH VERSION (his comment 8, "this is on the card"): the Year 3 card looks BACK on the term and closes it; nothing about next year or keeping the post.
-  // Where the earlier wording came from: the appraisal grid, GRID (nine bands, five wordings each) in BOARDROOM MOCK 10-11/_src/boardroom-template.html,
-  // which is the same table the game's appraisal scene carries (TRY THE BUILD/scene-appraisal.html, var GRID, ~1416). It was written for Years 1 and 2, so the
-  // game's own Year 3 appraisal would need the same care if it ever shows a statement from it. Drafts by Claude.
+
+
+
+
+
   cardStatement: {
     Outstanding: [
       "Three remarkable years. In your last you met the goal and every objective we set. Thank you, from all of us.",
@@ -499,16 +499,16 @@ var END_LINES = {
   cardStatementDismissed: [ "Your time here ends earlier than either of us wanted. Thank you for the work you put in.", "The year fell short of what we asked. We know how hard the role is, and we thank you for your effort.", "This was a difficult year. We recognise what you gave the firm." ],
   cardStatementProbation: [ "A first year that shows real promise. We would like to see what you do with the full term.", "You have made a start we value. We would like you to finish the term.", "Your first year is behind you, and we see your potential. We hope you will stay for the next two." ],
 
-  // ---------------------------------------------------------------- KATRIEN, alone with the player ----------------------------------------------------------------
-  // FOURTH VERSION, 16 Nov (his comments on the third: 1, 2, 4, 6, 7, 10, 13). Cut to the essentials so the colleagues come in sooner.
-  // Order: pleasantry (said standing, as they shake hands); result (very short; the appraisal card is on the screen); views (ONE passage: she steps outside
-  // the game, names The Disruptor and gives the two views); uncertain (one short line on the uncertainty of innovation); invite (Rooms 3 to 5, the dismissal and
-  // probation; in Rooms 1 and 2 the invitation is the congratulations and the harder challenge, in the section "harder" below); handover (her CEO debrief on the
-  // last page, then the colleagues). In her own speech the debrief is "the CEO debrief" or "my debrief"; the closing card keeps "the Exit Debrief with Katrien".
-  // Every bubble is held 2.4 words a second plus a second (the third version's pace).
-  katrien: {   // FIFTH VERSION (his comments on the fourth, 2, 4 and 5): (a) pleasantry; (b) the card with a short word (result); (c) her feedback on how the player did,
-               // with the uncertainty of innovation (feedback), and the invitation (invite; in Rooms 1 and 2 the "harder" section); (d) the step outside the game with
-               // The Disruptor's overall score (views); (e) her CEO debrief, what it is and why it is worth it (debrief); (f) the colleagues' goodbye (handover).
+
+
+
+
+
+
+
+  katrien: {
+
+
     r1: {
       pleasantry: [
         "[name]. Come in. It is good to see you. Sit with me.",
@@ -759,10 +759,10 @@ var END_LINES = {
         "I will walk you out." ]
     } },
 
-  // ---------------------------------------------------------------- Rooms 1 and 2: congratulations, and a harder challenge at Vélox ----------------------------------------------------------------
-  // Fourth version (his comments 2 and 4): no "come back and play again" for a player who did well; congratulations, then an invitation, in character, to take
-  // on a harder challenge, which is how she points to the next version (Forge, Pivot, Jugaad, Gauntlet). The Gauntlet-best line is HIS WORDS.
-  // SIXTH VERSION (his comment 1 on the fifth): the other versions are the SAME firm, Vélox, in a different or harder situation; never "a harder firm" or another firm.
+
+
+
+
   harder: {
     r1: {
       next: [
@@ -770,7 +770,7 @@ var END_LINES = {
         "Well done. Next, I would like to see you take on something harder: [next].",
         "Congratulations. You are ready for a tougher brief. Try [next].",
         "Well done. Next, I would give you Vélox in a tougher year: [next]." ],
-      gauntletTop: [   // the last sentence is HIS WORDS
+      gauntletTop: [
         "Very few people have done this, in the hardest version there is. I'll tell the game designer to make the game even harder next time.",
         "Congratulations. Almost nobody gets here. I'll tell the game designer to make the game even harder next time.",
         "You should be very proud. I'll tell the game designer to make the game even harder next time.",
@@ -799,7 +799,7 @@ var END_LINES = {
 
   // ---------------------------------------------------------------- the management board at the party (Rooms 1 and 2) ----------------------------------------------------------------
   board: {
-    r1: [   // praising "as if it was all them"
+    r1: [
       "I always said you were the right choice. I said it at the very first meeting.",
       "The budget had to come from somewhere. I like to think I found it. Congratulations.",
       "We took a chance on you. Well, I did, mostly. Congratulations.",
@@ -825,10 +825,10 @@ var END_LINES = {
       "To [name], who leaves this place better than we had any right to expect. Santé.",
       "To three good years, and to the person who gave them to us. Santé." ] },
 
-  // ---------------------------------------------------------------- THE SECTION HEADS: each on their own subject, Rooms 1 to 4 ----------------------------------------------------------------
-  // r1: thanks and praise "as if it was all them".  r2: warm thanks, each on their own subject.
-  // r3: "I told you so": their own opinion, in their own area, hung on a choice the player made. Dry, never unkind.
-  // r4: polite, a little dismissive; they do not give much.
+
+
+
+
   heads: {
     rd: {   // the R&D Director (Mathieu Dumont, or whoever holds the post). facts: launch {product}; stopped {project, year}
       r1: [
@@ -843,7 +843,7 @@ var END_LINES = {
         "You gave the lab room to work, and you asked good questions. That is rarer than it sounds.",
         "The R&D floor will miss you. They had just learned how you like a project review.",
         "Thank you for the pipeline. It is in better order than I have seen it." ],
-      r3: [   // third version (his comment 8): the same "I told you so", as teasing between colleagues who like the player
+      r3: [
         { need:'stopped', t:"The [project]. You stopped it in Year [year], and I said one more quarter. I still do. I would work for you again tomorrow, mind." },
         { need:'launch', t:"The [product] sold, as you said it would. I wanted two more behind it. Still, well done. Truly." },
         "You know I wanted more people on the frontier projects. You gave them money instead. I forgive you. Mostly.",
@@ -869,7 +869,7 @@ var END_LINES = {
         "You knew people's names on the R&D floor. You would be surprised how much that matters.",
         "Thank you for listening when I said people were tired. Not everyone does.",
         "People liked working for you. I hear these things." ],
-      r3: [   // third version (his comment 8): the same "I told you so", as teasing between colleagues who like the player
+      r3: [
         { need:'left', t:"[person] left in Year [year]. I did say our [role]s needed more care. You listened in the end, and people noticed. Thank you." },
         { need:'hired', t:"[N:hire]. I had asked for more, as you know. The ones you chose are good, though. Thank you." },
         "I said a development budget would keep people. You thought they would stay anyway. Some did, because of you.",
@@ -895,7 +895,7 @@ var END_LINES = {
         "You took the IP side seriously. In my experience, that is the exception.",
         "Thank you for reading my memos. I could tell you read them; you asked questions.",
         "We leave the firm better protected than we found it. Thank you." ],
-      r3: [   // third version (his comment 8): the same "I told you so", as teasing between colleagues who like the player
+      r3: [
         { need:'noPatents', t:"No patents in Year [year]. I asked for a more aggressive IP strategy, in writing. I will miss your patience with my memos." },
         { need:'noPatents', t:"Year [year] without a single filing. DragonForge will have enjoyed that. I enjoyed working with you more." },
         { need:'filed', t:"[N:patent] filed. With a more aggressive strategy, twice that. Still, you heard me out, and not everyone does." },
@@ -921,7 +921,7 @@ var END_LINES = {
         "You let me find the right partners instead of the quick ones. Thank you.",
         "Our partners say Vélox is easier to work with now. That is your doing.",
         "Thank you for trusting the people outside these walls. It paid." ],
-      r3: [   // third version (his comment 8): the same "I told you so", as teasing between colleagues who like the player
+      r3: [
         { need:'lapsed', t:"We let [partner] lapse. I said we would want them back, and we will. I will tell them you said hello." },
         { need:'formed', t:"[partner] was a good start. I had three more names on my list. Come back and we will do them together." },
         { need:'noAlliance', t:"Year [year] without a new alliance. I did send you a shortlist. You were always kind about my shortlists." },
@@ -947,7 +947,7 @@ var END_LINES = {
         "You understood that the platform is not a product. That made my job much easier.",
         "Vélox+ is in good shape. Thank you for that.",
         "Thank you for giving the platform a seat at the table." ],
-      r3: [   // third version (his comment 8): the same "I told you so", as teasing between colleagues who like the player
+      r3: [
         { need:'unused', t:"You left Vélox+ alone until [until]. I sent you a note every quarter, and you answered every one. I liked that." },
         { need:'complementors', t:"[N:complementor]. Good. CycleStream moved faster, as I mentioned once or twice. Thank you for listening, all the same." },
         "I said the platform needed backing early. It got it late. But it got it, and that was you.",
@@ -973,7 +973,7 @@ var END_LINES = {
         "Standards are slow. You were patient with them. Thank you.",
         "The committees know our name now. Thank you.",
         "Thank you for reading the standards reports. All of them, I suspect." ],
-      r3: [   // third version (his comment 8): the same "I told you so", as teasing between colleagues who like the player
+      r3: [
         { need:'noneJoined', t:"We joined no committee at all. When the rules are written, we will read them afterwards. I will miss you anyway." },
         { need:'joined', t:"[standard], yes. I had Bluetooth FTMS on the list too. It is still there, waiting for you." },
         "I said we should be in the room when the standards are set. We were in the corridor. Good company, though.",
@@ -988,7 +988,7 @@ var END_LINES = {
 
   // ---------------------------------------------------------------- the crowd's side remarks (the lower rooms; Rooms 1 and 2 cheer and do not speak) ----------------------------------------------------------------
   crowd: {
-    r3: [   // FOURTH VERSION (his comment 11): more variety, at most one sport line in a pool and in a playing
+    r3: [
       "Are these waffles from the canteen or the bakery on the corner?",
       "Liège waffles. Someone made an effort for you.",
       "We will miss you at the coffee machine.",
@@ -1002,7 +1002,7 @@ var END_LINES = {
       "Rain at four, apparently. Bring your bicycle in.",
       "My daughter is a sheep in the school play on Friday. Mostly she says baa.",
       "Paris–Roubaix this year. Come and stand in the Arenberg forest with us." ],
-    r4: [   // FOURTH VERSION (his comment 11): more variety, at most one sport line in a pool and in a playing
+    r4: [
       "Is it still raining? I left my umbrella in the car.",
       "They say it will clear up by the weekend. They always say that.",
       "Is that tea or coffee? I cannot tell from here.",
@@ -1016,7 +1016,7 @@ var END_LINES = {
       "The Saturday market had the first clementines.",
       "The new coffee machine makes a noise like a tram.",
       "My son wants to ride the Tour of Flanders sportive. I said yes before I thought." ],
-    r5: [   // FOURTH VERSION (his comment 11): more variety, at most one sport line in a pool and in a playing
+    r5: [
       "Grey again.",
       "They said rain this afternoon.",
       "The canal smells of rain.",
@@ -1031,7 +1031,7 @@ var END_LINES = {
       "The canteen has soup today.",
       "Did anyone watch the cyclocross on Sunday?" ] },
 
-  // the one kind person in Room 5 (most often the HR Business Partner). FOURTH VERSION (his comment 10): gentler, sweeter, developmental. The first is HIS WORDS.
+
   kind: [
     "I appreciate you gave it your best shot. You really tried.",
     "I know this is difficult. You really tried, and I saw it.",
@@ -1049,74 +1049,74 @@ var END_LINES = {
     "We will put your mug in the cupboard. With the others.",
     "I suppose the waffles were for another meeting." ],
 
-  // ---------------------------------------------------------------- CALL-OUTS as the player leaves (his comment 13) ----------------------------------------------------------------
-  // Two pools, each by outcome slot and by language (the language key is what the code reads to keep one playing to different languages):
-  //   belgian: English, French, Dutch and German.   intl: every other language he gave (Swedish, Norwegian and Danish count as one group, "nordic";
-  //   Canadian English is its own group, "ca", and is not drawn together with the Belgian pool's English when another choice is there).
-  // The rule (his, 16 Nov, "The rule as it now stands" in HIS-COMMENTS.md): in Rooms 1 to 4, three call-outs a playing, ONE from the Belgian pool and
-  // TWO from the international pool in two different languages; in Room 5 and the dismissal, one quiet call-out from the Belgian pool.
-  // Slots: job (Job Well Done) for Rooms 1 and 2; luck (Good Luck) for Rooms 3 and 4 and the dismissal; better (Better Luck Next Time) for Rooms 4 and 5.
-  // His words, exactly as he gave them; never reworded or added to. Left out on purpose, everywhere: "Pech gehabt", "Merde !", "¡Mucha mierda!", "Muita merda!".
-  // To add more: add strings to a language's list, or a new language key.
+
+
+
+
+
+
+
+
+
   callout: {
     job: {
       belgian: {
-        en: [ "Cracking job!", "Smashing!", "Spot on!", "Smashed it!", "Top marks!", "Brilliant!" ],   // HIS LIST 8 (English, 15 Nov)
-        nl: [ "Goed bezig!", "Knap staaltje werk!" ],   // HIS LIST (from Gemini, 15 Nov)
-        fr: [ "Chapeau !", "Du beau boulot" ],   // HIS LIST (from Gemini, 15 Nov)
-        de: [ "Klasse!" ] },   // HIS LIST (from Gemini, 15 Nov)
+        en: [ "Cracking job!", "Smashing!", "Spot on!", "Smashed it!", "Top marks!", "Brilliant!" ],
+        nl: [ "Goed bezig!", "Knap staaltje werk!" ],
+        fr: [ "Chapeau !", "Du beau boulot" ],
+        de: [ "Klasse!" ] },
       intl: {
-        ca: [ "Beauty!", "Right on!", "Absolute beauty!", "Killed it!", "Way to go!" ],   // HIS LIST 9 (Canadian, 15 Nov)
-        it: [ "Hai spaccato!", "Ottimo lavoro!" ],   // HIS LIST (from Gemini, 15 Nov)
-        es: [ "¡Buen trabajo!", "¡Bien hecho!", "¡Enhorabuena!", "¡Excelente!" ],   // HIS LIST 5 (Spanish, 15 Nov)
-        pt: [ "Bom trabalho!", "Muito bem!", "Parabéns!", "Mandou bem!", "Excelente!" ],   // HIS LIST 6 (Portuguese, 15 Nov)
-        nordic: [ "Bra jobbat!", "Snyggt!", "Godt jobbet!", "Kjempebra!", "Godt gået!", "Flot!" ],   // HIS LIST 7 (Nordic, 15 Nov)
-        ja: [ "Yoku dekimashita", "Otsukaresama" ],   // HIS LIST 2 (international, 15 Nov)
-        hi: [ "Bahut badhiya", "Shabash" ],   // HIS LIST 2 (international, 15 Nov)
-        zh: [ "Gàn dé hǎo", "Tài bàng le" ],   // HIS LIST 2 (international, 15 Nov)
-        ar: [ "Mumtaz", "Kafu" ],   // HIS LIST 3 (Arabic and Lingala, 15 Nov)
-        ln: [ "Kitoko", "Kitoko makasi",   // HIS LIST 3 (Arabic and Lingala, 15 Nov)
-              "Mosala kitoko", "Osalaki malamu" ] } },   // HIS LIST 4 (Lingala, 15 Nov)
+        ca: [ "Beauty!", "Right on!", "Absolute beauty!", "Killed it!", "Way to go!" ],
+        it: [ "Hai spaccato!", "Ottimo lavoro!" ],
+        es: [ "¡Buen trabajo!", "¡Bien hecho!", "¡Enhorabuena!", "¡Excelente!" ],
+        pt: [ "Bom trabalho!", "Muito bem!", "Parabéns!", "Mandou bem!", "Excelente!" ],
+        nordic: [ "Bra jobbat!", "Snyggt!", "Godt jobbet!", "Kjempebra!", "Godt gået!", "Flot!" ],
+        ja: [ "Yoku dekimashita", "Otsukaresama" ],
+        hi: [ "Bahut badhiya", "Shabash" ],
+        zh: [ "Gàn dé hǎo", "Tài bàng le" ],
+        ar: [ "Mumtaz", "Kafu" ],
+        ln: [ "Kitoko", "Kitoko makasi",
+              "Mosala kitoko", "Osalaki malamu" ] } },
     luck: {
       belgian: {
-        en: [ "Best of British", "Fingers crossed", "All the best", "Knock 'em dead", "Break a leg", "Go smash it" ],   // HIS LIST 8 (English, 15 Nov)
-        nl: [ "Zet 'm op!", "Succes!" ],   // HIS LIST (from Gemini, 15 Nov)
-        fr: [ "Bon courage" ],   // HIS LIST (from Gemini, 15 Nov)
-        de: [ "Toi, toi, toi", "Hals- und Beinbruch" ] },   // HIS LIST (from Gemini, 15 Nov)
+        en: [ "Best of British", "Fingers crossed", "All the best", "Knock 'em dead", "Break a leg", "Go smash it" ],
+        nl: [ "Zet 'm op!", "Succes!" ],
+        fr: [ "Bon courage" ],
+        de: [ "Toi, toi, toi", "Hals- und Beinbruch" ] },
       intl: {
-        ca: [ "Give 'er!", "Keep your stick on the ice", "Go get 'er done", "Good luck, eh",   // HIS LIST 9 (Canadian, 15 Nov)
-              "You miss 100% of the shots you don't take." ],   // HIS LIST 9 (Canadian, 15 Nov): his addition; here too, as an encouragement to try again (Room 3, and Room 4)
-        it: [ "In bocca al lupo" ],   // HIS LIST (from Gemini, 15 Nov)
-        es: [ "¡Buena suerte!", "¡Que te vaya bien!", "¡Éxito!" ],   // HIS LIST 5 (Spanish, 15 Nov)
-        pt: [ "Boa sorte!", "Força!", "Vai com tudo!", "Tudo de bom!" ],   // HIS LIST 6 (Portuguese, 15 Nov)
-        nordic: [ "Lycka till!", "Kör hårt!", "Lykke til!", "Tvi tvi!", "Held og lykke!", "Knæk og bræk!" ],   // HIS LIST 7 (Nordic, 15 Nov)
-        ja: [ "Ganbatte", "Kouun o inoru" ],   // HIS LIST 2 (international, 15 Nov)
-        hi: [ "Shubhkamnayein", "Vijay bhava" ],   // HIS LIST 2 (international, 15 Nov)
-        zh: [ "Jiā yóu", "Zhù nǐ hǎo yùn" ],   // HIS LIST 2 (international, 15 Nov)
-        ar: [ "Bil tawfiq" ],   // HIS LIST 3 (Arabic and Lingala, 15 Nov)
-        ln: [ "Chance elamu", "Makasi",   // HIS LIST 3 (Arabic and Lingala, 15 Nov)
-              "Nzambe asunga yo", "Kimia" ] } },   // HIS LIST 4 (Lingala, 15 Nov)
+        ca: [ "Give 'er!", "Keep your stick on the ice", "Go get 'er done", "Good luck, eh",
+              "You miss 100% of the shots you don't take." ],
+        it: [ "In bocca al lupo" ],
+        es: [ "¡Buena suerte!", "¡Que te vaya bien!", "¡Éxito!" ],
+        pt: [ "Boa sorte!", "Força!", "Vai com tudo!", "Tudo de bom!" ],
+        nordic: [ "Lycka till!", "Kör hårt!", "Lykke til!", "Tvi tvi!", "Held og lykke!", "Knæk og bræk!" ],
+        ja: [ "Ganbatte", "Kouun o inoru" ],
+        hi: [ "Shubhkamnayein", "Vijay bhava" ],
+        zh: [ "Jiā yóu", "Zhù nǐ hǎo yùn" ],
+        ar: [ "Bil tawfiq" ],
+        ln: [ "Chance elamu", "Makasi",
+              "Nzambe asunga yo", "Kimia" ] } },
     better: {
       belgian: {
-        en: [ "Hard lines", "Unlucky mate", "Chin up", "Never mind", "Tough break", "Gutted for you" ],   // HIS LIST 8 (English, 15 Nov)
-        nl: [ "Volgende keer beter", "Kop op!" ],   // HIS LIST (from Gemini, 15 Nov)
-        fr: [ "Ce n'est pas la mer à boire", "C'est pas grave" ],   // HIS LIST (from Gemini, 15 Nov)
-        de: [ "Kopf hoch!" ] },   // HIS LIST (from Gemini, 15 Nov)
+        en: [ "Hard lines", "Unlucky mate", "Chin up", "Never mind", "Tough break", "Gutted for you" ],
+        nl: [ "Volgende keer beter", "Kop op!" ],
+        fr: [ "Ce n'est pas la mer à boire", "C'est pas grave" ],
+        de: [ "Kopf hoch!" ] },
       intl: {
-        ca: [ "Next time, eh", "Tough go", "Tough sledding", "No worries", "Shake it off",   // HIS LIST 9 (Canadian, 15 Nov)
-              "You miss 100% of the shots you don't take." ],   // HIS LIST 9 (Canadian, 15 Nov): his addition
-        it: [ "Non fa niente" ],   // HIS LIST (from Gemini, 15 Nov)
-        es: [ "Más suerte la próxima vez", "Para la próxima", "¡No pasa nada!", "¡Ánimo!" ],   // HIS LIST 5 (Spanish, 15 Nov)
-        pt: [ "Mais sorte na próxima", "Fica para a próxima", "Para a próxima corre melhor", "Não faz mal", "Deixa para lá" ],   // HIS LIST 6 (Portuguese, 15 Nov)
-        nordic: [ "Bättre lycka nästa gång", "Nya tag", "Bedre lykke neste gang", "Bedre held næste gang", "Op på hesten igen" ],   // HIS LIST 7 (Nordic, 15 Nov)
-        ja: [ "Donmai", "Tsugi wa ganbarou" ],   // HIS LIST 2 (international, 15 Nov)
-        hi: [ "Agli baar behtar", "Koi baat nahi" ],   // HIS LIST 2 (international, 15 Nov)
-        zh: [ "Xià cì hǎo yùn", "Bié huī xīn" ],   // HIS LIST 2 (international, 15 Nov)
-        ar: [ "Hadh awfar", "Khayra bi ghayriha" ],   // HIS LIST 3 (Arabic and Lingala, 15 Nov)
-        ln: [ "Eza eloko te", "Lobi mokolo mosusu",   // HIS LIST 3 (Arabic and Lingala, 15 Nov)
-              "Mbala sima", "Mbala sima ekozala malamu", "Kozala mawa te" ] } } },   // HIS LIST 4 (Lingala, 15 Nov)
+        ca: [ "Next time, eh", "Tough go", "Tough sledding", "No worries", "Shake it off",
+              "You miss 100% of the shots you don't take." ],
+        it: [ "Non fa niente" ],
+        es: [ "Más suerte la próxima vez", "Para la próxima", "¡No pasa nada!", "¡Ánimo!" ],
+        pt: [ "Mais sorte na próxima", "Fica para a próxima", "Para a próxima corre melhor", "Não faz mal", "Deixa para lá" ],
+        nordic: [ "Bättre lycka nästa gång", "Nya tag", "Bedre lykke neste gang", "Bedre held næste gang", "Op på hesten igen" ],
+        ja: [ "Donmai", "Tsugi wa ganbarou" ],
+        hi: [ "Agli baar behtar", "Koi baat nahi" ],
+        zh: [ "Xià cì hǎo yùn", "Bié huī xīn" ],
+        ar: [ "Hadh awfar", "Khayra bi ghayriha" ],
+        ln: [ "Eza eloko te", "Lobi mokolo mosusu",
+              "Mbala sima", "Mbala sima ekozala malamu", "Kozala mawa te" ] } } },
 
-  // the dismissal: the second of the two who come in also says something short and kind (fourth version, his comment 12). The first says one call-out from the Belgian pool.
+
   shake: {
       dismissed: [
         "All the best, [name].",
@@ -1140,19 +1140,19 @@ if (typeof module !== "undefined") module.exports = { END_LINES: END_LINES };
 
 </script>
 <script>
-// =====================================================================================================================
-// ROOM KIT, fifth version of the end scene mock-up (16 Nov 2026). A trial redraw of the boardroom's chairs, plant and table (his comment 8 on the
-// fourth mock-up: "sharper and more clear and better rendered", to the standard of The Slingshot's room; keep every piece and its place).
-// SELF-CONTAINED: each function returns an SVG string drawn in the SAME local units, at the SAME anchor point (the floor point under the piece,
-// y = 0 is the floor) and the SAME footprint as the drawing it replaces, so it can be dropped into the strategy, desk and appraisal templates unchanged:
-//   ROOMKIT.chairSide(dir, tilt)  replaces  chairSide(dir)        side-on chair, seat towards +x when dir = 1; about 52 wide, 92 high
-//   ROOMKIT.chairBackOnly()       replaces  chairBackOnly()       the back of the chair at the head of the table (the table hides the rest)
-//   ROOMKIT.chairBase()           replaces  CH_BASE (as its own sprite, drawn behind a sitter)
-//   ROOMKIT.chairFront(tall)      replaces  chairFront(tall)      the chair at the foot of the table, seen from behind (seat, back, both arms)
-//   ROOMKIT.plant()               replaces  the corner plant's inline drawing (a monstera in a zinc planter); same anchor, same scale factor
-// The table is CSS (see head-part.html, "ROOM KIT: the table"): the same elements (#ttop, #eNear, #eLeft, #eRight, .leg) restyled under #stage.newroom.
-// Vector only. No pictures, no fonts, no external files. Colours: dark graphite leather, brushed aluminium, walnut; a mid-sized Belgian industrial firm.
-// =====================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
 var ROOMKIT = (function(){
   var LEATHER = '#262a31', LEATHER_HI = '#3b414b', LEATHER_LO = '#171a1f', SHELL = '#1c1f25', ALU = '#b8c0c9', ALU_LO = '#7d8792', ALU_HI = '#e3e8ee', CASTER = '#14171b';
   function svg(inner){ return '<svg width="1" height="1" viewBox="0 0 1 1" style="overflow:visible">' + inner + '</svg>'; }
@@ -1234,30 +1234,30 @@ var ROOMKIT = (function(){
 
 </script>
 <script>
-// ============================================================================================================================
-// THE END OF GAME SCENE ("Your last day"). MOCK-UP ONLY, 15 November 2026. Not part of the game.
-// Katrien and the player alone at the table; then the colleagues come in; a clap; the player walks out; "Your report is ready".
-// Seven variants: Rooms 1 to 5 for a full term (best to worst), Dismissed in mid-term, and Probation (stops after a confirmed Year 1).
-// The room, the people, the portrait drawing, the body, the chairs, the props and the camera are copied from the strategy
-// meeting's template (STRATEGY MEETING MOCK 11-11/_src/strategy-template.html). The people here are placed by projecting their
-// floor position through a homography measured from four floor anchors once per camera move (not 40 getBoundingClientRect calls a frame).
-// From The Slingshot's farewell (farewell-part-template.js), re-made: one main bubble at a time; lines drawn once from pools; the sheet of
-// paper on the floor and the chair pushed back; the nod; P to pause; Escape to skip; a stall guard (15 s) and a watchdog.
-// ALL WORDS are in end-scene-lines.js (END_LINES). Nothing in this file is a line of dialogue except the names and titles.
-// ============================================================================================================================
 
-// ====================== EXAMPLE FACTS: one set per variant, shaped as the game could send them ======================
-// EXAMPLES ONLY. In the game these would come from G.player, G.ceoAppraisalHistory, the yearly records (buildYearRecord),
-// G.departmentHeads and the posts held (G.rdDirector, G.hrManager, G.platformManager, G.standardsManager).
-// appraisals: one word per year appraised (Outstanding, Strong, Adequate, Concerning, Critical). income/goal: per year, as the player saw them.
-// posts: who holds each section head's post at the end (roster ids; the Standards Manager is a member of staff, so a name).
-// facts: for each section head, one or two things the player really did in that head's area; each remark that uses a fact names its kind.
-// card: the appraisal card for the last year (his comments 2 and 9), by the game's rule: Outstanding = goal met and all three objectives; Strong = goal met
-// and one or two; Adequate = goal met and none, or goal missed and two or three; Concerning = goal missed and one; Critical = goal missed and none.
-// The income on the card is counted from the first day, as the game counts it. Objective wordings are the game's own (CEO_OBJECTIVES_POOL, as used in the scenes).
-// V2 (16 Nov 2026), THE GAME'S COPY: the mock-up's example players (Elena, Jonas, Amira, Pieter, Sofie, Karim, Hanne) and their facts are taken out, so that
-// nothing of an example can reach a real player. Every variant starts empty and is filled only by what the game hands over (scene-facts); where the game
-// has nothing for a remark, the scene's own fallbacks apply, as in the mock-up.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var EXAMPLES = { '1':{}, '2':{}, '3':{}, '4':{}, '5':{}, dismissed:{}, probation:{} };
 var ROOM_NAMES = { '1':'Room 1 of 5: the best', '2':'Room 2 of 5: good', '3':'Room 3 of 5: done okay', '4':'Room 4 of 5: below expectations', '5':'Room 5 of 5: the dead room',
                    dismissed:'Dismissed in mid-term', probation:'Stopped after the probation year (confirmed)' };
@@ -1303,8 +1303,8 @@ function drawHead(role, room){   // a section head's remark: one built on a fact
     if (withFact.length && rnd() < 0.8) { var t = draw(withFact, facts[i]); if (t) return t; } }
   return draw(pool.filter(function(x){ return typeof x === 'string' || !x.need; })) || draw(pool, facts[0]) || ''; }
 
-// ====================== the Slingshot's portrait (portraitSVG, ~19475), as in the strategy template, with four additions for the crowd and the section heads:
-// a beard, a bald head, an afro and a headscarf (15 Nov), and freckles. The template's own drawing is otherwise unchanged.
+
+
 function dark(hex, f){ var r = Math.round(parseInt(hex.slice(1,3),16)*f), g = Math.round(parseInt(hex.slice(3,5),16)*f), b = Math.round(parseInt(hex.slice(5,7),16)*f); return 'rgb(' + r + ',' + g + ',' + b + ')'; }
 function portrait(id, p, turn){
   var skin = p.skin, hair = p.hair, style = p.style, accent = p.accent, fw = p.fw || 15.4, fh = p.fh || 17.4, eyY = 40, eyDX = 7, eyR = 1.8, cy = 43, earR = 3.3, noseL = 5, gid = 'pg' + id + String(turn).replace('-', 'm');
@@ -1357,9 +1357,9 @@ function portrait(id, p, turn){
   s += '<path d="M18 80 L18 72 Q22 62 32 61 L34 60 Q40 66 46 60 L48 61 Q58 62 62 72 L62 80 Z" fill="' + p.shirt + '"/>' + (style === 'scarf' ? '' : '<path d="M34 60 Q40 66 46 60 L46 64 Q40 69 34 64 Z" fill="' + (p.collar || 'white') + '" opacity="0.9"/>');
   return s + '</g><circle cx="40" cy="40" r="38" fill="none" stroke="' + accent + '" stroke-width="2.2"/></svg>';
 }
-// the Slingshot's figure (FIGURE_BODY, ~83824), as in the template, with a champagne flute or wine glass the right hand can hold (15 Nov)
-// SIXTH VERSION (fault found in the v5b check): the glass in the hand is a champagne flute in Room 1 and a red-wine glass in Room 2 (it was a flute in both).
-// Same place, same class (.xitem.flute, which the pour and the toast use), same pivot; the wine glass has the wider, rounder bowl and a shorter stem.
+
+
+
 var HELD_FLUTE = '<path class="fl" d="M39.4 33.5 L44.6 33.5 L44 38 Q42 40 40 38 Z" fill="FLUTE"/><path d="M39 30 L45 30 L44 38 Q42 40 40 38 Z" fill="rgba(235,245,250,.35)" stroke="#ffffff" stroke-width=".7"/><path d="M42 39 V45 M39.5 45.5 H44.5" stroke="#e5edf2" stroke-width="1"/>';
 var HELD_WINE = '<path class="fl" d="M37.9 34 Q38.2 38 42 39 Q45.8 38 46.1 34 Z" fill="FLUTE"/><path d="M37.4 30 Q36.9 38 42 39.4 Q47.1 38 46.6 30 Z" fill="rgba(235,245,250,.35)" stroke="#ffffff" stroke-width=".7"/><path d="M38.6 31.2 Q38.4 35 39.6 37" stroke="#ffffff" stroke-width=".6" fill="none" opacity=".7"/><path d="M42 39.4 V45 M39.2 45.5 H44.8" stroke="#e5edf2" stroke-width="1"/>';
 var BODY = '<svg class="xbody" viewBox="0 0 52 74"><g class="xleg l"><rect x="14.5" y="44" width="10.5" height="14" rx="3" fill="TROUSER"/><circle cx="19.75" cy="57" r="5" fill="TROUSER"/><rect x="14.5" y="55" width="10.5" height="14" rx="3" fill="TROUSER"/><rect x="12.5" y="66" width="13" height="6" rx="3" fill="#111827"/></g>'
@@ -1468,29 +1468,29 @@ function chairSide(dir, tilt){ return '<svg width="1" height="1" viewBox="0 0 1 
 // the eight seats of the opening (the template's Year 1 places); Katrien's at the head, the player's on her right
 var SEATS = [[900, 372, 0], [584, 510, 1], [1216, 510, -1], [584, 760, 1], [1216, 760, -1], [584, 1010, 1], [1216, 1010, -1], [900, 1216, 'back']];
 var KSEAT = [900, 372], YSEAT = [1216, 510];
-// fifth version (his comment 8): the room's chairs, plant and table redrawn as a trial (room-kit.js); "Room: old" on the bar shows the drawings as they were
+
 var LOOK = QS.get('look') === 'old' ? 'old' : 'new', NEWROOM = LOOK === 'new' && typeof ROOMKIT !== 'undefined';
 document.getElementById('stage').classList.toggle('newroom', NEWROOM);
-// SEVENTH VERSION (his comment 1 on the sixth: "the avatars are too low on the chairs"). The kit's side chair has its seat 8 units higher (-44) and its back
-// 5 units further out (-31) than the old drawing, so a sitter, whose hips are at about -22 (thighs -27 to -15, shoulders -65, elbows about -40), sat below
-// the seat with the back beside them. THE CHAIR FIT, in this one place (the kit's drawings are unchanged): each kit chair a sitter uses is drawn on its seat's
-// floor point scaled sx across and sy up, moved dx in towards the table (mirrored for chairs facing the other way) and dy down. The strategy meeting's first
-// fix (SIDE_FIT: 0.85 both ways, 4 in, 4 down) still left the sitters "too low" (his word on that scene). HIS CHOICE, from the strategy scene's sheet,
-// version 3 (v3, the setting here): the side chair at 0.70 of its size, 7.5 down and 1.5 in towards the table: seat top about -23, back top about -59,
-// arm-rest pad about -33. The same numbers as the strategy scene, so the two stay one kit. Katrien's head chair is left as the kit draws it (head: null), as
-// in the strategy scene. The earlier trials (SIDE_FIT, and L6/L10/L14, the seat 6/10/14 lower than SIDE_FIT, with a head chair lowered to match and its foot
-// kept at -34 behind the table: dy = -34 x (1 - sy)) are kept for the record and can be shown with ?fit=sidefit|l6|l10|l14 (for the pictures only).
-// EIGHTH VERSION (his comment on the seventh: "the chairs on each side of the table seem a little small"; his answers: "Chairs only", head and foot "Match the
-// side chairs"). v8: every kit chair at 0.77 (about a tenth larger than 0.70); the people unchanged. Side: 2.5 in and 10.6 down, so the seat top stays at
-// -23.3 (where he approved it, under the hips) and the back's front edge stays where it was over the torso. Head (Katrien): 0.77 with its foot held at -34
-// behind the table edge (dy = -34 x (1 - 0.77)). Foot (chairFront and chairBase, empty in this scene): 0.77 about its floor point. v3 kept for ?fit=v3.
+
+
+
+
+
+
+
+
+
+
+
+
+
 var SEAT_FITS = { v8:{ side:{ sx:0.77, sy:0.77, dx:2.5, dy:10.6 }, head:{ sx:0.77, sy:0.77, dx:0, dy:-7.8 }, foot:{ sx:0.77, sy:0.77, dx:0, dy:0 } },
   v3:{ side:{ sx:0.70, sy:0.70, dx:1.5, dy:7.5 }, head:null },
   sidefit:{ side:{ sx:0.85, sy:0.85, dx:4, dy:4 }, head:null },
   l6:  { side:{ sx:0.85, sy:0.714, dx:4, dy:4 }, head:{ sx:1, sy:0.714, dx:0, dy:-9.7 } },
   l10: { side:{ sx:0.85, sy:0.623, dx:4, dy:4 }, head:{ sx:1, sy:0.623, dx:0, dy:-12.8 } },
   l14: { side:{ sx:0.85, sy:0.532, dx:4, dy:4 }, head:{ sx:1, sy:0.532, dx:0, dy:-15.9 } } };
-var SEAT_FIT = SEAT_FITS[QS.get('fit')] || SEAT_FITS.v8;   // THE ONE LINE: v8 (his v3, with every chair 0.77)
+var SEAT_FIT = SEAT_FITS[QS.get('fit')] || SEAT_FITS.v8;
 function fitChair(h, f, dir){ if (!f) return h; var i = h.indexOf('>') + 1, j = h.lastIndexOf('</svg>');
   return h.slice(0, i) + '<g transform="translate(' + (f.dx * dir) + ' ' + f.dy + ') scale(' + f.sx + ' ' + f.sy + ')">' + h.slice(i, j) + '</g>' + h.slice(j); }
 function kitChairSide(dir, tilt){ return fitChair(ROOMKIT.chairSide(dir, tilt), SEAT_FIT.side, dir); }
@@ -1532,18 +1532,18 @@ var PAPER = '<svg width="1" height="1" viewBox="0 0 1 1"><g transform="rotate(-1
 // Katrien's place: a pad, a pen, a cup. The player's cup. Nobody else's: the meeting is over.
 (function(){ var g = svg(settings, 'g', { transform:'translate(240 52)' }); svg(g, 'rect', { x:-50, y:-18, width:40, height:52, rx:3, fill:'#000', opacity:.4, transform:'translate(4 6)' }); svg(g, 'rect', { x:-50, y:-18, width:40, height:52, rx:3, fill:'#fbfaf6' });
   for (var i = 0; i < 4; i++) svg(g, 'line', { x1:-44, y1:-8 + i * 10, x2:-20 - (i % 2) * 6, y2:-8 + i * 10, stroke:'#c9c6bf', 'stroke-width':2.2 }); svg(g, 'line', { x1:-4, y1:-12, x2:0, y2:28, stroke:'#c21a2c', 'stroke-width':4.5, 'stroke-linecap':'round' });
-  })();   // third version (his comment 2): no cups or glasses on the table until the colleagues bring them
-// SIXTH VERSION (his comment 2 on the fifth): "Your appraisal is in front of you" must be true to the picture. A slim appraisal booklet lies on the table in front of
-// the player's seat, there by the time the two sit down, in every variant where one of her result lines says the appraisal is in front of the player (or "There it is").
-// Drawn like the room kit: flat, with a soft shadow and a light edge. Not the notepad: a pale grey-blue cover with a Vélox orange spine, a title block and a
-// score disc; about three-quarters of the size of her pad; turned towards the player (who sits on the right, facing left), clear of the player's arms.
-// SEVENTH VERSION (his comment 2 on the sixth: "the booklet should be there for all scenes - it could be a more in front of the player and mirror box on the
-// screen"). Now in EVERY variant (Rooms 1 to 5, the dismissal, the probation), from the moment the two sit, whatever Katrien says. It lies squarely before the
-// player's seat (the seat is at table depth 90; it was at 112, nearer the camera), just inside the table's right edge and short of the player's hand, turned
-// so its top points away from the player. It is a small paper copy of the appraisal card on the screen, the same layout in miniature, drawn from the same
-// facts (EX.card): Katrien's portrait and name, "End of year appraisal · Year N", the score disc in the card's own colour and number, the rating's words,
-// the statement block with its dark left rule, "What the year showed" and the four rows (headline goal and three objectives) with their Met / Not met marks.
-// About 34 by 44 units, a little smaller than her pad (40 by 52), white with a thin grey edge and a paper edge under it; her pad is cream with a red pen.
+  })();
+
+
+
+
+
+
+
+
+
+
+
 var APPR_PAPER_AT = (QS.get('bk') || '432,92,-90,1.3').split(',').map(Number);   // table x, table y (depth), turn, size (?bk= for trials only)
 var APPR_PAPER = svg(settings, 'g', { id:'apprPaper', transform:'translate(' + APPR_PAPER_AT[0] + ' ' + APPR_PAPER_AT[1] + ') rotate(' + APPR_PAPER_AT[2] + ') scale(' + APPR_PAPER_AT[3] + ')', style:'opacity:0;transition:opacity .3s' }), apprPaperBuilt = false;
 var SCORE_COL = { 3:'#10b981', 2:'#f59e0b', 1:'#dc2626' };   // the card's disc colours (head-part.html, #appr .ov.s1-s3)
@@ -1556,11 +1556,11 @@ function buildApprPaper(){ if (apprPaperBuilt) return; apprPaperBuilt = true; va
   svg(g, 'circle', { cx:-13.2, cy:-18, r:2.6, fill:'#e9edf2' }); svg(g, 'circle', { cx:-13.2, cy:-18.4, r:1.35, fill:'#eccba3' }); svg(g, 'path', { d:'M-14.8 -18.9 Q-13.2 -21.4 -11.6 -18.9 Q-13.2 -19.9 -14.8 -18.9 Z', fill:'#16130f' }); svg(g, 'path', { d:'M-15.4 -15.9 Q-13.2 -17.6 -11 -15.9 Z', fill:'#17191d' });
   tx(-9.6, -17.8, 'KATRIEN DE WOLF', 2.2, '#1a1a1a', 800, { textLength:17, lengthAdjust:'spacingAndGlyphs' }); tx(-9.6, -15.6, 'CEO', 1.5, '#888888', 700);
   tx(-15, -11.8, 'END OF YEAR APPRAISAL · YEAR ' + (c.year || 3), 1.6, '#888888', 700, { textLength:30, lengthAdjust:'spacingAndGlyphs' });
-  // the score: the disc in the card's colour with its number, and the rating's words; the rule under them
-  // V2 (16 Nov 2026), his answer on a dismissal in Year 1 ("The year so far"): a year not completed (card.unfinished) has no score from Katrien, so the disc
-  // carries no number and is drawn in the end screen's colour for such a year (#57534e), and the words are the end screen's own: "Not completed"
+
+
+
   svg(g, 'circle', { cx:-12, cy:-6.2, r:3.7, fill:c.unfinished ? '#57534e' : SCORE_COL[sc] }); if (!c.unfinished) tx(-12, -4.6, String(sc), 4.6, '#ffffff', 800, { 'text-anchor':'middle' });
-  var w3 = c.unfinished ? 'Not completed' : WORD3[sc];   // V2 (16 Nov 2026)
+  var w3 = c.unfinished ? 'Not completed' : WORD3[sc];
   tx(-7, -5.2, w3, 2.7, '#1a1a1a', 800, { textLength:Math.min(22, w3.length * 1.25), lengthAdjust:'spacingAndGlyphs' });
   svg(g, 'line', { x1:-15, y1:-1.6, x2:15, y2:-1.6, stroke:'#e0e0e0', 'stroke-width':.4 });
   // the statement: a grey block with the dark rule on its left, three lines of writing
@@ -1571,7 +1571,7 @@ function buildApprPaper(){ if (apprPaperBuilt) return; apprPaperBuilt = true; va
   var rows = [!!c.goalMet].concat((c.objectives || []).map(function(o){ return !!o[2]; }));
   rows.slice(0, 4).forEach(function(met, i){ var y = 11.4 + i * 2.6;
     svg(g, 'line', { x1:-15, y1:y + 0.2, x2:-15 + [11, 13, 12, 14][i], y2:y + 0.2, stroke:'#2a2a2a', 'stroke-width':.75 }); svg(g, 'line', { x1:-15, y1:y + 1.25, x2:-15 + [17, 15, 16, 18][i], y2:y + 1.25, stroke:'#a3a8ae', 'stroke-width':.45 });
-    if (!c.unfinished) svg(g, 'rect', { x:met ? 11 : 9, y:y - 0.35, width:met ? 4 : 6, height:1.1, rx:.4, fill:met ? '#059669' : '#b91c1c' });   // V2 (16 Nov 2026): nothing judged for a year not completed
+    if (!c.unfinished) svg(g, 'rect', { x:met ? 11 : 9, y:y - 0.35, width:met ? 4 : 6, height:1.1, rx:.4, fill:met ? '#059669' : '#b91c1c' });
     svg(g, 'line', { x1:-15, y1:y + 1.9, x2:15, y2:y + 1.9, stroke:'#eeeeee', 'stroke-width':.3 }); });
   APPR_PAPER.dataset.score = String(sc); APPR_PAPER.dataset.colour = SCORE_COL[sc]; }
 function showApprPaper(on){ if (!APPR_PAPER) return; if (on) buildApprPaper(); APPR_PAPER.style.opacity = on ? '1' : '0'; }   // every variant (the sixth version showed it only where she says "in front of you")
@@ -1588,7 +1588,7 @@ var TABLE_PROPS = {
 var tableThings = (TABLE_PROPS[PLAN.table] || []).map(function(t){ var o = thing(t[0], anchor(t[1], t[2], tanchors), t[3], 0); o.el.classList.add('hide'); o.pop = t[4] === 'pop'; return o; });
 var TABLE_AT = null;   // sixth version: when the colleagues' things were set on the table (for the checks)
 function setTable(){ if (TABLE_AT === null) { TABLE_AT = Math.round(clock); LOG.push({ t:TABLE_AT, who:'card', kind:'table', text:'table set' }); } if (DRINKS) { people.you.el.classList.add('glass'); people.katrien.el.classList.add('glass'); } tableThings.forEach(function(o, i){ later(function(){ o.el.classList.remove('hide'); }, STILL ? 0 : i * 40); }); }
-// the sideboard by the back wall: BARE in every variant of the end scene (his comment 12 and his answer). What shows the level stands on the main table only.
+
 if (PLAN.debris) thing(PAPER, anchor(1180, 1260), 1.4, -30);   // the Slingshot's debris: one sheet of paper on the floor
 
 // the town through the two windows: the template's drawing, its Year 3 winter (a pale sky, light snow) for the last day of a full term
@@ -1665,7 +1665,7 @@ function spotsFor(mode){
   for (var tries = 0; tries < 2600 && s.length < 90; tries++) { var zn = ['back', 'right', 'left'][tries % 3], z = Z[zn], p = [z[0] + rnd() * (z[1] - z[0]), z[2] + rnd() * (z[3] - z[2])];
     if (zn === 'right' && p[0] > 1560 && p[1] > 960 && p[1] < 1290) continue;   // the way in from the door stays clear
     if (d2(p, [1640, 130]) < 95 || d2(p, KSPOT) < 80 || d2(p, PSPOT) < 110 || d2(p, SPEAK[0]) < 75 || d2(p, SPEAK[1]) < 75) continue;
-    if (s.some(function(q){ return Math.hypot((q[0] - p[0]) * 0.75, (q[1] - p[1]) * 0.45) < 62 || Math.hypot(q[0] - p[0], q[1] - p[1]) < 85; })) continue;   // his comments 1 and 11: clear space between figures, as the camera sees them
+    if (s.some(function(q){ return Math.hypot((q[0] - p[0]) * 0.75, (q[1] - p[1]) * 0.45) < 62 || Math.hypot(q[0] - p[0], q[1] - p[1]) < 85; })) continue;
     s.push(p); zoneOf.push(zn); }
   function roundRobin(minD){ var zone = { back:[], right:[], left:[] }; s.forEach(function(p, i){ if (d2(p, PSPOT) >= (minD || 0)) zone[zoneOf[i]].push(p); });
     for (var zk in zone) zone[zk].sort(function(a, b){ return d2(a, PSPOT) - d2(b, PSPOT); });
@@ -1673,7 +1673,7 @@ function spotsFor(mode){
     while (out.length < left) { var zz = zone[turn[ti++ % turn.length]]; if (zz.length) out.push(zz.shift()); } return out; }
   if (mode === 'near') s = roundRobin(0);   // they crowd round, on all three sides of the player
   else if (mode === 'middle') s = roundRobin(230);   // round the player, at a little distance
-  else if (mode === 'far') s = shuffle([[1165, 140], [1245, 165], [1300, 235], [1290, 305], [880, 120], [820, 175], [1205, 300], [960, 150]]);   // third version (his comment 9): a small group close to the player
+  else if (mode === 'far') s = shuffle([[1165, 140], [1245, 165], [1300, 235], [1290, 305], [880, 120], [820, 175], [1205, 300], [960, 150]]);
   else if (mode === 'dead') s = shuffle([[1170, 145], [1255, 185], [1290, 285], [880, 125], [1195, 300]]);   // the same, fewer, quieter
   return s; }
 
@@ -1753,7 +1753,7 @@ function placeWords(t, sr, k){
   var youHead = owners.indexOf('you') < 0 ? headBox('you', sr, k) : null;   // side bubbles also keep off the player's face
   var mainR = null;
   if (talker) { var q = headOf(talker), bw = say.offsetWidth, bh = say.offsetHeight, P = people[talker], left, top;
-    if (talker === 'katrien' && phase === 'meeting') { var ap = $('appr'), apOn = ap && ap.classList.contains('on'); left = Math.max(apOn ? 20 + 420 + 18 : 12, q.x - bw / 2); var lb = P.el.querySelector('.lab b'), lr = lb ? lb.getBoundingClientRect() : null; top = (lr && lr.height ? (lr.top - sr.top) / k : q.y - 30 * q.s) - bh - 12; say.classList.remove('toL'); say.classList.add('toD'); say.style.setProperty('--tx', Math.round(Math.max(18, Math.min(bw - 18, q.x - Math.max(12, Math.min(1600 - bw - 12, left))))) + 'px'); }   // third version (his comment 1): just above her head and her name, clear of the player, never over the card   // his comment 1: beside her, towards the player, its pointer to her   // in the close-up her words sit above her head, clear of the player beside her
+    if (talker === 'katrien' && phase === 'meeting') { var ap = $('appr'), apOn = ap && ap.classList.contains('on'); left = Math.max(apOn ? 20 + 420 + 18 : 12, q.x - bw / 2); var lb = P.el.querySelector('.lab b'), lr = lb ? lb.getBoundingClientRect() : null; top = (lr && lr.height ? (lr.top - sr.top) / k : q.y - 30 * q.s) - bh - 12; say.classList.remove('toL'); say.classList.add('toD'); say.style.setProperty('--tx', Math.round(Math.max(18, Math.min(bw - 18, q.x - Math.max(12, Math.min(1600 - bw - 12, left))))) + 'px'); }
     else { say.classList.remove('toL', 'toD'); var you = people.you, onLeft = P.sx <= (you ? you.sx : 800);
       // beside the speaker's head, away from the player; if that would cover a head with a bubble up, or the bottle being opened, the other side; then above the head
       var cands = [[onLeft ? q.x - 26 * q.s - bw : q.x + 26 * q.s, q.y - bh / 2 - 6 * q.s], [onLeft ? q.x + 26 * q.s : q.x - 26 * q.s - bw, q.y - bh / 2 - 6 * q.s], [q.x - bw / 2, q.y - 14 * q.s - bh]].map(function(c){ return [Math.round(Math.max(12, Math.min(1600 - bw - 12, c[0]))), Math.round(Math.max(12, Math.min(900 - bh - 12, c[1])))]; });
@@ -1786,8 +1786,8 @@ setInterval(function(){ var now = performance.now(); if (now - lastFrame > 400 &
 
 // ====================== speech: one main bubble at a time (#say), short side remarks (.wd) above a head ======================
 var LOG = [];   // everything said, for the checks
-// SIXTH VERSION (his addition: "Just a little slower for the colleagues speech, not much - it is just texture"): the colleagues' MAIN bubbles (the speeches,
-// the toast, Room 4's dry line, Room 5's kind word) are held 1.2 times the template's hold (was 1.1 s + 40 ms a character, at least 3 s). Not Katrien's slow pace.
+
+
 var MAIN_SLOWER = 1.2;
 function holdMain(t){ return Math.round(MAIN_SLOWER * Math.max(3000, 1100 + String(t).length * 40)); }
 function sideHold(t){ var w = String(t || '').trim().split(/\s+/).length; return Math.max(3000, Math.round(1000 + w * 1000 / 2.4)); }
@@ -1798,9 +1798,9 @@ function speak(id, text){ if (!text) return; quiet(); people[id].el.classList.ad
   say.dataset.who = id; say.style.setProperty('--c', MEM[id].c); say.innerHTML = '<span class="who">' + esc(first(id)) + ' · ' + esc(MEM[id].title) + '</span>' + esc(text); talker = id; say.classList.add('on');
   LOG.push({ t:Math.round(clock), who:id, kind:'main', text:text }); sr(MEM[id].name + ': ' + text); if (STILL) still(MEM[id].name, text); lastStep = clock; }
 function hush(){ quiet(); talker = null; say.classList.remove('on'); if (STILL) $('still').style.display = 'none'; }
-// fifth version (his comment 6): ONE rhythm for every side bubble. Each fades in, holds for its reading time (words / 2.4 + 1 s, at least 3 s) and goes;
-// at most two on screen at once (one in Rooms 4 and 5); one waiting its turn is shown as soon as there is room. Placement keeps them off each other,
-// off the main bubble and off the speaking head (placeWords).
+
+
+
 var wordQ = [], SIDE_MAX = (LVL === 4 || LVL === 5) ? 1 : 2;
 function busy(id){ return (talker === id && say.classList.contains('on')) || words.some(function(w){ return w.id === id; }); }   // VERIFY-v5 F3: one bubble per person
 function word(id, text, ms, front){ if (!text) return; if (words.length >= SIDE_MAX || busy(id)) { if (front) wordQ.unshift([id, text]); else wordQ.push([id, text]); return; } wordNow(id, text); }
@@ -1839,7 +1839,7 @@ var HEAD_LIST = [], BOARD_LIST = [], CROWD_LIST = [], ALL_PARTY = [];
   ALL_PARTY = BOARD_LIST.concat(HEAD_LIST, CROWD_LIST);
 })();
 
-function setup(){   // 16 Nov (his comment 4): the scene begins with the two standing. The player comes in through the glass door; Katrien waits by the table.
+function setup(){
   put('katrien', 1300, 420); people.katrien.el.classList.remove('sit', 'side', 'behind'); face('katrien', 1);
   put('you', OUTSIDE[0], OUTSIDE[1]); people.you.el.classList.remove('sit', 'side', 'wait', 'behind'); face('you', -1);
   ALL_PARTY.forEach(function(id){ put(id, -999, -999); people[id].el.className = 'p s'; });
@@ -1848,20 +1848,20 @@ function door(open){ $('doorLeaf').classList.toggle('open', !!open); }
 function enter(id, spot, delay, done, home){   // in through the glass door, round the table if need be, to their place (home: their place in the room, when they go first to where they will speak)
   later(function(){ var P = people[id]; put(id, OUTSIDE[0] + rnd() * 80, OUTSIDE[1] + (rnd() - 0.5) * 120); P.inside = true; P.spot = home || spot;   // their place is known from the start (a speaker may be called before arriving)
     walk(id, [DOOR, DOOR_IN].concat(route(DOOR_IN, spot)), function(){ P.spot = home || spot; settle(id); if (done) done(); }); }, delay); }
-var DRINKS = LVL === 1 || LVL === 2;   // his answer to comment 8: glasses only in Rooms 1 and 2; Rooms 3, 4 and 5 raise nothing
+var DRINKS = LVL === 1 || LVL === 2;
 function settle(id){ var P = people[id]; if (!P) return; if (LVL === 5 || LVL === 4) {   // in a small group: facing the player, or a neighbour in the group, so each remark has a listener
     var near = ALL_PARTY.filter(function(o){ return o !== id && people[o].x > -500 && d2([people[o].x, people[o].y], [P.x, P.y]) < 200; }), o = near.length && rnd() < 0.45 ? people[near[ri(near.length)]] : people.you; faceTo(id, o.x, o.y); if (LVL === 5) P.el.classList.add('shoes', rnd() < 0.5 ? 'R2' : 'x'); }
   else faceTo(id, people.you.x, people.you.y); if (DRINKS && !P.el.classList.contains('bottle')) P.el.classList.add('glass'); }
 function lineDuration(t){ return katHold(t); }
-// third version (his comment 5): Katrien's bubbles are timed by their words, at a slow reading pace (2.4 words a second) plus a second to settle; never under 3.5 s
+
 function katHold(t){ var w = String(t || '').trim().split(/\s+/).length; return Math.max(3500, Math.round(1000 + w * 1000 / 2.4)); }
 
-// ---------- the appraisal card (his comments 2, 7 and 9): the card the player has had after Years 1 and 2, now for the last year ----------
-// Its look and its contents are those of the appraisal meeting's card (BOARDROOM MOCK 10-11/_src/boardroom-template.html, #q.plan.appr):
-// the score 1 to 3 and its words, Katrien's statement from the appraisal grid, then what the year showed: the headline goal and the three objectives, met or not.
+
+
+
 var SCORE = { Outstanding:3, Strong:3, Adequate:2, Concerning:1, Critical:1 }, WORD3 = { 3:'Exceeds expectations', 2:'Meets expectations', 1:'Needs development' };
-// V2 (16 Nov 2026): a year not completed has no card on the screen, as before; the booklet shows the year so far
-function showAppraisal(){ var c = EX.card, el = $('appr'); if (!c || !el || c.unfinished) return false; var sc = (c.score >= 1 && c.score <= 3 ? c.score : SCORE[c.level]) || 2, st = draw(ROOM === 'dismissed' ? L.cardStatementDismissed : ROOM === 'probation' ? L.cardStatementProbation : ((L.cardStatement || {})[c.level]) || []) || '';   // fourth version (his comment 8): Year 3 statements look back on the term
+
+function showAppraisal(){ var c = EX.card, el = $('appr'); if (!c || !el || c.unfinished) return false; var sc = (c.score >= 1 && c.score <= 3 ? c.score : SCORE[c.level]) || 2, st = draw(ROOM === 'dismissed' ? L.cardStatementDismissed : ROOM === 'probation' ? L.cardStatementProbation : ((L.cardStatement || {})[c.level]) || []) || '';
   var rows = [{ name:'Headline goal', sub:c.income + ' of ' + c.goal + ' in innovation income' + (c.mix === undefined ? '' : c.mix ? ', the mix met' : ', the mix not met'), met:!!c.goalMet }]
     .concat((c.objectives || []).map(function(o){ return { name:o[0], sub:o[1], met:!!o[2] }; }));
   el.innerHTML = '<div class="who"><span class="av">' + portrait('kcard', MEM.katrien.look, 0) + '</span><span><b>Katrien De Wolf</b><br>CEO</span></div>'
@@ -1876,7 +1876,7 @@ function hideAppraisal(){ var el = $('appr'); if (el && el.classList.contains('o
 // sixth version: the appraisal booklet (APPR_PAPER) fades in on the table as the two go to their seats, so it is fully there when they sit down (showApprPaper, below)
 function openingSteps(){   // the player comes in; a handshake (bent arms, low hands); her pleasantry; the two walk to their seats and sit; the camera closes in
   var K = ((L.katrien || {})[FULL ? 'r' + LVL : ROOM]) || {}, t = draw(K.pleasantry), S = [];
-  S.push([null, function(){ phase = 'arrive'; door(true); later(function(){ people.you.spd = 0.95; walk('you', [DOOR, DOOR_IN, [1430, 450]], function(){ people.you.spd = SPEED; face('you', -1); face('katrien', 1);   // VERIFY-v5 F6: a brisker walk in (the walk OUT stays slow, his comment 4)
+  S.push([null, function(){ phase = 'arrive'; door(true); later(function(){ people.you.spd = 0.95; walk('you', [DOOR, DOOR_IN, [1430, 450]], function(){ people.you.spd = SPEED; face('you', -1); face('katrien', 1);
       people.katrien.el.classList.add('shake', 'still'); people.you.el.classList.add('greetL'); later(function(){ door(false); }, 300);
       speak('katrien', t); var hold = katHold(t);
       later(function(){ people.katrien.el.classList.remove('shake', 'still'); people.you.el.classList.remove('greetL'); }, 1900);
@@ -1884,27 +1884,27 @@ function openingSteps(){   // the player comes in; a handshake (bent arms, low h
         shot('close'); walk('katrien', [[1040, 322], KSEAT], function(){ sit('katrien', 0); sat(); }); walk('you', [[1330, 510], YSEAT], function(){ sit('you', -1); face('you', -1); sat(); }); showApprPaper(true); }, hold); }); }, 300); }]);
   return S; }
 var HANDOVER_END = 0;
-// SIXTH VERSION (his comment 5 on the fifth: the moment after Katrien finishes her own part "hangs a little too long" before she invites the colleagues in).
-// Her last own line, the CEO debrief, was held for its reading time (2.4 words a second) plus the usual settling second, and the hand-over followed at once.
-// The settling second after that one line is now 0.3 s, in every variant with colleagues (Rooms 1 to 5 and the dismissal; the probation has none). The reading
-// time itself (words / 2.4) is untouched, and so is the 3.5 s floor; every other bubble keeps its full hold.
+
+
+
+
 var DEBRIEF_SETTLE = (FULL || ROOM === 'dismissed') ? 300 : null;
 function debriefHold(t){ var w = String(t || '').trim().split(/\s+/).length; return Math.max(3500, Math.round(DEBRIEF_SETTLE + w * 1000 / 2.4)); }
 function hushAfterHandover(){ later(function(){ if (talker === 'katrien') hush(); }, Math.max(0, HANDOVER_END - clock)); }
-function katrienSteps(){   // his order (comments 2, 7, 9, 14): the last year's results with the card up; outside the game; come back; the Exit Debrief; the colleagues
-  var K = ((L.katrien || {})[FULL ? 'r' + LVL : ROOM]) || {}, S = [], order = ['result', 'feedback', 'invite', 'harder', 'views', 'debrief', 'handover'];   // fifth version (his comment 4): feedback before the step outside the game   // fourth version: cut to the essentials (his comments 1 and 2)
+function katrienSteps(){
+  var K = ((L.katrien || {})[FULL ? 'r' + LVL : ROOM]) || {}, S = [], order = ['result', 'feedback', 'invite', 'harder', 'views', 'debrief', 'handover'];
   order.forEach(function(slot){ var t;
     if (slot === 'harder') { if (!(LVL === 1 || LVL === 2)) return; var Hd = (L.harder || {})['r' + LVL] || {};
       t = VERSION === 'incubator' ? draw(Hd.incubator) : VERSION === 'gauntlet' ? draw(LVL === 1 ? Hd.gauntletTop : Hd.gauntlet) : draw(Hd.next); }
-    else t = draw((slot === 'feedback' && ROOM === 'dismissed' && EX.negligent && K.feedback && K.feedback.length >= 4) ? K.feedback.slice(2) : K[slot]);   // V2 (16 Nov 2026)
+    else t = draw((slot === 'feedback' && ROOM === 'dismissed' && EX.negligent && K.feedback && K.feedback.length >= 4) ? K.feedback.slice(2) : K[slot]);
     if (!t) return;
     if (slot === 'result') S.push([Math.max(5200, lineDuration(t)), function(){ showAppraisal(); speak('katrien', t); }]);   // the card stays up through this passage; she does not read it out
     else if (slot === 'handover') S.push([Math.max(1800, lineDuration(t) - 2600), function(){ HANDOVER_END = clock + lineDuration(t); floorFree = HANDOVER_END + 300; speak('katrien', t); }]);   // nobody speaks over her hand-over   // the door opens while she is still saying it
-    else if (slot === 'debrief' && DEBRIEF_SETTLE !== null) S.push([debriefHold(t), function(){ hideAppraisal(); speak('katrien', t); }]);   // sixth version (his comment 5): a shorter beat before the hand-over
-    else S.push([lineDuration(t), function(){ if (slot === 'debrief') hideAppraisal(); speak('katrien', t); }]); });   // fifth version (his comment 1): the card stays up until the debrief
+    else if (slot === 'debrief' && DEBRIEF_SETTLE !== null) S.push([debriefHold(t), function(){ hideAppraisal(); speak('katrien', t); }]);
+    else S.push([lineDuration(t), function(){ if (slot === 'debrief') hideAppraisal(); speak('katrien', t); }]); });
   return S; }
 
-// ---------- the call-outs as the player leaves (his comment 13; his lists, end-scene-lines.js): two or three, from the crowd, never the speakers ----------
+
 var CALLED = [], calloutEnd = 0;   // the call-outs of this playing, with their languages, for the checks
 function pickCallout(kinds, pool, usedLang){   // one call-out: never said before in this playing, and in a language not yet heard (Canadian and the Belgian English count as one here)
   var C = L.callout || {}, cands = [];
@@ -1913,7 +1913,7 @@ function pickCallout(kinds, pool, usedLang){   // one call-out: never said befor
   if (!list.length) return null; var langs = []; list.forEach(function(c){ if (langs.indexOf(c[0]) < 0) langs.push(c[0]); });
   var lg = langs[ri(langs.length)], opts = list.filter(function(c){ return c[0] === lg; }), c = opts[ri(opts.length)]; said[c[1]] = 1; usedLang[c[0]] = 1; return c; }
 function calloutKinds(){ return LVL === 1 || LVL === 2 ? ['job'] : LVL === 3 || ROOM === 'dismissed' ? ['luck'] : LVL === 4 ? ['luck', 'better'] : ['better']; }
-function callouts(ids, keepOrder, startAt){   // his rule: Rooms 1 to 4, three: one from the Belgian pool, two from the international pool in two languages; Room 5, one, quiet, Belgian
+function callouts(ids, keepOrder, startAt){
   var plan = LVL >= 1 && LVL <= 4 ? shuffle(['belgian', 'intl', 'intl']) : ['belgian'], used = {}, kinds = calloutKinds(), out = [];
   ids = ids.filter(function(id){ return people[id] && people[id].x > -500; }); if (!keepOrder) ids = shuffle(ids);
   plan.forEach(function(pool, i){ if (i >= ids.length) return; var c = pickCallout([kinds[ri(kinds.length)]], pool, used) || pickCallout(kinds, pool, used); if (c) out.push([ids[i], c, pool]); });
@@ -1922,7 +1922,7 @@ function callouts(ids, keepOrder, startAt){   // his rule: Rooms 1 to 4, three: 
 
 function partySteps(){
   var S = [], spots = spotsFor(PLAN.spotsBy), order = ALL_PARTY.slice();
-  var carriers = LVL >= 1 && LVL <= 5 ? CROWD_LIST.slice(0, LVL <= 2 ? 2 : 1) : [];   // who carries the cake and the drinks in (Room 5 too: the table is bare until then, his comment 2)
+  var carriers = LVL >= 1 && LVL <= 5 ? CROWD_LIST.slice(0, LVL <= 2 ? 2 : 1) : [];
   var trays = { 1:[CAKE_TIER, CHAMPAGNE], 2:[CAKE_CHOC, RED], 3:[WAFFLES], 4:[TEAPOT], 5:[JUG] }[LVL] || [];
   var pourer = DRINKS ? carriers[1] : null;
   S.push([300, function(){ hushAfterHandover(); phase = 'party'; shot('party');   // VERIFY-v5 F6: was 600
@@ -1948,18 +1948,18 @@ function partySteps(){
   SPOKE = speakers.map(function(s){ return s.id; });
   speakers.forEach(function(sp, i){ sp.at = DRINKS ? SPEAK[(speakers.length - 1 - i) % 2] : SPEAK[i % 2]; });   // VERIFY-v5 F1: in Rooms 1 and 2 the last speaker stands on the left, away from where the bottle is opened, so their bubble is clear of it
   var lead = LVL === 5 ? null : speakers[0];
-  var sideQ = [], sideN = PLAN.side || 0, SPORT = /Anderlecht|Red Devils|Club Brugge|cyclocross|Roubaix|Tour of Flanders|sportive|football|the match|Omloop/i, hadSport = false;   // fourth version (his comment 11): at most one sport line in a playing
+  var sideQ = [], sideN = PLAN.side || 0, SPORT = /Anderlecht|Red Devils|Club Brugge|cyclocross|Roubaix|Tour of Flanders|sportive|football|the match|Omloop/i, hadSport = false;
   for (var s = 0; s < sideN; s++) { var pool = ((L.crowd || {})['r' + LVL] || []).filter(function(x){ return !(hadSport && SPORT.test(x)); }), tx = draw(pool); if (tx) { if (SPORT.test(tx)) hadSport = true; sideQ.push(tx); } }
   if (LVL === 4 || LVL === 5) { var budget = LVL === 4 ? 8000 : 14000, used = 0;   // VERIFY-v5 F6: one bubble at a time here, so long draws are capped: remarks are kept while their reading times fit the budget (always at least one)
     sideQ = sideQ.filter(function(tx, i){ var h = sideHold(tx); if (i > 0 && used + h > budget) return false; used += h; return true; }); }
   var dryId = LVL === 4 ? (HEAD_LIST[HEAD_LIST.length - 1] || CROWD_LIST[0]) : null, mains = SPOKE.concat(dryId ? [dryId] : [], LVL === 5 ? [HEAD_LIST[0]] : [], pourer ? [pourer] : []);
   // VERIFY-v5 F3: nobody who gives a main speech (or the toast, the pour, the kind word) is given a side remark
   var talkers = shuffle((LVL === 5 ? HEAD_LIST.slice(1).concat(CROWD_LIST) : CROWD_LIST.concat(LVL >= 4 ? HEAD_LIST : [])).filter(function(id){ return mains.indexOf(id) < 0; })), ti = 0;
-  // sixth version (his comment 4 on the fifth, checked across every line): a side remark that names a drink or food waits until the things are on the table;
-  // until then the next remark in the queue that names nothing goes first (if every remark left names something, none is said yet)
+
+
   var THING_RX = /\b(coffee|tea|cups?|waffles?|speculoos|cakes?|wine|champagne|glass(es)?|water|milk|drinks?|bottles?)\b/i, ABSENT_OK = /waffles were for another meeting/i;
   function sideRemark(){ if (TABLE_AT === null) { var ix = -1; for (var q = 0; q < sideQ.length; q++) if (!THING_RX.test(sideQ[q]) || ABSENT_OK.test(sideQ[q])) { ix = q; break; } if (ix < 0) return 0; if (ix > 0) sideQ.unshift(sideQ.splice(ix, 1)[0]); }
-    var tx = sideQ.shift(); if (!tx || !talkers.length) return 0; var id = talkers[ti++ % talkers.length]; word(id, tx); return sideHold(tx); }   // VERIFY-v5 F6: the next beat waits for the remark's own reading time, not the template's longer chat time
+    var tx = sideQ.shift(); if (!tx || !talkers.length) return 0; var id = talkers[ti++ % talkers.length]; word(id, tx); return sideHold(tx); }
   if (LVL === 5) {   // the dead room: nobody speaks of the result. The weather, the football, the trains. A silence. Then one kind person.
     S.push([500, function(){}]);
     for (var w = 0; w < sideN; w++) S.push([null, function(){ var ms = sideRemark(); later(next, (ms || 1000) + 350 + ri(350)); }]);
@@ -1987,8 +1987,8 @@ function partySteps(){
   if (LVL === 1) S.push([null, function(){ startCarry(function(){ next(); }); }]);
   return S; }
 var SPOKE = [];
-// ---------- the toast (his comment 8 and his answer): Rooms 1 and 2. The one who carried the drinks in takes the bottle, opens it (the cork in Room 1),
-// pours, and only then does the room raise its glasses together, slowly, each with a bent arm. ----------
+
+
 var POUR = null, POUR_DX = +(QS.get('pdx') || 150), POUR_DY = +(QS.get('pdy') || -25);   // the stream from the bottle's mouth to the glass being filled
 var STREAM_BG = LVL === 1 ? 'linear-gradient(90deg, rgba(243,227,161,.95), rgba(255,246,210,.85))' : 'linear-gradient(90deg, rgba(92,10,24,.97), rgba(128,22,38,.92))';   // VERIFY-v5 F2: the stream is the drink: champagne gold in Room 1, deep red wine in Room 2
 function pourStream(sr, k){ var e = $('stream'); if (!e) return; if (e._bg !== STREAM_BG) { e.style.background = STREAM_BG; e._bg = STREAM_BG; } if (!POUR || !people[POUR.from] || !people[POUR.to]) { e.style.display = 'none'; return; }
@@ -1996,9 +1996,9 @@ function pourStream(sr, k){ var e = $('stream'); if (!e) return; if (e._bg !== S
   var rb = b.getBoundingClientRect(), rg = g.getBoundingClientRect(), mx = (rb.left + 1 - sr.left) / k, my = (rb.top + rb.height * 0.7 - sr.top) / k, gx = (rg.left + rg.width / 2 - sr.left) / k, gy = (rg.top + 2 - sr.top) / k;
   var dx = gx - mx, dy = gy - my, len = Math.hypot(dx, dy); e.style.display = 'block'; e.style.left = mx.toFixed(1) + 'px'; e.style.top = my.toFixed(1) + 'px'; e.style.width = len.toFixed(1) + 'px'; e.style.transform = 'rotate(' + (Math.atan2(dy, dx) * 180 / Math.PI).toFixed(1) + 'deg)';
   window.__pour = { mouth:[Math.round(mx), Math.round(my)], glass:[Math.round(gx), Math.round(gy)] }; }
-// ---------- the toast (his comments 8 and 5): Rooms 1 and 2. The colleague who carried the drinks in holds the bottle in one hand and no glass; opens it (the cork
-// in Room 1); pours into the glass the player holds out, then into a colleague's; the rest fill their glasses from the bottles on the table; then the room raises
-// its glasses together, slowly, each with a bent arm. ----------
+
+
+
 function pourInto(pourer, target, done){ var P = people[pourer], T = people[target];
   P.el.classList.remove('glass', 'poured'); P.el.classList.add('bottle');
   walk(pourer, [[T.x + POUR_DX, T.y + POUR_DY]], function(){ face(pourer, 1); P.el.classList.add('mir'); if (target !== 'you') face(target, 1); T.el.classList.add('glass', 'holdout');
@@ -2007,7 +2007,7 @@ function pourInto(pourer, target, done){ var P = people[pourer], T = people[targ
     later(function(){ P.el.classList.remove('pour', 'mir'); POUR = null; T.el.classList.remove('holdout'); if (done) done(); }, 2100); }); }
 function pourAndToast(pourer, toaster){
   var P = people[pourer]; P.el.classList.remove('glass'); P.el.classList.add('bottle'); P.spd = Math.max(P.spd, 1.0);   // VERIFY-v5 F6: a brisker walk to the player
-  walk(pourer, route([P.x, P.y], [PSPOT[0] + POUR_DX, PSPOT[1] + POUR_DY]), function(){ face(pourer, 0); P.el.classList.add('openup'); OPENING = pourer; OPEN_T0 = clock;   // fifth version (his comment 3): in front, in clear view; the bottle held up. VERIFY-v5 F1: no bubble covers pourer, bottle, cork or stream until the pour ends (placeWords)
+  walk(pourer, route([P.x, P.y], [PSPOT[0] + POUR_DX, PSPOT[1] + POUR_DY]), function(){ face(pourer, 0); P.el.classList.add('openup'); OPENING = pourer; OPEN_T0 = clock;
     later(function(){ if (LVL === 1) pop(P); }, 900);   // the cork out
     later(function(){ P.el.classList.remove('openup'); }, LVL === 1 ? 2300 : 1600);
     later(function(){
@@ -2027,44 +2027,44 @@ function endSteps(){
   if (LVL === 1) { S.push([null, function(){ finish(); }]); return S; }   // Room 1 ends with the carry-out (startCarry)
   if (FULL) S.push([null, function(){ later(next, Math.max(0, (partyFloor() || 0) - clock)); }]);
   if (FULL) S.push([2600, function(){ hush(); who.concat(['katrien']).forEach(function(id){ var P = people[id]; P.el.classList.remove('glass', 'toast', 'cheer', 'bottle'); faceTo(id, PSPOT[0], PSPOT[1]); P.el.classList.add('clap'); }); people.you.el.classList.remove('glass');   // the clap: everyone, the same clap in every room
-      if (bye) word('katrien', bye);   // her last word first; then the call-outs, while the player is still in the room (his comment 6 on the second mock-up)
+      if (bye) word('katrien', bye);
       callouts(CROWD_LIST.concat(HEAD_LIST).filter(function(id){ return SPOKE.indexOf(id) < 0; }), false, bye && SIDE_MAX === 1 ? sideHold(bye) + 200 : 900); }]);
   S.push([null, function(){ who.concat(['katrien']).forEach(function(id){ people[id].el.classList.remove('clap'); });
     var Y = people.you, path = route([Y.x, Y.y], DOOR_IN).concat([DOOR, OUTSIDE]), spd = ROOM === 'probation' ? 0.95 : 0.36, len = 0, at = [Y.x, Y.y];
     path.slice(0, -1).forEach(function(q){ len += d2(at, q); at = q; });   // to the door: the player sets off so as to reach it as the last call-out ends
     if (!FULL && bye) word('katrien', bye);
-    later(function(){ door(true); people.you.spd = spd; walk('you', path, function(){ people.you.x = -999; later(function(){ door(false); }, 600); next(); }); }, FULL ? Math.max(0, calloutEnd - clock - len / spd) : 0);   // his comment 4: a slower walk out. VERIFY-v5 F6: reaches the door as the last call-out ends (was 0.4 s after)
+    later(function(){ door(true); people.you.spd = spd; walk('you', path, function(){ people.you.x = -999; later(function(){ door(false); }, 600); next(); }); }, FULL ? Math.max(0, calloutEnd - clock - len / spd) : 0);
     who.forEach(function(id){ later(function(){ var P = people[id]; if (P.x > -500 && !P.path.length) faceTo(id, DOOR[0], DOOR[1]); }, 600 + ri(900)); }); }]);
-  S.push([null, function(){ var t0 = clock; (function wait(){ if (clock - t0 >= 800 && clock >= calloutEnd && !words.length && !wordQ.length) { later(next, 200); return; }   /* VERIFY-v5 F6: was 1500 + 400 */ later(wait, 200); })(); }]);   // a moment of the room after the player has gone (his comment 4); no bubble is cut short   // a moment of the room after the player has gone (his comment 4); no bubble is cut short
+  S.push([null, function(){ var t0 = clock; (function wait(){ if (clock - t0 >= 800 && clock >= calloutEnd && !words.length && !wordQ.length) { later(next, 200); return; }   /* VERIFY-v5 F6: was 1500 + 400 */ later(wait, 200); })(); }]);
   S.push([null, function(){ finish(); }]);
   return S; }
 
 // ---------- the dismissal and the probation year: no party ----------
 function smallSteps(){
   var S = [];
-  if (ROOM === 'dismissed') {   // one or two come in for a quick handshake and a word of luck (his Good Luck list)
-    // VERIFY-v5 F7 (his comment 12): ALWAYS two former colleagues; both shake hands and both say something short and kind (the first, the one Belgian call-out).
-    // F6: they come in while Katrien is still handing over, and the second steps up as the first lets go, so the two words overlap a little.
+  if (ROOM === 'dismissed') {
+
+
     S.push([300, function(){ hushAfterHandover(); phase = 'party'; shot('party'); walk('you', [[1330, 430], [1345, 800], [1460, 960]], function(){ face('you', 1); }); later(function(){ walk('katrien', [[1040, 300], [1345, 330]], function(){ face('katrien', 1); }); }, 600);
       door(true); HEAD_LIST.forEach(function(id, i){ enter(id, [1610 + i * 40, 900 + i * 120], 200 + i * 450, function(){ faceTo(id, 1460, 960); }); }); }]);
-    HEAD_LIST.forEach(function(id, i){ var c = i === 0 ? pickCallout(['luck'], 'belgian', {}) : null, t = c ? c[1] : draw(((L.shake || {}).dismissed) || []); if (c) CALLED.push('belgian:' + c[0] + ':' + c[1]);   // fourth version (his comment 12): both say something; the first a Belgian-pool call-out, the second a short kind word
+    HEAD_LIST.forEach(function(id, i){ var c = i === 0 ? pickCallout(['luck'], 'belgian', {}) : null, t = c ? c[1] : draw(((L.shake || {}).dismissed) || []); if (c) CALLED.push('belgian:' + c[0] + ':' + c[1]);
       S.push([null, function(){ var P = people[id]; (function go(){ if (P.x < -500 || P.x > DOOR_IN[0] - 10 || P.path.length || clock < HANDOVER_END - 800) { later(go, 100); return; }   // in, and Katrien's hand-over said
         walk(id, [[1560 + i * 12, 990 + i * 16]], function(){ face(id, -1); face('you', 1); P.el.classList.add('shake'); people.you.el.classList.add('offer', 'wait'); if (t) word(id, t); P.el.classList.add('nod');
           later(function(){ P.el.classList.remove('shake', 'nod'); people.you.el.classList.remove('offer', 'wait'); walk(id, [i ? (P.spot || [1640, 820]) : [1385, 880]], function(){ faceTo(id, 1460, 960); }); next(); }, 1300); }); })(); }]); });   // the first steps aside, clear of the second's head and bubble
   } else {   // probation: Katrien only. She stands as the player gets up to go.
-    S.push([300, function(){ hushAfterHandover(); phase = 'party'; shot('party'); door(true); people.katrien.spd = 0.95; people.you.spd = 0.95;   // fourth version (his comment 13): brisk and upright, Katrien sees the player to the door
+    S.push([300, function(){ hushAfterHandover(); phase = 'party'; shot('party'); door(true); people.katrien.spd = 0.95; people.you.spd = 0.95;
       walk('katrien', [[1040, 322], [1345, 330], [1560, 960]], function(){ face('katrien', 1); }); walk('you', [[1345, 470], [1640, 1040]], function(){ face('you', -1); people.you.el.classList.add('greetL'); people.katrien.el.classList.add('shake', 'still'); }); }]);
     S.push([2400, function(){ people.you.el.classList.remove('greetL'); people.katrien.el.classList.remove('shake', 'still'); }]);
   }
   return S; }
 
-// ---------- Room 1: two colleagues lift the player, carry them once round the table, and then out through the door; everyone follows (his comment 1) ----------
+
 function startCarry(done){
   var A = CROWD_LIST[2] || HEAD_LIST[0], B = CROWD_LIST[3] || HEAD_LIST[1];
   if (STILL || !A || !B) { done(); return; }
   SPOKE.push(A, B);
   var Y = people.you, n = 0, path = [[1345, 245], [1345, 1320], [460, 1320], [460, 245], [1345, 245], DOOR_IN, DOOR, [OUTSIDE[0] + 120, OUTSIDE[1]]], followed = false, called = false;
-  function c0(){ callouts(shuffle(CROWD_LIST.filter(function(id){ return SPOKE.indexOf(id) < 0; })).sort(function(a, b){ return d2([people[b].x, people[b].y], DOOR_IN) - d2([people[a].x, people[a].y], DOOR_IN); }).slice(0, 8).sort(function(){ return rnd() - 0.5; }), true); }   // his comment 6: the call-outs begin as the carry turns for the door, from those who leave last
+  function c0(){ callouts(shuffle(CROWD_LIST.filter(function(id){ return SPOKE.indexOf(id) < 0; })).sort(function(a, b){ return d2([people[b].x, people[b].y], DOOR_IN) - d2([people[a].x, people[a].y], DOOR_IN); }).slice(0, 8).sort(function(){ return rnd() - 0.5; }), true); }
   [A, B].forEach(function(id, i){ var P = people[id]; P.el.classList.remove('glass', 'poured', 'toast'); P.spd = Math.max(P.spd, 1.0); walk(id, route([P.x, P.y], [PSPOT[0] + (i ? 30 : -30), PSPOT[1]]), function(){ face(id, 0); if (++n === 2) lift(); }); });
   function lift(){ [A, B].forEach(function(id){ people[id].el.classList.add('lift'); }); Y.el.classList.remove('glass', 'poured'); Y.el.classList.add('sit', 'lifting'); Y.bias = -6;
     later(function(){ Y.el.classList.add('lifted'); }, 300);
@@ -2087,7 +2087,7 @@ function stepCarry(dt){ var c = carry, to = c.path[0]; if (!to) { var d0 = c.don
   c.ids.forEach(function(id, i){ var P = people[id]; P.x = c.x + (i ? px : -px); P.y = c.y + (i ? py : -py); P.el.classList.add('walk'); face(id, Math.abs(ux) > 0.5 ? (ux > 0 ? 1 : -1) : (uy > 0 ? 0 : 'back')); });
   lastStep = clock; }
 function cheer(id, ms){ var P = people[id]; if (!P) return; P.el.classList.add('cheer', 'glad'); later(function(){ P.el.classList.remove('cheer', 'glad'); }, ms || 1400); }
-function pop(P){   // the cork, out of the bottle in the pourer's hands, in an arc. No confetti (Ammon, 14 and 15 Nov).
+function pop(P){
   if (STILL) return; var x0 = P.sx + 16 * P.s * P.k, y0 = P.sy - 62 * P.s * P.k, bt = P.el.querySelector('.xitem.bot'); if (bt) { var br = bt.getBoundingClientRect(), sr0 = stage.getBoundingClientRect(), k0 = sr0.width / 1600; x0 = (br.left + br.width / 2 - sr0.left) / k0; y0 = (br.top - sr0.top) / k0; } var c = document.createElement('div'); c.className = 'cork'; fx.appendChild(c);
   var t0 = clock, foam = [];
   for (var i = 0; i < 7; i++) { var f = document.createElement('div'); f.className = 'foam'; fx.appendChild(f); foam.push({ el:f, vx:(rnd() - 0.4) * 0.08, vy:-0.08 - rnd() * 0.08 }); }
@@ -2100,7 +2100,7 @@ function pop(P){   // the cork, out of the bottle in the pourer's hands, in an a
 function showCard(){ var c = (L.card || {}), yr = FULL ? 3 : (EX.year || 1);
   $('cardT').textContent = c.title || 'Your last day'; $('cardS').textContent = fill(c.sub || 'Year [year] · Cargovil, Vilvoorde', { year:yr }); $('card').classList.add('on'); }
 function finish(){ if (finished) return; finished = true; hush(); hideAppraisal(); generation++; tasks = []; carry = null;
-  var c = L.card || {}; $('endS').textContent = fill(((c.endSub || {})[FULL ? 'full' : ROOM]) || ''); $('endcard').classList.add('on');   // V2 (16 Nov 2026): the mock-up's note under Continue is not written in the game copy
+  var c = L.card || {}; $('endS').textContent = fill(((c.endSub || {})[FULL ? 'full' : ROOM]) || ''); $('endcard').classList.add('on');
   LOG.push({ t:Math.round(clock), who:'card', kind:'end', text:'Your report is ready' });
   try { if (window.parent !== window) window.parent.postMessage({ type:'end-scene-done' }, '*'); } catch (e) {} }
 function start(){
@@ -2110,14 +2110,14 @@ function start(){
   all = all.concat(openingSteps(), katrienSteps(), FULL ? partySteps() : smallSteps(), endSteps());
   run(all); }
 
-// ====================== the controls: Skip, Play again, P to pause, Escape to skip, the mock-up's bar ======================
+
 $('skip').addEventListener('click', function(){ finish(); });
-// V2 (16 Nov 2026), THE GAME'S COPY: no Play again button; Continue tells the game, which closes the scene and opens the end screen (no mock-up note)
+
 $('cont').addEventListener('click', function(){ try { if (window.parent !== window) window.parent.postMessage({ type:'end-scene-continue' }, '*'); } catch (e) {} });
 window.addEventListener('keydown', function(e){ if (e.target && /INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
   if (e.key === 'p' || e.key === 'P') { paused = !paused; stage.classList.toggle('paused', paused); }
   if (e.key === 'Escape') finish(); });
-// V2 (16 Nov 2026), THE GAME'S COPY: the mock-up's avatar picker, Faces button and control bar (room, version, name, draw) are taken out; the game gives these
+
 function resize(){ var s = Math.min(window.innerWidth / 1600, window.innerHeight / 900); fit.style.transform = 'translate(-50%,-50%) scale(' + s + ')'; }
 window.addEventListener('resize', resize); resize();
 
@@ -2132,8 +2132,8 @@ requestAnimationFrame(frame); start();
 (function(){ if (!/[?&]game=1/.test(location.search)) { boot(null); return; }
   // joined to the game (not done yet; for later): the page says scene-ready, waits for scene-facts { end:{ room, version, name, appraisals, posts, facts, player:{avatar} } }
   var started = false, late = setTimeout(function(){ if (!started) try { parent.postMessage({ type:'scene-no-facts', scene:'end' }, '*'); } catch (e) {} }, 4000);
-  window.addEventListener('message', function(e){ if (started || !e.data || e.data.type !== 'scene-facts' || !e.data.end) return; if (e.source !== window.parent || (location.protocol !== 'file:' && e.origin !== location.origin)) return;   /* 23 Nov 2026: facts are taken only from the game that opened this page, on the same site (a folder opened from disk has no site to compare) */  started = true; clearTimeout(late); document.body.classList.add('ingame'); boot(e.data.end);   // V2 (16 Nov 2026): only from the game that holds the page
-    try { new MutationObserver(function(){ var ec = document.getElementById('endcard'); if (ec && ec.classList.contains('on')) { try { document.getElementById('cont').focus(); } catch (x) {} } }).observe(document.getElementById('endcard'), { attributes:true, attributeFilter:['class'] }); } catch (x) {}   // V2 (16 Nov 2026): keyboard and screen reader land on Continue when the closing card is up
+  window.addEventListener('message', function(e){ if (started || !e.data || e.data.type !== 'scene-facts' || !e.data.end) return; if (e.source !== window.parent || (location.protocol !== 'file:' && e.origin !== location.origin)) return;     started = true; clearTimeout(late); document.body.classList.add('ingame'); boot(e.data.end);
+    try { new MutationObserver(function(){ var ec = document.getElementById('endcard'); if (ec && ec.classList.contains('on')) { try { document.getElementById('cont').focus(); } catch (x) {} } }).observe(document.getElementById('endcard'), { attributes:true, attributeFilter:['class'] }); } catch (x) {}
     try { parent.postMessage({ type:'scene-started', scene:'end' }, '*'); } catch (x) {} });
   window.addEventListener('error', function(){ try { parent.postMessage({ type:'scene-error', scene:'end' }, '*'); } catch (x) {} });
   try { parent.postMessage({ type:'scene-ready', scene:'end' }, '*'); } catch (e) {} })();

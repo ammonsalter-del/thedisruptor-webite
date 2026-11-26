@@ -8,63 +8,63 @@
     https://creativecommons.org/licenses/by-nc-sa/4.0/
     Required Notice: Copyright 2026 Ammon Salter (https://disruptorsim.org)
 */
-// =====================================================================================================
-// COMPETITIVE PLAY SHIM, rebased 17 November 2026 (COMPETITIVE PLAY 16-11/rebase-1711/build) from the final draft of 16 November.
-// Tested locally against a stand-in only. Line numbers: github-working/index.html of 17 Nov (119,853 lines, commit 8b011f2).
-// Changes of 17 Nov, each marked "rebase 17 Nov": The Disruptor's score sent (and shown only if CONFIG.compareScore); the game's
-// own assessment read through gameAssessmentFor first, as the end screen reads it; a note when the widest pool holds pre-filled
-// practice games (CONFIG.sayPractice); one closing line on the card; the card's place a switch (CONFIG.cardPlace).
-//
-// A separate file beside the game, loaded after it by one script tag. It changes no game logic. It wraps three of the game's
-// functions and always calls the game's own function first:
-//   startGameFromArrival   (index.html 115251)  in a Forge game only, the question "Compare your tenure", over the name screen
-//   saveYearRecord         (index.html 107908)  a year has been appraised (or a tenure ended early): the run and every year so far are sent
-//   showEndOfGameScorecard (index.html 109757)  the end: sent once more, then one card on the end screen, above "Your report"
-// Reached from outside: the three functions and runFrankIdentity are top-level function declarations in the game's main classic
-// script (3561 to 116578), so they are properties of window and the game's own calls go through window: a wrapper put on window is
-// the one the game calls. G is a top-level const (4100) in the same script: not on window, but visible by name to any later
-// classic script (the global lexical scope is shared), which this file is. No further edit to the game is needed for either.
-//
-// Forge only: G.gameMode 'builder', not the Incubator (G.incubatorMode), not a game begun as a probation year.
-// As on the Slingshot (_trajectorySkip): a Forge player who chooses Skip is recorded anonymously (the same yearly record, with no
-// nickname, no level and no class code) and sees no comparison. Other versions send nothing. Nothing is stored on the device. No library. Every request gives up after eight seconds, silently.
-// The game never waits on this file and never sees an error from it. Delete the file and its tag and the game is as it was.
-//
-// What it writes to G (both saved with the game): G.runStartTime and G.runNonce, through the game's own runFrankIdentity()
-// (108789), at the start of a Forge run once the question is answered; and G.competePlay = { v, compared, nickname, level, code, errors }.
-// It never reads G.player.
-// =====================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (function () {
   'use strict';
   if (window.__dzShim) return;                       // loaded twice: the second copy does nothing
   window.__dzShim = { version: '2026-11-17' };
 
-  // ================================================================ THE SWITCHES (each big choice in one place)
+
   var CONFIG = {
-    // BIG CHOICE 1 = A: the Disruptor's own Supabase project (EU). Two placeholders, filled in at STEPS step 7.
-    // While either is still a placeholder the shim does nothing at all: no question, no request.
+
+
     url: 'https://wwihfojqrrizmwelamvf.supabase.co',
     key: 'sb_publishable_8doMY-Me4JZ5OcBrjEgMgA_kHWEjXiu',                // publishable key: public by design, it can only call the functions
-    // BIG CHOICE 2 = A: a nickname the game makes up ('generated'). The other values, 'typed' and 'none', are built and work.
+
     nicknames: 'generated',
-    // BIG CHOICE 3: the purposes are said in WORDS.notice and WORDS.more below (his own sentence) and on the class page.
-    page: 'https://disruptorsim.org/classroom.html', // the lecturer's page and the fuller notice (address to confirm at upload)
+
+    page: 'https://disruptorsim.org/classroom.html',
     // The game's own assessment (being built in GAME ASSESSMENT BUILD 16-11): the key on G it is kept under. Read only if present.
     assessmentKey: 'gameAssessment',
-    // rebase 17 Nov. HIS CHOICE: whether the card also places The Disruptor's score among Forge players. It is SENT either way
-    // (it is part of the game's own assessment, which the notice names); false shows only the board's verdict, as built on 16 Nov.
-    compareScore: true,   // 20 Nov, his answer: "Those and the score"
-    // rebase 17 Nov. HIS CHOICE: whether the card says when the all-Forge figures include pre-filled practice games.
+
+
+    compareScore: true,
+
     sayPractice: true,
-    // rebase 17 Nov. HIS CHOICE: where the card sits: 'beforeReport' (as built: after "A word from the game", above "Your report")
-    // or 'afterScore' (straight after The Disruptor's score panel, before "A word from the game").
+
+
     cardPlace: 'beforeReport',
     wait: 8000,                                      // ms before any request is given up
     codeWait: 5000                                   // ms the question waits for a class code to be checked, then carries on
   };
 
-  // rebase 17 Nov: a secret key put here by mistake (sb_secret_..., or an old-style key whose role is service_role) switches the
-  // shim off entirely, so it can never be used from a player's browser. Only the publishable (or old-style anon) key belongs here.
+
+
   function secretKey(k) { try { if (/^sb_secret_/.test(k)) return true; var p = String(k).split('.'); return p.length === 3 && /service_role/.test(atob(p[1].replace(/-/g, '+').replace(/_/g, '/'))); } catch (e) { return false; } }
   var LIVE = !/PROJECTREF/.test(CONFIG.url) && !/REPLACE_ME/.test(CONFIG.key) && !secretKey(CONFIG.key);
 
@@ -168,18 +168,18 @@
   function assessmentOf(g, early) {
     var out = {};
     try {
-      // rebase 17 Nov: the game's own function first (index.html 110519), exactly as the end screen's score panel calls it (110492);
-      // it returns the kept result for this ending, or makes it; the saved key is the fall-back.
+
+
       var a = null;
       if (typeof window.gameAssessmentFor === 'function') a = window.gameAssessmentFor(early ? 'dismissed' : 'full');
       if (!a) a = g[CONFIG.assessmentKey];
       if (!a) return out;
       if (GA_LEVELS.indexOf(a.levelName) >= 0) out.assessment_level = a.levelName;
       (a.areas || []).forEach(function (x) { if (x && GA_AREAS.indexOf(x.id) >= 0 && GA_STATES.indexOf(x.state) >= 0) out['ga_' + x.id] = x.state; });
-      // rebase 17 Nov: The Disruptor's score as the player sees it (rounded, 0 to 100, as dsEndScreenPanel 110494), and whether the
-      // level beside it was held back by results (a.capped)
-      // 22 Nov: also as "score", which the class page shows (PATCH-3.sql); "ds_score" stays, so a database before PATCH 3 still keeps it.
-      // Not a number: neither is sent (never a guess).
+
+
+
+
       if (typeof a.score === 'number' && isFinite(a.score)) { out.score = out.ds_score = Math.max(0, Math.min(100, Math.round(a.score))); out.ds_held = !!a.capped; }
     } catch (e) {}
     return out;
@@ -365,7 +365,7 @@
     if (!overlay || !pdf || !overlay.contains(pdf)) return null;          // the end screen itself has been drawn
     var shell = overlay.firstElementChild, before = pdf;
     while (before && before.parentElement !== shell) before = before.parentElement;   // the "Your report" block
-    // rebase 17 Nov: the block after The Disruptor's score panel (the panel holds the game's logo, Logocropped.webp, 110497, and its title)
+
     var afterScore = null;
     // (the title picture carries the same logo, so the block taken is the one whose words name the score)
     try { [].forEach.call(shell ? shell.querySelectorAll('img[src="Logocropped.webp"]') : [], function (logo) {
@@ -392,14 +392,14 @@
         var bits = [WORDS.income + ' ' + band(p.income_rank), WORDS.objectives + ' ' + band(p.objectives_rank)];
         if (p.score_rank != null) bits.push(WORDS.boardScore + ' ' + band(p.score_rank));
         card.appendChild(el('div', line, (POOL_WORDS[p.pool] || '') + ' (' + p.n + '): ' + bits.join(', ') + '.'));
-        if (p.models > 0) practice = true;                                         // rebase 17 Nov
+        if (p.models > 0) practice = true;
       });
     });
     if (!years.length) card.appendChild(el('div', line, WORDS.tooFew));
     if (data && data.game_view && data.game_view.rank != null && data.game_view.level) {
       card.appendChild(el('div', line + 'margin-top:10px;', WORDS.gameView + ' ' + data.game_view.level + ', ' + band(data.game_view.rank) + ' ' + WORDS.ofForge + ' (' + data.game_view.n + ').'));
     }
-    // rebase 17 Nov: The Disruptor's score among Forge players, only if he chooses it (CONFIG.compareScore)
+
     if (CONFIG.compareScore && data && data.score_view && data.score_view.rank != null) {
       card.appendChild(el('div', line + 'margin-top:10px;', WORDS.scoreView + ' ' + data.score_view.score + ', ' + band(data.score_view.rank) + ' ' + WORDS.ofForge + ' (' + data.score_view.n + ').'));
       if (data.score_view.models > 0) practice = true;
@@ -410,12 +410,12 @@
       var e = order.filter(function (k) { return data.endings[k]; }).map(function (k) { return ENDING_WORDS[k] + ' ' + Math.round(data.endings[k] * 100) + '%'; });
       if (e.length) card.appendChild(el('div', line + 'margin-top:10px;', WORDS.endings + ' ' + e.join(', ') + '.'));
     }
-    if (CONFIG.sayPractice && practice) card.appendChild(el('div', 'font-size:12px;color:#57534e;margin-top:10px;', WORDS.practice));   // rebase 17 Nov
-    card.appendChild(el('div', line + 'margin-top:10px;', WORDS.close));      // rebase 17 Nov: one supportive closing line, whatever the standing
+    if (CONFIG.sayPractice && practice) card.appendChild(el('div', 'font-size:12px;color:#57534e;margin-top:10px;', WORDS.practice));
+    card.appendChild(el('div', line + 'margin-top:10px;', WORDS.close));
     var cp = (game() || {}).competePlay || {};
     var foot = el('div', 'font-size:12px;color:#57534e;margin-top:12px;', cp.nickname ? WORDS.playingAs + ' ' + cp.nickname + '.' : '');
     card.appendChild(foot);
-    if (CONFIG.cardPlace === 'afterScore' && at.afterScore) at.shell.insertBefore(card, at.afterScore);   // rebase 17 Nov
+    if (CONFIG.cardPlace === 'afterScore' && at.afterScore) at.shell.insertBefore(card, at.afterScore);
     else if (at.before) at.shell.insertBefore(card, at.before); else at.shell.appendChild(card);
   }
 
@@ -486,8 +486,8 @@
     errLevel: 'Please choose your level.',
     errCode: 'A class code has six letters and numbers.',
     errCodeUnknown: 'That code was not found. Check it, or leave it blank.',
-    // BIG CHOICE 3: THE NOTICE, in his words (16 Nov 2026). One constant: a change of wording is a change of this one line.
-    // It sits directly above the two buttons, so the Compare sentence comes last.
+
+
     notice: 'The game records your results for each year and the time you played. No personal data is collected. It does not track you. All play is anonymous. The data is used to improve the game and monitor use. If you choose Compare, you get a made-up nickname and see how your run went.',
     moreLink: 'More about this',
     more: [
@@ -506,7 +506,7 @@
     gameView: 'The game’s assessment:', ofForge: 'of Forge players',
     endings: 'How other Forge tenures ended:',
     playingAs: 'Playing as',
-    // rebase 17 Nov (drafts for his word; he asked that every line be developmental and supportive):
+
     scoreView: 'The Disruptor’s score:',
     practice: 'While few players have finished, the figures for all Forge players include practice games played by the game’s test players.',
     close: 'Wherever your years stand, your report shows what to try next time.'
